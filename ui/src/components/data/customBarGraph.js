@@ -77,11 +77,11 @@ export const CustomBarGraph = (props) => {
         type: "column",
         data: numberOFVehicles,
       },
-      {
-        name: "Time Traveled",
-        type: "line",
-        data: [10],
-      },
+      // {
+      //   name: "Time Traveled",
+      //   type: "line",
+      //   data: [10],
+      // },
     ],
   };
 
@@ -110,9 +110,9 @@ export const CustomBarGraph = (props) => {
           //   showTodayButton
         />
       </Box>
-      <Box>
+      
         <ReactApexChart options={chartData} series={chartData.series} />
-      </Box>
+      
     </span>
   );
 };

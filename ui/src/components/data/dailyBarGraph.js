@@ -68,11 +68,11 @@ export const DailyBarGraph = (props) => {
         type: "column",
         data: numberOFVehicles,
       },
-      {
-        name: "Time Traveled",
-        type: "line",
-        data: [10],
-      },
+      // {
+      //   name: "Time Traveled",
+      //   type: "line",
+      //   data: [10],
+      // },
     ],
   };
 

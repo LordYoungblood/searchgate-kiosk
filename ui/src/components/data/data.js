@@ -16,7 +16,7 @@ export const Data = () => {
   const lastYear = PriorYear.toISOString().slice(0, 7);
 
   return (
-    <Box>
+    <Box sx={{ width: "100%" }}>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Box sx={{ width: "50%" }}>
           <Typography> 30 Day Trend</Typography>
@@ -27,8 +27,14 @@ export const Data = () => {
           <MonthlyBarGraph element={{ visitorDetails, lastYear }} />
         </Box>
       </Box>
-
-      <CustomBarGraph visitorDetails={{ visitorDetails }} />
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ width: "75%" }}>
+          <CustomBarGraph
+            
+            visitorDetails={{ visitorDetails }}
+          />
+        </Box>
+      </Box>
     </Box>
   );
 };
