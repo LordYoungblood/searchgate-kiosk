@@ -1,7 +1,7 @@
 const client = require("../../db/client");
 
 
-//get all vehicle info from db
+//-------------get all vehicle info from db-------------------------------------//
 const getAllVehicles = async (req, res) => {
   try {
     const all = await client.query("SELECT * FROM sfs45_cape ORDER BY date");
@@ -12,9 +12,9 @@ const getAllVehicles = async (req, res) => {
   }
 };
 
-//User Admin
+//-------------add new vehicle to db--------------------------------------------//
 
-//insert new vehicle into db
+
 
 const addVehicle = async (req, res) => {
     const vehicle = {
@@ -29,9 +29,6 @@ const addVehicle = async (req, res) => {
     };
     console.log(vehicle);
   try {
-
-
-    
     let result = await client.query(
       `INSERT INTO sfs45_cape (first_name, last_name, drivers_license, plate, make, model, state, date) values('${vehicle.first_name}', '${vehicle.last_name}', '${vehicle.drivers_license}', '${vehicle.plate}', '${vehicle.make}', '${vehicle.model}', '${vehicle.state}', '${vehicle.date}')`
     );

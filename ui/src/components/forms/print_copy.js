@@ -62,6 +62,8 @@ export default function PrintModal(props) {
   const vehicle = props.element.vehicle;
   const setFailedRegister = props.element.setFailedRegister;
   const reload = props.element.reload;
+
+  // ------------------ PRINTING ----------------- //
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     onAfterPrint: () => reload(),
@@ -70,17 +72,9 @@ export default function PrintModal(props) {
   const marginTop = "10px"
   const marginBottom = "10px"
 
-  // console.log("FROM PRINT MODAL", props);
-
-
-
-  
-
+  // ------------------ POST USER/VEHICLE INFO INTO DB ----------------- //
   const postUser = () => {
-    console.log("posting vehicle");
-
-    console.log(vehicle.drivers_license);
-    console.log(vehicle.first_name);
+    setFailedRegister(false);
     fetch("http://localhost:8080/api", {
       method: "POST",
       credentials: "include",
@@ -90,19 +84,15 @@ export default function PrintModal(props) {
       },
     })
       .then((res) => res.json())
-
       .catch((err) => {
         console.log("Error: ", err);
       });
-    console.log("vehicle has been posted");
     handleClose();
   };  
   
 
   const ComponentToPrint = React.forwardRef((props, ref) => {
-    //   const date = new Date();
-    // const today =
-    //   date.toISOString().slice(0, 10) + " " + date.toTimeString().slice(0, 5);
+
     return (
       <Box ref={ref} sx={{ overflow: "hidden" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>

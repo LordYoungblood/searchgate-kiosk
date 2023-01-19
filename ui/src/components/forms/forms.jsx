@@ -57,51 +57,6 @@ export const Forms = () => {
   const reload = () => {
     window.location.reload();
   };
-  // console.log('froms.js from context', token)
-  // console.log('from forms local storage shit',localStorage.getItem('user'));
-  // console.log('admin from local storage', localStorage.getItem('admin'));
-
-
-  const ab = new Date()
-  console.log(ab.toDateString())
-
-  // posting vehicle and user info to the database
-  const postUser = () => {
-    console.log("posting vehicle");
-    setFailedRegister(false);
-
-    if (
-      vehicle.first_name === "" ||
-      vehicle.last_name === "" ||
-      vehicle.plate === "" ||
-      vehicle.drivers_license === "" ||
-      vehicle.state === "" ||
-      vehicle.make === "" ||
-      vehicle.model === ""
-    ) {
-      setFailedRegister(true);
-
-      return;
-    }
-
-    fetch(`${API}`, {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify(vehicle),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        // "Authorization": `Bearer ${user.Bearer}`
-      },
-    })
-      .then((res) => res.json())
-      .then(setFlag(true))
-
-      .catch((err) => {
-        console.log("Error: ", err);
-      });
-    console.log("vehicle has been posted");
-    reload();
-  };
 
   return (
     <>
@@ -138,7 +93,6 @@ export const Forms = () => {
           <form
             noValidate
             autoComplete="off"
-            // onSubmit={handleSubmit}
             sx={{
               display: "grid",
               boxShadow: 3,
@@ -325,19 +279,6 @@ export const Forms = () => {
             </Box>
           </form>
         </Container>
-
-        {/* <Button
-              sx={{ boxShadow: 2, width: 150, m: 1 }}
-              variant="contained"
-              onClick={() =>  <PrintModal element={vehicle}/> 
-              }
-              
-            
-            >
-              {" "}
-              Veryify Information & Print{" "}
-            </Button>
-             */}
         <PrintModal element={{ vehicle, setFailedRegister, reload }} />
       </Box>
     </>

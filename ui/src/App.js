@@ -22,7 +22,7 @@ export const App = () => {
   const userDomain = "localhost";
   const API = "http://localhost:8080/api";
 
-  //testing update
+
 
   useMemo(() => {
     if (cookies.user) {
@@ -30,7 +30,7 @@ export const App = () => {
     }
   }, [cookies]);
 
-  // if (user !== null && flag === true) {
+// ----------------- fetch for all Vehicle information -------------------------//
   useEffect(() => {
     fetch(API, {
       method: "GET",
@@ -46,8 +46,9 @@ export const App = () => {
       })
       .catch((err) => console.log(err));
   }, [flag]);
-  // };
+ 
 
+  // ----------- Context object to be passed to all components ------------------//
   const obj = {
     visitorDetails,
     setVisitorDetails,
@@ -65,6 +66,8 @@ export const App = () => {
     setFlag,
   };
 
+
+  // ----------------- verification routes for login ----------------------------//
   if (!user) {
     return (
       <VehicleContext.Provider value={obj}>
@@ -77,18 +80,7 @@ export const App = () => {
       </VehicleContext.Provider>
     );
   }
-  // if (user === null) {
-  //   return (
-  //     <VehicleContext.Provider value={obj}>
-  //       <Router>
-  //         <Routes>
-  //           <Route path="/" element={<Login />} />
-  //           <Route path="*" element={<Login />} />
-  //         </Routes>
-  //       </Router>
-  //     </VehicleContext.Provider>
-  //   );
-  // } else {
+
 
   return (
     <VehicleContext.Provider value={obj}>

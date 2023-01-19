@@ -64,7 +64,7 @@ export const Navbar = () => {
             />
           </Box>
 
-          <Button onClick={() => logout()} color="inherit">
+          <Button sx={{ mr: 5 }} onClick={() => logout()} color="inherit">
             Logout
           </Button>
         </Toolbar>

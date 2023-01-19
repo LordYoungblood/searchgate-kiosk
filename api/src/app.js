@@ -8,7 +8,7 @@ const vehicleRoutes = require("./routes/vehicles");
 const authRoutes = require("./routes/auth");
 const client = require("../db/client");
 const auth = require("./middleware/authentication");
-// DB Connection
+
 
 const whitelist = [
   "http://localhost:3000",
@@ -16,6 +16,9 @@ const whitelist = [
   "http://localhost:3001",
   "https://localhost:3001",
 ];
+
+// ----------------- CORS ----------------------------------------------------//
+
 const corsOptions = {
   credentials: true,
   origin: function (origin, callback) {
@@ -30,7 +33,7 @@ const corsOptions = {
   },
 };
 
-//DataBase Connection initialization
+//-------- DataBase Connection initialization ---------------------------------//
 let retries = 5;
 while (retries) {
   try {
@@ -45,21 +48,19 @@ while (retries) {
     new Promise((res) => setTimeout(res, 5000));
   }
 }
-// client
-//   .connect()
-//   .then(() => console.log("Connected to database"))
-//   .catch((err) => console.log(err));
+
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-//inital API route
+// -------- inital API route -----------------------------------------------//
 app.get("/", (req, res) => {
   res.send("Welcome to the Vehicle Tracking API");
 });
 
-//Primary API route
+
+// ----------------- Routes ----------------------------------------------------//
 app.use("/api", authRoutes);
 app.use("/api", auth, vehicleRoutes);
 
