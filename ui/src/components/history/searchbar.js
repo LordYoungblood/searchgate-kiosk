@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
-
+//------------------Search Bar///DOES NNOT IMPACT PERFORMACE-----------//
 export const SearchBar = () => {
   return (
     <Paper

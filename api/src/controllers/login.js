@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 //----- user_name: password: admin: true/false -----=------------------------------//
 const login = async (req, res) => {
   const { user_name, password } = req.body;
-  console.log(req.body);
 
   try {
     const user = await client.query(
@@ -51,7 +50,6 @@ const register = async (req, res) => {
   if (req.body.admin === undefined) {
     req.body.admin = false;
   }
-  console.log(req.body);
   const password = await bcrypt.hash(req.body.password, 10);
   const { user_name, admin } = req.body;
   try {

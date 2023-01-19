@@ -27,7 +27,7 @@ const addVehicle = async (req, res) => {
       state: req.body.state,
       date: req.body.date
     };
-    console.log(vehicle);
+    
   try {
     let result = await client.query(
       `INSERT INTO sfs45_cape (first_name, last_name, drivers_license, plate, make, model, state, date) values('${vehicle.first_name}', '${vehicle.last_name}', '${vehicle.drivers_license}', '${vehicle.plate}', '${vehicle.make}', '${vehicle.model}', '${vehicle.state}', '${vehicle.date}')`
