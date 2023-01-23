@@ -2,17 +2,9 @@ import { React, useState, useContext } from "react";
 import { VehicleContext } from "../VehicleContext";
 import {
   Box,
-  Button,
   Container,
-  FormControl,
-  FormHelperText,
-  InputLabel,
   MenuItem,
-  MuiAlert,
-  Typography,
   TextField,
-  Snackbar,
-  Stack,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import logo from "../image/logo.svg";

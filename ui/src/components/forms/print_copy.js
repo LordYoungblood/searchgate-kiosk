@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext} from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Alert, Box, Button, Typography, Modal, Stack } from "@mui/material/";
 // import Button from "@mui/material/Button";
 // import Typography from "@mui/material/Typography";
@@ -13,12 +13,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import swal from 'sweetalert';
-import Swal from 'sweetalert2'
-
-
-
-
+import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 const tabStyle = {
   height: 500,
@@ -43,21 +39,18 @@ const style = {
 
 const printStyle = {
   position: "absolute",
-  top: '10px',
+  top: "10px",
   bottom: "10px",
   left: "10px",
   right: "10px",
-
-  
-
-}
+};
 
 export default function PrintModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [flag, setFlag] = useState(false);
-  
+
   const componentRef = useRef();
   const vehicle = props.element.vehicle;
   const setFailedRegister = props.element.setFailedRegister;
@@ -69,8 +62,8 @@ export default function PrintModal(props) {
     onAfterPrint: () => reload(),
   });
 
-  const marginTop = "10px"
-  const marginBottom = "10px"
+  const marginTop = "10px";
+  const marginBottom = "10px";
 
   // ------------------ POST USER/VEHICLE INFO INTO DB ----------------- //
   const postUser = () => {
@@ -88,20 +81,33 @@ export default function PrintModal(props) {
         console.log("Error: ", err);
       });
     handleClose();
-  };  
-  
+  };
 
   const ComponentToPrint = React.forwardRef((props, ref) => {
-
     return (
-      <Box ref={ref} sx={{ overflow: "hidden" }}>
+      <Box ref={ref} sx={{ overflow: "hidden", m: 2, mb: 4 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <img
             style={{ width: "20%", margin: 2 }}
             src={flash}
             alt="Security Forces Logo"
           />
-          45 SFS Vehicle Pass
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography>
+              <b>45 SFS Vehicle Pass</b>
+            </Typography>
+
+            <Typography sx={{ ml: 1.5 }}>
+              <b>{vehicle.date}</b>
+            </Typography>
+          </Typography>
+
           <img
             style={{ width: "15%", margin: 1 }}
             src={patch}
@@ -112,28 +118,44 @@ export default function PrintModal(props) {
           className="printElement1"
           sx={{ display: "flex", flexDirection: "column" }}
         >
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Typography> First Name: {vehicle.first_name}</Typography>
-            <Typography sx={{ pl: 5 }}>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography>
               {" "}
-              Last Name: {vehicle.last_name}
+              <b>First Name:</b> {vehicle.first_name}
+            </Typography>
+            <Typography>
+              {/* {" "} */}
+              <b>Last Name:</b> {vehicle.last_name}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <Typography>
               {" "}
-              Drivers License: {vehicle.state} {vehicle.drivers_license}
+              <b>Drivers License:</b> {vehicle.state} {vehicle.drivers_license}
             </Typography>
           </Box>
           <Box
             className="printElement1"
-            sx={{ display: "flex", justifyContent: "space-between" }}
+            sx={{ display: "flex", flexDirection: "column" }}
           >
-            <Typography> Vehicle Plate: {vehicle.plate}</Typography>
-            <Typography> Make: {vehicle.make}</Typography>
-            <Typography> Model: {vehicle.model}</Typography>
+            <Typography>
+              {" "}
+              <b>Vehicle Plate:</b> {vehicle.plate}
+            </Typography>
+            <Typography>
+              {" "}
+              <b>Make:</b> {vehicle.make}
+            </Typography>
+            <Typography>
+              {" "}
+              <b>Model:</b> {vehicle.model}
+            </Typography>
           </Box>
-          <Typography>{vehicle.date}</Typography>
+
+          <Typography sx={{ mt: 25 }}>
+            {" "}
+            Ensure Pass Is Kept In Vehicle At All Times{" "}
+          </Typography>
         </Box>
       </Box>
     );
@@ -184,7 +206,7 @@ export default function PrintModal(props) {
         button: "Continue",
         showConfirmButton: false,
         timer: 7000,
-      })
+      });
       return;
     }
     handleOpen();
@@ -192,18 +214,19 @@ export default function PrintModal(props) {
 
   return (
     <div>
-      <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-      <Button
-        sx={{ boxShadow: 2, width: 150, m: 1}}
-        variant="contained"
-        onClick={() => {
-          fillOutFields();
-        }}
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <Button
+          sx={{ boxShadow: 2, width: 150, m: 1 }}
+          variant="contained"
+          onClick={() => {
+            fillOutFields();
+          }}
         >
-        Verify & Print
-      </Button>
-
-        </Box>
+          Verify & Print
+        </Button>
+      </Box>
       <Modal
         open={open}
         onClose={handleClose}
