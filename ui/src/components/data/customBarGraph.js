@@ -28,6 +28,7 @@ export const CustomBarGraph = (props) => {
     });
   }, [selectedDate, selectedDate1]);
 
+
   useMemo(() => {
     for (let i = 0; i < combineDates.length; i++) {
       let count = 0;
