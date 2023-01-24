@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Box, Button, Typography, Modal} from "@mui/material/";
 import { useReactToPrint } from "react-to-print";
 import flash from "../image/flash.png";
@@ -35,7 +35,7 @@ import Swal from "sweetalert2";
 // };
 
 export default function PrintModal(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
  
