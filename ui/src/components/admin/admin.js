@@ -9,6 +9,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Swal from "sweetalert2";
 import {
   DataGrid,
@@ -24,7 +25,9 @@ export const Users = () => {
   const { API } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(10);
   const [userDetails, setUserDetails] = useState([]);
+  const [toggle, setToggle] = useState(false);
   const [open, setOpen] = useState(false);
+
   const [failedRegister, setFailedRegister] = useState(false);
   const [newUser, setNewUser] = useState({
     user_name: "",
@@ -34,6 +37,9 @@ export const Users = () => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleOpen2 = () => setOpen(true);
+  const handleClose2 = () => setOpen(false);
 
   // console.log(visitorDetails);
 
@@ -50,7 +56,7 @@ export const Users = () => {
         setUserDetails(json);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [toggle]);
 
   const postUser = () => {
     setFailedRegister(false);
@@ -62,15 +68,67 @@ export const Users = () => {
         "Content-Type": "application/json; charset=utf-8",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        res.json();
+        toggle ? setToggle(false) : setToggle(true);
+      })
       .catch((err) => {
         console.log("Error: ", err);
       });
     handleClose();
   };
 
+  const deleteUser = (id) => {
+    setFailedRegister(false);
+    console.log(id);
+    fetch(`${API}/users`, {
+      method: "DELETE",
+      credentials: "include",
+      body: JSON.stringify({ id }),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+      .then((res) => {
+        res.json();
+        toggle ? setToggle(false) : setToggle(true);
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+      });
+  };
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    // { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "Delete",
+      headerName: "Delete",
+      width: 50,
+      renderCell: (params) => (
+        <DeleteForeverIcon
+          onClick={() => {
+            Swal.fire({
+              title: `Do you want to delete ${params.row.user_name}?`,
+              showDenyButton: false,
+              showCancelButton: true,
+              confirmButtonText: "Delete",
+              denyButtonText: `Don't save`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                deleteUser(params.row.uuid);
+                Swal.fire(
+                  `${params.row.user_name} has been deleted`,
+                  "",
+                  "success"
+                );
+              } else if (result.isDenied) {
+                Swal.fire("Changes are not saved", "", "info");
+              }
+            });
+          }}
+        />
+      ),
+    },
     {
       field: "user_name",
       headerName: "User Name",
@@ -92,6 +150,7 @@ export const Users = () => {
       id: index + 1,
       user_name: user.user_name,
       admin: user.admin,
+      uuid: user.id,
     });
   });
 
