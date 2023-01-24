@@ -1,55 +1,44 @@
-import React, { useState, useRef, useContext } from "react";
-import { Alert, Box, Button, Typography, Modal, Stack } from "@mui/material/";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
-// import Modal from "@mui/material/Modal";
-import ReactToPrint from "react-to-print";
+import React, { useRef } from "react";
+import { Box, Button, Typography, Modal} from "@mui/material/";
 import { useReactToPrint } from "react-to-print";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
-import shark from "../image/shark.png";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import Swal from "sweetalert2";
 
-const tabStyle = {
-  height: 500,
-  maxHeight: 300,
-  overflow: "scroll",
-  //backgroundColor: "blue"
-};
+// const tabStyle = {
+//   height: 500,
+//   maxHeight: 300,
+//   overflow: "scroll",
+// };
 
-// console.log("FROM FORMS", Forms);
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "75%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
-const printStyle = {
-  position: "absolute",
-  top: "10px",
-  bottom: "10px",
-  left: "10px",
-  right: "10px",
-};
+// const style = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: "75%",
+//   bgcolor: "background.paper",
+//   border: "2px solid #000",
+//   boxShadow: 24,
+//   p: 4,
+// };
+
+// const printStyle = {
+//   position: "absolute",
+//   top: "10px",
+//   bottom: "10px",
+//   left: "10px",
+//   right: "10px",
+// };
 
 export default function PrintModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [flag, setFlag] = useState(false);
+ 
 
   const componentRef = useRef();
   const vehicle = props.element.vehicle;
@@ -62,8 +51,6 @@ export default function PrintModal(props) {
     onAfterPrint: () => reload(),
   });
 
-  const marginTop = "10px";
-  const marginBottom = "10px";
 
   // ------------------ POST USER/VEHICLE INFO INTO DB ----------------- //
   const postUser = () => {
@@ -85,7 +72,7 @@ export default function PrintModal(props) {
 
   const ComponentToPrint = React.forwardRef((props, ref) => {
     return (
-      <Box ref={ref} sx={{ overflow: "hidden", m: 2, mb: 4 }}>
+      <Box ref={ref} sx={{ overflow: "hidden", m: 2, mb: 4, justifyContent: 'center' }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <img
             style={{ width: "20%", margin: 2 }}
@@ -116,9 +103,9 @@ export default function PrintModal(props) {
         </Box>
         <Box
           className="printElement1"
-          sx={{ display: "flex", flexDirection: "column" }}
+          sx={{ display: "flex", flexDirection: "column",  rowGap: 1.5, mt: 4  }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1.5 }}>
             <Typography>
               {" "}
               <b>First Name:</b> {vehicle.first_name}
@@ -136,7 +123,7 @@ export default function PrintModal(props) {
           </Box>
           <Box
             className="printElement1"
-            sx={{ display: "flex", flexDirection: "column" }}
+            sx={{ display: "flex", flexDirection: "column", rowGap: 1.5 }}
           >
             <Typography>
               {" "}
@@ -152,7 +139,7 @@ export default function PrintModal(props) {
             </Typography>
           </Box>
 
-          <Typography sx={{ mt: 25 }}>
+          <Typography sx={{ mt: 25, display: 'flex', width: '100%', justifyContent: 'center', flexWrap: true }}>
             {" "}
             Ensure Pass Is Kept In Vehicle At All Times{" "}
           </Typography>
@@ -232,8 +219,17 @@ export default function PrintModal(props) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{ width: '40%', m: 'auto'}}
       >
-        <Box sx={style}>
+        <Box sx={{ position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "75%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,}}>
           <Box>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Verify All Information Is Correct

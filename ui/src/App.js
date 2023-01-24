@@ -9,6 +9,7 @@ import { History } from "./components/history/history";
 import { VehicleContext } from "./components/VehicleContext";
 import { useCookies } from "react-cookie";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Users } from "./components/admin/admin";
 import DateFnsUtils from "@date-io/date-fns";
 
 export const App = () => {
@@ -22,15 +23,13 @@ export const App = () => {
   const userDomain = "localhost";
   const API = "http://localhost:8080/api";
 
-
-
   useMemo(() => {
     if (cookies.user) {
       setUser(cookies);
     }
   }, [cookies]);
 
-// ----------------- fetch for all Vehicle information -------------------------//
+  // ----------------- fetch for all Vehicle information -------------------------//
   useEffect(() => {
     fetch(API, {
       method: "GET",
@@ -46,7 +45,6 @@ export const App = () => {
       })
       .catch((err) => console.log(err));
   }, [flag]);
- 
 
   // ----------- Context object to be passed to all components ------------------//
   const obj = {
@@ -66,7 +64,6 @@ export const App = () => {
     setFlag,
   };
 
-
   // ----------------- verification routes for login ----------------------------//
   if (!user) {
     return (
@@ -81,7 +78,6 @@ export const App = () => {
     );
   }
 
-
   return (
     <VehicleContext.Provider value={obj}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -94,6 +90,7 @@ export const App = () => {
 
             <Route path="/data" element={<Data />} />
             <Route path="/History" element={<History />} />
+            <Route path="/users" element={<Users />} />
             <Route path="*" element={<Forms />} />
 
             {/* <Route path="/" element={<Login />} /> */}

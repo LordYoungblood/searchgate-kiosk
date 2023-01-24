@@ -1,40 +1,38 @@
 version: "3"
 
-
-
 services:
-  gatekiosk-db:
-    image: postgres
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=gatekiosk
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
-      - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  #   gatekiosk-db:
+  #     image: postgres
+  #     restart: always
+  #     environment:
+  #       - POSTGRES_USER=postgres
+  #       - POSTGRES_PASSWORD=password
+  #       - POSTGRES_DB=gatekiosk
+  #     ports:
+  #       - "5432:5432"
+  #     healthcheck:
+  #       test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #       interval: 5s
+  #       timeout: 5s
+  #       retries: 10
+  #     volumes:
+  #       - ./pgdata:/var/lib/postgresql/data
+  #       - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
 
   gatekiosk-api:
     build: api/
-    depends_on:
-      gatekiosk-db:
-        condition: service_healthy
+    # depends_on:
+      # gatekiosk-db:
+      #   condition: service_healthy
     ports:
       - "8080:8080"
     environment:
       # - NODE_ENV=development
-      - DB_HOST=gatekiosk-db
+      - DB_HOST=vehicle-gate-kiosk.ca4lcabxs5eo.us-gov-west-1.rds.amazonaws.com
       - DB_PORT=5432
       - DB_USER=postgres
-      - DB_PASSWORD=password
-      - DB_NAME=gatekiosk
+      - DB_PASSWORD=Vehiclekiosk45!
+      - DB_NAME=vehicle_gate_kiosk
       # - POSTGRES_DB=gatekiosk-db
     volumes:
       - type: bind

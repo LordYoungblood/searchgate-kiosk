@@ -1,8 +1,8 @@
 import { DailyBarGraph } from "./dailyBarGraph";
 import { MonthlyBarGraph } from "./monthlyBarGraph";
 import { CustomBarGraph } from "./customBarGraph";
-import { useEffect, useState, useContext } from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { useContext } from "react";
+import { Box, Typography } from "@mui/material";
 import { VehicleContext } from "../VehicleContext";
 
 export const Data = () => {

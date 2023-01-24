@@ -11,8 +11,8 @@ import Swal from 'sweetalert2'
 
 
 export const Login = () => {
-  const { API, setUser, setIsAuthenticated, setToken, setCookie, cookie, userDomain, setFlag, fetchData } = useContext(VehicleContext);
-  // console.log(API);
+  const { API, setUser, setIsAuthenticated, setCookie, userDomain, setFlag } = useContext(VehicleContext);
+  
   const [login, setLogin] = useState({
     user_name: "",
     password: "",

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { VehicleContext } from "./VehicleContext";
 import AppBar from "@mui/material/AppBar";
-import { Box, Grid } from "@mui/material/";
+import { Box } from "@mui/material/";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import shark from "./image/shark.png";
@@ -43,12 +43,12 @@ export const Navbar = () => {
                   Analytics
                 </Button>
                 <Button
-                  onClick={() => navigate("/about")}
+                  onClick={() => navigate("/users")}
                   variant="h6"
                   component="div"
                   sx={{}}
                 >
-                  About
+                  Users
                 </Button>
               </>
             ) : null}

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
 import ReactApexChart from "react-apexcharts";
 
 export const MonthlyBarGraph = (props) => {

@@ -6,21 +6,10 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import logo from "../image/logo.svg";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
-import shark from "../image/shark.png";
-import { height } from "@mui/system";
 import PrintModal from "./print_copy";
-import { renderMatches } from "react-router";
 
-const tabStyle = {
-  height: 500,
-  maxHeight: 300,
-  overflow: "scroll",
-  //backgroundColor: "blue"
-};
 
 export const Forms = () => {
   const date = new Date();
@@ -28,8 +17,7 @@ export const Forms = () => {
     date.toISOString().slice(0, 10) + " " + date.toTimeString().slice(0, 5);
 
   const [failedRegister, setFailedRegister] = useState(false);
-  const [flag, setFlag] = useState(false);
-  const { API, user, cookies } = useContext(VehicleContext);
+  const { cookies } = useContext(VehicleContext);
 
   const [vehicle, setVehicle] = useState({
     first_name: "",
@@ -209,7 +197,7 @@ export const Forms = () => {
 
               <TextField
                 error={failedRegister}
-                sx={{ boxShadow: 2, width: 150, m: 1, width: "80%" }}
+                sx={{ boxShadow: 2,  m: 1, width: "80%" }}
                 onChange={(e) =>
                   setVehicle((prev) => {
                     return { ...prev, drivers_license: e.target.value };
@@ -243,7 +231,7 @@ export const Forms = () => {
                 sx={{ boxShadow: 2, m: 1, width: "100%" }}
               />
               <TextField
-                sx={{ boxShadow: 2, width: 150, m: 1, width: "100%" }}
+                sx={{ boxShadow: 2,  m: 1, width: "100%" }}
                 error={failedRegister}
                 onChange={(e) =>
                   setVehicle((prev) => {
@@ -256,7 +244,7 @@ export const Forms = () => {
                 name="make"
               />
               <TextField
-                sx={{ boxShadow: 2, width: 150, m: 1, width: "100%" }}
+                sx={{ boxShadow: 2, m: 1, width: "100%" }}
                 error={failedRegister}
                 onChange={(e) =>
                   setVehicle((prev) => {

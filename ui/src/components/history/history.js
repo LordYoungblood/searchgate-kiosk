@@ -1,23 +1,11 @@
 import { useState, useContext } from "react";
 import { VehicleContext } from "../VehicleContext";
-import { Box, Container } from "@mui/material";
-import {
-  DataGrid,
-  GridToolbar,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarExport,
-  GridToolbarDensitySelector,
-} from "@mui/x-data-grid";
-import { SearchBar } from "./searchbar";
+import { Box } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 export const History = () => {
   const { visitorDetails } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(10);
-  // const [visitorsDetails, setVisitorsDetails] = useState([]);
-
-  // console.log(visitorDetails);
 
   const columns = [
     // { field: 'id', headerName: 'ID', width: 90 },
@@ -98,6 +86,7 @@ export const History = () => {
       make: visitor.make,
       model: visitor.model,
     });
+    return rows
   });
 
   return (
