@@ -10,4 +10,4 @@ RUN   npm install node &&\
 
 EXPOSE 8080
 
-CMD ["npm", "run", "build"]
+CMD ["npm", "run"]
