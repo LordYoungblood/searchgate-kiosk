@@ -4,8 +4,8 @@
   "description": "Search Gate Kiosk",
   "main": "index.js",
   "scripts": {
-    "install": "cd api && npm install",
-    "start": "cd api && npm start",
+    "install": "cd api && npm install && npm install express",
+    "start": "npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
