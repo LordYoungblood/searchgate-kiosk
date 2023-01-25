@@ -47,20 +47,20 @@ services:
       start_period: 120s
       retries: 10
 
-  gatekiosk-ui:
-    build: ui/
-    depends_on:
-      - "gatekiosk-api"
-    ports:
-      - "3000:3000"
-    volumes:
-      - type: bind
-        source: ./ui/src
-        target: /app/src
-    restart: on-failure
-    healthcheck:
-      test: curl --fail http://localhost:3000 || exit 1
-      interval: 5s
-      timeout: 5s
-      start_period: 120s
-      retries: 10
+  # gatekiosk-ui:
+  #   build: ui/
+  #   depends_on:
+  #     - "gatekiosk-api"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - type: bind
+  #       source: ./ui/src
+  #       target: /app/src
+  #   restart: on-failure
+  #   healthcheck:
+  #     test: curl --fail http://localhost:3000 || exit 1
+  #     interval: 5s
+  #     timeout: 5s
+  #     start_period: 120s
+  #     retries: 10
