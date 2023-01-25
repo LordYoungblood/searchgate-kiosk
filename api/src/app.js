@@ -3,7 +3,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const cors = require("cors");
-const port = process.env.port || 8080;
+const port = process.env.port || 80;
 const vehicleRoutes = require("./routes/vehicles");
 const authRoutes = require("./routes/auth");
 const client = require("../db/client");
