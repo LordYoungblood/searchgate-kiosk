@@ -4,10 +4,10 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install -g node &&\
-    npm install &&\
+RUN   npm install node &&\
+    npm install 
     
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "build"]
