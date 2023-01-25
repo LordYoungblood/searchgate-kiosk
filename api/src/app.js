@@ -55,6 +55,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 // -------- inital API route -----------------------------------------------//
+app.get('/ELB-HealthChecker/2.0', (req, res) => {
+  res.send(200);
+})
+
 app.get("/", (req, res) => {
   res.send("Welcome to the Vehicle Tracking API");
 });
