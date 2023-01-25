@@ -1,10 +1,10 @@
 const { Client } = require("pg");
 const client = new Client({
-  host: process.env.DB_HOST || "localhost",
-  port: process.env.DB_PORT || 5432,
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_NAME || 'gate-kiosk'
+  host: process.env.PGHOST || "localhost",
+  user: process.env.PGUSER || 'postgres',
+  port: process.env.PGPORT || 5432,
+  password: process.env.PGPASSWORD || 'password',
+  database: process.env.PGDATABASE || 'gate-kiosk'
 });
 
 module.exports = client;
