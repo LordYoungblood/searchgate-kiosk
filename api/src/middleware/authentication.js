@@ -2,16 +2,19 @@ const jwt = require("jsonwebtoken");
 
 // ----- Auth middleware to verify token and add user to req object -----------------//
 const auth = async (req, res, next) => {
-  const authHeader = req.cookies.auth;
+  const authHeader = req.headers;
+  const token = req.cookies.auth;
+  console.log("token ", token);
   try {
-    if (!authHeader) {
+    if (!token) {
       return res
         .status(401)
         .json({ message: "No token, authorization denied" });
     }
+    // const token = authHeader.split(" ")[1];
 
-    const token = jwt.verify(authHeader, process.env.JWT_SECRET);
-    req.user = token.id;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded.id;
 
     next();
   } catch (err) {
