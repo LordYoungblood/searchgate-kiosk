@@ -22,6 +22,11 @@ const login = async (req, res) => {
       const token = jwt.sign({ id: user.rows[0].id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_LIFETIME,
       });
+      res.set("Authorization", token, {
+        maxAge: 28800000,
+        httpOnly: true,
+        secure: true,
+      })
       res.cookie("auth", token, {
         maxAge: 28800000,
         httpOnly: true,
