@@ -27,11 +27,11 @@ const login = async (req, res) => {
         httpOnly: true,
         secure: true,
       })
-      res.cookie("auth", token, {
-        maxAge: 28800000,
-        httpOnly: true,
-        secure: true,
-      });
+      // res.cookie("auth", token, {
+      //   maxAge: 28800000,
+      //   httpOnly: true,
+      //   secure: true,
+      // });
       res.status(200).json({
         token,
         user: {
