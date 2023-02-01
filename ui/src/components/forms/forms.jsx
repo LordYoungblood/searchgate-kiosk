@@ -1,15 +1,9 @@
 import { React, useState, useContext } from "react";
 import { VehicleContext } from "../VehicleContext";
-import {
-  Box,
-  Container,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { Box, Container, MenuItem, TextField } from "@mui/material";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
 import PrintModal from "./print_copy";
-
 
 export const Forms = () => {
   const date = new Date();
@@ -30,9 +24,9 @@ export const Forms = () => {
     date: today,
   });
 
-  if (!cookies.user) {
-    window.location.href = "/login";
-  }
+  // if (!localStorage) {
+  //   window.location.href = "/login";
+  // }
 
   const reload = () => {
     window.location.reload();
@@ -53,6 +47,7 @@ export const Forms = () => {
           alt="Security Forces Logo"
         />
         <h1 style={{ paddingTop: "2%" }}> Inspection Gate Kiosk </h1>
+        {/* <h1 style={{ paddingTop: "2%" }}> Halt Security Forces! </h1> */}
         <img
           style={{ height: "100px", margin: "10px" }}
           src={patch}
@@ -197,7 +192,7 @@ export const Forms = () => {
 
               <TextField
                 error={failedRegister}
-                sx={{ boxShadow: 2,  m: 1, width: "80%" }}
+                sx={{ boxShadow: 2, m: 1, width: "80%" }}
                 onChange={(e) =>
                   setVehicle((prev) => {
                     return { ...prev, drivers_license: e.target.value };
@@ -231,7 +226,7 @@ export const Forms = () => {
                 sx={{ boxShadow: 2, m: 1, width: "100%" }}
               />
               <TextField
-                sx={{ boxShadow: 2,  m: 1, width: "100%" }}
+                sx={{ boxShadow: 2, m: 1, width: "100%" }}
                 error={failedRegister}
                 onChange={(e) =>
                   setVehicle((prev) => {

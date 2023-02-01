@@ -1,18 +1,24 @@
 import { useState, useContext } from "react";
 import { VehicleContext } from "../VehicleContext";
 import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbar,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
+} from "@mui/x-data-grid";
 
 export const History = () => {
   const { visitorDetails } = useContext(VehicleContext);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(50);
 
   const columns = [
-    // { field: 'id', headerName: 'ID', width: 90 },
     {
       field: "date",
       headerName: "Date",
-      width: 150,
+      width: 200,
     },
     {
       field: "firstName",
@@ -76,7 +82,11 @@ export const History = () => {
   const rows = [];
   visitorDetails.map((visitor) => {
     rows.push({
-      date: visitor.date.slice(0, 10),
+      date:
+        visitor.date.split("T")[0] +
+        " : " +
+        visitor.date.split("T")[1].slice(0, 5),
+      // time: visitor.date.split("T")[1].split(".")[0],
       id: visitor.id,
       lastName: visitor.last_name,
       firstName: visitor.first_name,
@@ -86,8 +96,18 @@ export const History = () => {
       make: visitor.make,
       model: visitor.model,
     });
-    return rows
+    return rows;
   });
+
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+      </GridToolbarContainer>
+    );
+  }
 
   return (
     <>
@@ -95,20 +115,23 @@ export const History = () => {
         <h1>History</h1>
         {/* <SearchBar /> */}
       </Box>
-      <Box sx={{ height: 700, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={pageSize}
-          onPageSizeChange={(e) => setPageSize(e)}
-          rowsPerPageOptions={[10, 20, 50, 100]}
-          // checkboxSelection
-          disableSelectionOnClick
-          experimentalFeatures={{ newEditingApi: true }}
-          components={{
-            Toolbar: GridToolbar,
-          }}
-        ></DataGrid>
+      <Box>
+        {/* <Box sx={{ height: 700, width: "100%" }}> */}
+        <div style={{ height: "77vh", width: "100%" }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={pageSize}
+            onPageSizeChange={(e) => setPageSize(e)}
+            rowsPerPageOptions={[10, 20, 50, 100]}
+            // checkboxSelection
+            disableSelectionOnClick
+            experimentalFeatures={{ newEditingApi: true }}
+            components={{
+              Toolbar: CustomToolbar,
+            }}
+          ></DataGrid>
+        </div>
       </Box>
     </>
   );
