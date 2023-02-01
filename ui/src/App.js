@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Users } from "./components/admin/admin";
 import DateFnsUtils from "@date-io/date-fns";
+import { af } from "date-fns/esm/locale";
 
 export const App = () => {
   const [visitorDetails, setVisitorDetails] = useState([]);
@@ -21,21 +22,29 @@ export const App = () => {
   const [token, setToken] = useState(null);
 
   const userDomain = "localhost";
-  const API = "http://localhost:8080/api";
+
+  // const API = "http://localhost:8080/api";
+  const API =
+    "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
 
   useMemo(() => {
-    if (cookies.user) {
-      setUser(cookies);
+    if (localStorage.au && localStorage.ver) {
+      const user = JSON.parse(`${localStorage.au}`);
+      const token = JSON.parse(`${localStorage.ver}`);
+      setUser(user);
+      setToken(token);
     }
-  }, [cookies]);
+  }, [flag]);
 
   // ----------------- fetch for all Vehicle information -------------------------//
+
   useEffect(() => {
     fetch(API, {
       method: "GET",
-      credentials: "include",
+      // credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -44,7 +53,7 @@ export const App = () => {
         setFlag(false);
       })
       .catch((err) => console.log(err));
-  }, [flag]);
+  }, [token, flag]);
 
   // ----------- Context object to be passed to all components ------------------//
   const obj = {
@@ -83,18 +92,22 @@ export const App = () => {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router>
           <Navbar />
-
-          <Routes>
-            <Route path="/vehicles" element={<Forms />} />
-            <Route path="/" element={<Login />} />
-
-            <Route path="/data" element={<Data />} />
-            <Route path="/History" element={<History />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="*" element={<Forms />} />
-
-            {/* <Route path="/" element={<Login />} /> */}
-          </Routes>
+          {user === 2055 ? (
+            <Routes>
+              <Route path="/forms" element={<Forms />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/data" element={<Data />} />
+              <Route path="/History" element={<History />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="*" element={<Forms />} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path="/forms" element={<Forms />} />
+              <Route path="/" element={<Login />} />
+              <Route path="*" element={<Forms />} />
+            </Routes>
+          )}
         </Router>
       </MuiPickersUtilsProvider>
     </VehicleContext.Provider>

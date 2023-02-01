@@ -10,6 +10,8 @@ import {
   TextField,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import Swal from "sweetalert2";
 import {
   DataGrid,
@@ -22,7 +24,7 @@ import {
 } from "@mui/x-data-grid";
 
 export const Users = () => {
-  const { API } = useContext(VehicleContext);
+  const { API, token } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(10);
   const [userDetails, setUserDetails] = useState([]);
   const [toggle, setToggle] = useState(false);
@@ -46,9 +48,10 @@ export const Users = () => {
   useEffect(() => {
     fetch(`${API}/users`, {
       method: "GET",
-      credentials: "include",
+      // credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -62,10 +65,11 @@ export const Users = () => {
     setFailedRegister(false);
     fetch(`${API}/register`, {
       method: "POST",
-      credentials: "include",
+      // credentials: "include",
       body: JSON.stringify(newUser),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -83,10 +87,11 @@ export const Users = () => {
     console.log(id);
     fetch(`${API}/users`, {
       method: "DELETE",
-      credentials: "include",
+      // credentials: "include",
       body: JSON.stringify({ id }),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -102,9 +107,10 @@ export const Users = () => {
     {
       field: "Delete",
       headerName: "Delete",
-      width: 50,
+      width: 60,
       renderCell: (params) => (
         <DeleteForeverIcon
+          sx={{ color: "#ef5350" }}
           onClick={() => {
             Swal.fire({
               title: `Do you want to delete ${params.row.user_name}?`,
@@ -190,7 +196,7 @@ export const Users = () => {
           }}
         >
           <Button
-            sx={{ boxShadow: 2, width: 150, m: 1 }}
+            sx={{ boxShadow: 2, width: 150, mb: 0.5 }}
             variant="contained"
             onClick={handleOpen}
           >
@@ -290,20 +296,22 @@ export const Users = () => {
         </Modal>
       </div>
 
-      <Box sx={{ height: 700, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={pageSize}
-          onPageSizeChange={(e) => setPageSize(e)}
-          rowsPerPageOptions={[10, 20, 50, 100]}
-          // checkboxSelection
-          disableSelectionOnClick
-          experimentalFeatures={{ newEditingApi: true }}
-          components={{
-            Toolbar: GridToolbar,
-          }}
-        ></DataGrid>
+      <Box>
+        <div style={{ height: "73vh", width: "100%" }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={pageSize}
+            onPageSizeChange={(e) => setPageSize(e)}
+            rowsPerPageOptions={[10, 20, 50, 100]}
+            // checkboxSelection
+            disableSelectionOnClick
+            experimentalFeatures={{ newEditingApi: true }}
+            components={{
+              Toolbar: GridToolbar,
+            }}
+          ></DataGrid>
+        </div>
       </Box>
     </>
   );

@@ -7,7 +7,7 @@ export const DailyBarGraph = (props) => {
  
 
   const combineDates = [];
-  const numberOFVehicles = [];
+  let numberOFVehicles = [];
 
   const date = vehicleData.map((data) => {
     const newDay = data.date.slice(0, 10);
@@ -19,16 +19,22 @@ export const DailyBarGraph = (props) => {
     }
   });
 
+  // useMemo(() => {
+  //   for (let i = 0; i < combineDates.length; i++) {
+  //     let count = 0;
+  //     for (let j = 0; j < vehicleData.length; j++) {
+  //       if (combineDates[i] === vehicleData[j].date.slice(0, 10)) {
+  //         count++;
+  //       }
+  //     }
+  //     numberOFVehicles.push(count);
+  //   }
+  // }, [combineDates, vehicleData]);
+  
   useMemo(() => {
-    for (let i = 0; i < combineDates.length; i++) {
-      let count = 0;
-      for (let j = 0; j < vehicleData.length; j++) {
-        if (combineDates[i] === vehicleData[j].date.slice(0, 10)) {
-          count++;
-        }
-      }
-      numberOFVehicles.push(count);
-    }
+     numberOFVehicles = combineDates.map(date =>
+      vehicleData.filter(vehicle => date === vehicle.date.slice(0, 10)).length
+    );
   }, [combineDates, vehicleData]);
 
   const chartData = {

@@ -2,7 +2,6 @@ const client = require("../../db/client");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
 //------ Login functionallity with bcrypt and jwt ---------------------------------//
 //----- user_name: password: admin: true/false -----=------------------------------//
 const login = async (req, res) => {
@@ -22,10 +21,13 @@ const login = async (req, res) => {
       const token = jwt.sign({ id: user.rows[0].id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_LIFETIME,
       });
+      res.setHeader("Authorization", `Bearer ${token}`);
+
       res.cookie("auth", token, {
         maxAge: 28800000,
-        httpOnly: true,
-        secure: true,
+        path: '/',
+        SameSite: "None",
+        Secure: true,
       });
       res.status(200).json({
         token,
@@ -42,7 +44,6 @@ const login = async (req, res) => {
     res.status(500).send(err);
   }
 };
- 
 
 //----- Register functionallity with bcrypt *** must register with postman --------//
 //----- user_name: password: admin: true/false -----=------------------------------//

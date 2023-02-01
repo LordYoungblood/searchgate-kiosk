@@ -6,13 +6,20 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 // import { setFlagsFromString } from "v8";
 
-
 export const Login = () => {
-  const { API, setUser, setIsAuthenticated, setCookie, userDomain, setFlag } = useContext(VehicleContext);
-  
+  const {
+    API,
+    setUser,
+    setIsAuthenticated,
+    setCookie,
+    setToken,
+    userDomain,
+    setFlag,
+  } = useContext(VehicleContext);
+
   const [login, setLogin] = useState({
     user_name: "",
     password: "",
@@ -20,6 +27,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const postLogin = () => {
+    // console.log("pre fetch");
     fetch(`${API}/login`, {
       method: "POST",
       credentials: "include",
@@ -27,9 +35,7 @@ export const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(login),
-      
     })
-    
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -41,33 +47,46 @@ export const Login = () => {
             button: "Continue",
             showConfirmButton: false,
             timer: 7000,
-          })
+          });
         }
       })
       .then((data) => {
         if (data === undefined) return;
         if (data !== undefined) {
-          console.log('login.js data',data)
-          data.user.admin === true ? setCookie('user', '2055', {
-            path: '/',
-            domain: userDomain,
-            maxAge: 8000,
-            secure: true,
-          }) : setCookie('user', '5050', {
-            path: '/',
-            domain: userDomain,
-            maxAge: 8000,
-            secure: true,
-          })
-          setFlag(true)
+          data.user.admin === true
+            ? localStorage.setItem("au", "2055", {
+                path: "/",
+                domain: userDomain,
+                maxAge: 8000,
+                secure: true,
+                SameSite: "None",
+              })
+            : localStorage.setItem("au", "5050", {
+                path: "/",
+                domain: userDomain,
+                maxAge: 8000,
+                secure: true,
+                SameSite: "None",
+              });
+          // setCookie("auth", data.token, {
+          //   path: "/",
+          //   domain: userDomain,
+          //   maxAge: 8000,
+          //   secure: true,
+          // });
+          // console.log("after cookies is set", data);
+          setToken(data.token);
           setUser(data);
+          localStorage.setItem("ver", JSON.stringify(data.token));
+          // console.log("after local storage is set", localStorage);
           setIsAuthenticated(data.user.admin);
-          navigate("/vehicles");
-          
+          setFlag(true);
+          navigate("/forms");
         }
       })
       .catch((err) => console.log(err));
   };
+  // console.log("after post login is complete", localStorage);
 
   return (
     <Box
@@ -152,7 +171,7 @@ export const Login = () => {
               }}
               onKeyPress={(event) => {
                 if (event.key === "Enter") {
-                  // postLogin();
+                  postLogin();
                 }
               }}
             />
@@ -171,6 +190,7 @@ export const Login = () => {
           >
             Login
           </Button>
+
           {/* <Button
             fullWidth
             variant="contained"

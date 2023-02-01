@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Box, Button, Typography, Modal } from "@mui/material/";
 import { useReactToPrint } from "react-to-print";
+import { VehicleContext } from "../VehicleContext";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
 // import swal from "sweetalert";
@@ -36,6 +37,7 @@ export default function PrintModal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { token, API } = React.useContext(VehicleContext);
 
   const componentRef = useRef();
   const vehicle = props.element.vehicle;
@@ -51,12 +53,13 @@ export default function PrintModal(props) {
   // ------------------ POST USER/VEHICLE INFO INTO DB ----------------- //
   const postUser = () => {
     setFailedRegister(false);
-    fetch("http://localhost:8080/api", {
+    fetch(API, {
       method: "POST",
-      credentials: "include",
+      // credentials: "include",
       body: JSON.stringify(vehicle),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
