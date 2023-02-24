@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
+import logo from "../image/vigil_negative.png";
 import Swal from "sweetalert2";
 // import { setFlagsFromString } from "v8";
 
@@ -96,7 +97,7 @@ export const Login = () => {
         top: 0,
         width: "100vw",
         height: "100vh",
-        backgroundColor: "#1769aa",
+        backgroundColor: '#051726',
       }}
     >
       <Container component="main" maxWidth="xs">
@@ -133,7 +134,7 @@ export const Login = () => {
             <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
               <img
                 style={{ width: "100px", margin: "10px" }}
-                src={flash}
+                src={logo}
                 alt="Security Forces Flash"
               />
             </Box>
@@ -182,10 +183,8 @@ export const Login = () => {
             variant="contained"
             color="primary"
             size="medium"
-            sx={{
-              borderRadius: "30px",
-              width: 200,
-            }}
+            sx={{ boxShadow: 2, width: 150, m: 1, backgroundColor: '#61C0A3', '&:hover': { backgroundColor: '#61C0A3', color: 'black'} }}
+
             onClick={() => postLogin()}
           >
             Login

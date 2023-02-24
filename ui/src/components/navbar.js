@@ -4,6 +4,7 @@ import { VehicleContext } from "./VehicleContext";
 import AppBar from "@mui/material/AppBar";
 import { Box, Typography } from "@mui/material/";
 import Toolbar from "@mui/material/Toolbar";
+import logo from "./image/vigil_nobackground.png";
 
 import Button from "@mui/material/Button";
 import shark from "./image/shark.png";
@@ -22,21 +23,20 @@ export const Navbar = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <AppBar position="relative">
-        <Toolbar>
+    <Box sx={{ display: "flex", width: "100%" }}>
+      <AppBar position="relative" sx={{ backgroundColor: '#051726'}}>
+        <Toolbar >
           {/* <Box sx={{ width: "100%" }}> */}
           {user === 2055 ? (
-            <>
+            <Box sx={{justifyContent: 'flex-start', alignContent: 'center', width: '100%' }}>
+              <Button>
+
               <HomeIcon
                 sx={{ fontSize: 30, color: "white", cursor: "pointer" }}
                 onClick={() => navigate("/forms")}
-              />
-              {/* <img
-              src={shark}
-              alt="shark"
-              style={{ width: "10%" }}
-            /> */}
+                />
+                </Button>
+              
               <Button
                 onClick={() => navigate("/history")}
                 variant="h6"
@@ -56,11 +56,11 @@ export const Navbar = () => {
                 onClick={() => navigate("/users")}
                 variant="h6"
                 component="div"
-                sx={{}}
+                
               >
                 Users
               </Button>
-            </>
+            </Box>
           ) : null}
           {/* </Box> */}
           {/* <Typography
@@ -74,6 +74,15 @@ export const Navbar = () => {
             />
             
           </Typography> */}
+          <Box sx={{justifyContent: 'center', width: '100%'}}>
+
+
+          <img
+              src={logo}
+              alt="shark"
+              style={{ width: 55 }}
+              />
+              </Box>
 
           <Button
             sx={{

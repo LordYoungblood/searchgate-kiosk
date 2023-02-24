@@ -1,6 +1,7 @@
 import { React, useState, useContext } from "react";
 import { VehicleContext } from "../VehicleContext";
-import { Box, Container, MenuItem, TextField } from "@mui/material";
+import { Box, Container, MenuItem, TextField, Typography } from "@mui/material";
+
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
 import PrintModal from "./print_copy";
@@ -41,18 +42,20 @@ export const Forms = () => {
           mb: 1,
         }}
       >
-        <img
+        {/* <img
           style={{ width: "100px", margin: "10px" }}
           src={flash}
           alt="Security Forces Logo"
-        />
-        <h1 style={{ paddingTop: "2%" }}> Inspection Gate Kiosk </h1>
+        /> */}
+        <Typography style={{ alightContent: 'center', fontFamily: "sans", fontSize: 60 }}> VIGIL </Typography>
+        {/* VIGIL = Vehicle Information Gathering and Identification Log
+        || Vehicle Inspection Gateway and logistics */}
         {/* <h1 style={{ paddingTop: "2%" }}> Halt Security Forces! </h1> */}
-        <img
+        {/* <img
           style={{ height: "100px", margin: "10px" }}
           src={patch}
           alt="Security Forces Logo"
-        />
+        /> */}
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}></Box>
@@ -75,7 +78,7 @@ export const Forms = () => {
               m: 1,
             }}
           >
-            <h2> Personal Information </h2>
+           <Typography sx={{fontFamily: 'sans', fontSize: 25, fontWeight: 'bold'}}> Personal Information </Typography>
             <Box
               sx={{
                 display: "flex",
@@ -204,7 +207,7 @@ export const Forms = () => {
                 name="Driver's License Number"
               />
             </Box>
-            <h2> Vehicle Information </h2>
+            <Typography sx={{fontFamily: 'sans', fontSize: 25, fontWeight: 'bold'}}> Vehicle Information </Typography>
             <Box
               sx={{
                 display: "flex",

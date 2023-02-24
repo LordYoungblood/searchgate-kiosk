@@ -16,7 +16,7 @@ export const Data = () => {
   const lastYear = PriorYear.toISOString().slice(0, 7);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ mt: 5, width: "100%" }}>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Box sx={{ width: "50%" }}>
           <Typography> 30 Day Trend</Typography>

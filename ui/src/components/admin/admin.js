@@ -13,6 +13,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import Swal from "sweetalert2";
+import { makeStyles } from '@material-ui/core/styles';
 import {
   DataGrid,
   GridToolbar,
@@ -23,12 +24,20 @@ import {
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    color: 'black',
+    backgroundColor: 'lightgray',
+  },
+}));
+
 export const Users = () => {
   const { API, token } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(10);
   const [userDetails, setUserDetails] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [open, setOpen] = useState(false);
+  const classes = useStyles();
 
   const [failedRegister, setFailedRegister] = useState(false);
   const [newUser, setNewUser] = useState({
@@ -182,8 +191,20 @@ export const Users = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "center", flexGrow: 1 }}>
-        <h1>Users</h1>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexGrow: 1,
+          width: "100%",
+        }}
+      >
+        <Typography
+          style={{ alightContent: "center", fontFamily: "sans", fontSize: 30 }}
+        >
+          {" "}
+          Users{" "}
+        </Typography>
       </Box>
 
       <div>
@@ -196,7 +217,13 @@ export const Users = () => {
           }}
         >
           <Button
-            sx={{ boxShadow: 2, width: 150, mb: 0.5 }}
+            sx={{
+              boxShadow: 2,
+              width: 150,
+              mb: 0.5,
+              backgroundColor: "#61C0A3",
+              "&:hover": { backgroundColor: "#61C0A3", color: "black" },
+            }}
             variant="contained"
             onClick={handleOpen}
           >
@@ -299,6 +326,7 @@ export const Users = () => {
       <Box>
         <div style={{ height: "73vh", width: "100%" }}>
           <DataGrid
+            toolBarStyles={classes.toolbar}
             rows={rows}
             columns={columns}
             pageSize={pageSize}
@@ -307,8 +335,65 @@ export const Users = () => {
             // checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            sx={{ color: 'black', '& .MuiButtonBase-root': {color: 'black'}}}
             components={{
+              
+                sx: {
+                  "& .MuiButtonBase": {
+                    color: "black",
+                  },
+                  "& .MuiButtonBase-root": {
+                    color: "black",
+                  },
+                  "& .MuiTypography-root": {
+                    color: "black",
+                  },
+                  "& .MuiButton-StartIcon": {
+                    color: "black",
+                  },
+                  "& .MuiButtonBase-root": {
+                    color: "black",
+                  },
+                  "& .MuiTouchRipple": {
+                    color: "black",
+                  },
+
+  
+
+                
+              },
               Toolbar: GridToolbar,
+            }}
+            componentsProps={{
+              panel: {
+                sx: {
+                  "& .MuiButton-StartIcon": {
+                    color: "black",
+                  },
+                  "& .MuiTouchRipple": {
+                    color: "black",
+                  },
+                  "& .MuiButton": {
+                    color: "black",
+                  },
+                 
+                  "& .MuiButtonBase-root": {
+                    color: "black",
+                  },
+                  "& .MuiTypography-root": {
+                    color: "black",
+                    fontSize: 20,
+                  },
+                  "& .MuiDataGrid-filterForm": {
+                    color: "#61C0A3",
+                    // bgcolor: "#61C0A3",
+                  },
+                  "& .MuiDataGrid-filterFormContainer": {
+                    color: "black",
+                    // bgcolor: "#61C0A3",
+                  },
+                },
+              },
             }}
           ></DataGrid>
         </div>

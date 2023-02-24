@@ -71,8 +71,8 @@ export const MonthlyBarGraph = (props) => {
       //   type: "line",
       //   data: [10],
       // },
+    
     ],
-  };
-
-  return <ReactApexChart options={chartData} series={chartData.series} />;
+  }
+  return <ReactApexChart options={chartData} series={chartData.series} /> 
 };

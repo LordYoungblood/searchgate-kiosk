@@ -127,6 +127,8 @@ export const History = () => {
             // checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            sx={{ color: 'black', '& .MuiButtonBase-root': {color: 'black'}}}
+            
             components={{
               Toolbar: CustomToolbar,
             }}

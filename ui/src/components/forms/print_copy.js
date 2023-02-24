@@ -215,7 +215,7 @@ export default function PrintModal(props) {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Button
-          sx={{ boxShadow: 2, width: 150, m: 1 }}
+          sx={{ boxShadow: 2, width: 150, m: 1, backgroundColor: '#61C0A3', '&:hover': { backgroundColor: '#61C0A3', color: 'black'} }}
           variant="contained"
           onClick={() => {
             fillOutFields();

@@ -45,6 +45,7 @@ export const CustomBarGraph = (props) => {
     chart: {
       type: "line",
       id: "apexchart-example",
+      color: "#000",
       // width: '25%',
       // height: '25%'
       //   foreColor: theme.palette.primary.main
@@ -85,6 +86,7 @@ export const CustomBarGraph = (props) => {
       // },
     ],
   };
+  
 
   return (
     <span>
