@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install -g nodemon &&\
+RUN npm install nodemon &&\
     npm install &&\
     apk --no-cache add curl
 

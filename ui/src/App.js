@@ -6,6 +6,7 @@ import { Forms } from "./components/forms/forms";
 import { Navbar } from "./components/navbar";
 import { Data } from "./components/data/data";
 import { History } from "./components/history/history";
+import { Webmaster } from "./components/webmaster/webmaster";
 import { VehicleContext } from "./components/VehicleContext";
 import { useCookies } from "react-cookie";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -36,6 +37,7 @@ export const App = () => {
       setBase(JSON.parse(`${localStorage.base}`));
     }
   }, [flag]);
+  
 
   // ----------------- fetch for all Vehicle information -------------------------//
 
@@ -67,6 +69,8 @@ export const App = () => {
     isAuthenticated,
     setIsAuthenticated,
     setToken,
+    setBase,
+    base,
     token,
     cookies,
     setCookie,
@@ -102,6 +106,7 @@ export const App = () => {
               <Route path="/History" element={<History />} />
               <Route path="/users" element={<Users />} />
               <Route path="*" element={<Forms />} />
+              <Route path="/webmaster" element={<Webmaster />} />
             </Routes>
           ) : (
             <Routes>

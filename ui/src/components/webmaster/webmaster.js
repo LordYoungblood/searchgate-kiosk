@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Users = () => {
+export const Webmaster = () => {
   const { API, token, base } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(10);
   const [userDetails, setUserDetails] = useState([]);
@@ -44,6 +44,7 @@ export const Users = () => {
     user_name: "",
     admin: "",
     password: "",
+    user_base: "",
   });
 
   const handleOpen = () => setOpen(true);
@@ -155,6 +156,12 @@ export const Users = () => {
     {
       field: "admin",
       headerName: "admin",
+      width: 150,
+      // editable: true,
+    },
+    {
+      field: "base",
+      headerName: "Base",
       width: 150,
       // editable: true,
     },
@@ -290,6 +297,27 @@ export const Users = () => {
                   }
                 }}
               />
+
+              <TextField
+                error={failedRegister}
+                sx={{ boxShadow: 2, m: "auto", width: "50%" }}
+                variant="outlined"
+                required
+                id="base"
+                label="Installation"
+                name="base"
+                defaultValue=""
+                select
+                onChange={(e) => {
+                  setNewUser((prev) => {
+                    return { ...prev, admin: e.target.value };
+                  });
+                }}
+              >
+                <MenuItem value={"Patrick"}> Patrick SFB</MenuItem>
+                <MenuItem value={"Cape"}> Cape Canveral SFB </MenuItem>
+              </TextField>
+
               <TextField
                 error={failedRegister}
                 sx={{ boxShadow: 2, m: "auto", width: "50%" }}

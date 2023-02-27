@@ -3,7 +3,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
 
-CREATE TABLE IF NOT EXISTS sfs45_cape
+CREATE TABLE IF NOT EXISTS patrick_SFB
 (
     id uuid NOT NULL DEFAULT uuid_generate_v4 (),
     first_name character varying(255) COLLATE pg_catalog."default",
@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS users
     user_name character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT users_pkey PRIMARY KEY (id),
     user_base jsonb
-)
+);
+
 
 -- TABLESPACE pg_default;
 

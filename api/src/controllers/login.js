@@ -15,9 +15,6 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    // console.log(user.rows[0]);
-    // app.set("base", user.rows[0].base)
-    
 
     const isMatch = await bcrypt.compare(password, user.rows[0].password);
     if (isMatch) {
@@ -37,12 +34,7 @@ const login = async (req, res) => {
       });
       res.status(200).json({
         token,
-        user: {
-          id: user.rows[0].id,
-          user_name: user.rows[0].user_name,
-          admin: user.rows[0].admin,
-          base: user.rows[0].base,
-        },
+        user: user.rows[0],
       });
     } else {
       res.status(400).json({ message: "Invalid credentials" });
@@ -55,6 +47,15 @@ const login = async (req, res) => {
 //----- Register functionallity with bcrypt *** must register with postman --------//
 //----- user_name: password: admin: true/false -----=------------------------------//
 const register = async (req, res) => {
+  // const base = req.headers.base;
+  // const parsedBase = JSON.parse(base);
+  // console.log('not parsed', base)
+  // console.log('parsed base from login.js', parsedBase.name)
+  const objBase = req.body.user_base;
+  const stringBase = JSON.stringify(req.body.user_base);
+  console.log("parsed", typeof objBase.name);
+  console.log("string", stringBase);
+
   if (req.body.admin === undefined) {
     req.body.admin = false;
   }
@@ -65,8 +66,22 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Please enter all fields" });
     }
     const user = await client.query(
-      `INSERT INTO users (user_name, password, admin) VALUES ('${user_name}', '${password}', '${admin}')`
+      `INSERT INTO users (user_name, password, admin, user_base) VALUES ('${user_name}', '${password}', '${admin}', '${stringBase}') RETURNING *`
     );
+
+    await client.query(`CREATE TABLE IF NOT EXISTS ${objBase.name}
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  first_name character varying(255) COLLATE pg_catalog."default",
+  last_name character varying(255) COLLATE pg_catalog."default",
+  drivers_license character varying(255) COLLATE pg_catalog."default",
+  plate character varying(255) COLLATE pg_catalog."default",
+  make character varying(255) COLLATE pg_catalog."default",
+  model character varying(255) COLLATE pg_catalog."default",
+  state character varying COLLATE pg_catalog."default",
+  date timestamp
+);`);
+
     res.status(200).send({ user_name, admin });
   } catch (err) {
     console.log(err);

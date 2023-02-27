@@ -19,6 +19,7 @@ export const Navbar = () => {
   const logout = () => {
     localStorage.removeItem("ver");
     localStorage.removeItem("au");
+    localStorage.removeItem("base");
     navigate("/");
   };
 
@@ -59,6 +60,15 @@ export const Navbar = () => {
                 
               >
                 Users
+              </Button>
+
+              <Button
+                onClick={() => navigate("/webmaster")}
+                variant="h6"
+                component="div"
+                
+              >
+                Web Master
               </Button>
             </Box>
           ) : null}

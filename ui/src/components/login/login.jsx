@@ -54,7 +54,8 @@ export const Login = () => {
       .then((data) => {
         if (data === undefined) return;
         if (data !== undefined) {
-          
+          console.log("data", data);
+            console.log("data", data);
           data.user.admin === true
             ? localStorage.setItem("au", "2055", {
                 path: "/",
@@ -70,6 +71,26 @@ export const Login = () => {
                 secure: true,
                 SameSite: "None",
               });
+          data.user.admin === true ? setCookie("au", "2055", {
+                path: "/",
+                domain: userDomain,
+                maxAge: 8000,
+                secure: true,
+                SameSite: "None",
+              }) : setCookie("au", "5050", {
+                path: "/",
+                domain: userDomain,
+                maxAge: 8000,
+                secure: true,
+                SameSite: "None",
+              });
+            setCookie("base", data.user.user_base, {
+                path: "/",
+                domain: userDomain,
+                maxAge: 8000,
+                secure: true,
+                SameSite: "None",
+            })
           // setCookie("auth", data.token, {
           //   path: "/",
           //   domain: userDomain,
@@ -80,7 +101,7 @@ export const Login = () => {
           setToken(data.token);
           setUser(data);
           localStorage.setItem("ver", JSON.stringify(data.token));
-          localStorage.setItem("base", JSON.stringify(data.user.base));
+          localStorage.setItem("base", JSON.stringify(data.user.user_base));
           // console.log("after local storage is set", localStorage);
           setIsAuthenticated(data.user.admin);
           setFlag(true);
@@ -99,7 +120,7 @@ export const Login = () => {
         top: 0,
         width: "100vw",
         height: "100vh",
-        backgroundColor: '#051726',
+        backgroundColor: "#051726",
       }}
     >
       <Container component="main" maxWidth="xs">
@@ -185,8 +206,13 @@ export const Login = () => {
             variant="contained"
             color="primary"
             size="medium"
-            sx={{ boxShadow: 2, width: 150, m: 1, backgroundColor: '#61C0A3', '&:hover': { backgroundColor: '#61C0A3', color: 'black'} }}
-
+            sx={{
+              boxShadow: 2,
+              width: 150,
+              m: 1,
+              backgroundColor: "#61C0A3",
+              "&:hover": { backgroundColor: "#61C0A3", color: "black" },
+            }}
             onClick={() => postLogin()}
           >
             Login

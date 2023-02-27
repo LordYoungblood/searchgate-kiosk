@@ -37,7 +37,7 @@ export default function PrintModal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { token, API } = React.useContext(VehicleContext);
+  const { token, API, base } = React.useContext(VehicleContext);
 
   const componentRef = useRef();
   const vehicle = props.element.vehicle;
@@ -56,11 +56,12 @@ export default function PrintModal(props) {
     fetch(API, {
       method: "POST",
       // credentials: "include",
-      body: JSON.stringify(vehicle),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${token}`,
+        Base: JSON.stringify(base),
       },
+      body: JSON.stringify(vehicle),
     })
       .then((res) => res.json())
       .catch((err) => {

@@ -3,10 +3,12 @@ const client = require("../../db/client");
 //-------------get all vehicle info from db-------------------------------------//
 const getAllVehicles = async (req, res) => {
   const base = JSON.parse(req.headers.base);
-  console.log(base.name)
-  console.log(base.length)
+  // console.log(typeof base.name)
+  // console.log(base.length)
   try {
-    const all = await client.query("SELECT * FROM sfs45_cape ORDER BY date");
+    // const all = await client.query("SELECT * FROM sfs45_cape ORDER BY date");
+    const all = await client.query(`SELECT * FROM ${base.name} ORDER BY date`);
+   
     // const all = await client.query(`SELECT * FROM ${base.name} ORDER BY date`);
     res.status(200).send(all.rows);
   } catch (err) {
@@ -18,6 +20,7 @@ const getAllVehicles = async (req, res) => {
 //-------------add new vehicle to db--------------------------------------------//
 
 const addVehicle = async (req, res) => {
+  const base = JSON.parse(req.headers.base);
   const vehicle = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -31,7 +34,7 @@ const addVehicle = async (req, res) => {
 
   try {
     let result = await client.query(
-      `INSERT INTO sfs45_cape (first_name, last_name, drivers_license, plate, make, model, state, date) values('${vehicle.first_name}', '${vehicle.last_name}', '${vehicle.drivers_license}', '${vehicle.plate}', '${vehicle.make}', '${vehicle.model}', '${vehicle.state}', '${vehicle.date}')`
+      `INSERT INTO ${base.name} (first_name, last_name, drivers_license, plate, make, model, state, date) values('${vehicle.first_name}', '${vehicle.last_name}', '${vehicle.drivers_license}', '${vehicle.plate}', '${vehicle.make}', '${vehicle.model}', '${vehicle.state}', '${vehicle.date}')`
     );
 
     res.status(200).send(result);
