@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS users
     admin boolean NOT NULL DEFAULT false,
     password character varying COLLATE pg_catalog."default" NOT NULL,
     user_name character varying(25) COLLATE pg_catalog."default",
-    CONSTRAINT users_pkey PRIMARY KEY (id)
+    CONSTRAINT users_pkey PRIMARY KEY (id),
+    user_base jsonb
 )
 
 -- TABLESPACE pg_default;

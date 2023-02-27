@@ -54,6 +54,7 @@ export const Login = () => {
       .then((data) => {
         if (data === undefined) return;
         if (data !== undefined) {
+          
           data.user.admin === true
             ? localStorage.setItem("au", "2055", {
                 path: "/",
@@ -79,6 +80,7 @@ export const Login = () => {
           setToken(data.token);
           setUser(data);
           localStorage.setItem("ver", JSON.stringify(data.token));
+          localStorage.setItem("base", JSON.stringify(data.user.base));
           // console.log("after local storage is set", localStorage);
           setIsAuthenticated(data.user.admin);
           setFlag(true);

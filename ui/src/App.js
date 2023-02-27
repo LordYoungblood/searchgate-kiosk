@@ -20,19 +20,20 @@ export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [flag, setFlag] = useState(false);
   const [token, setToken] = useState(null);
+  const [base, setBase] = useState(null);
 
   const userDomain = "localhost";
+  // const userDomain = "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com/";
 
-  // const API = "http://localhost:8080/api";
-  const API =
-    "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
+  const API = "http://localhost:8080/api";
+  // const API =
+  //   "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
 
   useMemo(() => {
     if (localStorage.au && localStorage.ver) {
-      const user = JSON.parse(`${localStorage.au}`);
-      const token = JSON.parse(`${localStorage.ver}`);
-      setUser(user);
-      setToken(token);
+      setUser(JSON.parse(`${localStorage.au}`));
+      setToken(JSON.parse(`${localStorage.ver}`));
+      setBase(JSON.parse(`${localStorage.base}`));
     }
   }, [flag]);
 
@@ -45,6 +46,7 @@ export const App = () => {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${token}`,
+        Base: JSON.stringify(base),
       },
     })
       .then((res) => res.json())

@@ -15,6 +15,9 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
+    // console.log(user.rows[0]);
+    // app.set("base", user.rows[0].base)
+    
 
     const isMatch = await bcrypt.compare(password, user.rows[0].password);
     if (isMatch) {
@@ -25,7 +28,10 @@ const login = async (req, res) => {
 
       res.cookie("auth", token, {
         maxAge: 28800000,
-        path: '/',
+        domain:
+          "localhost" ||
+          "vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com",
+        path: "/",
         SameSite: "None",
         Secure: true,
       });
@@ -35,6 +41,7 @@ const login = async (req, res) => {
           id: user.rows[0].id,
           user_name: user.rows[0].user_name,
           admin: user.rows[0].admin,
+          base: user.rows[0].base,
         },
       });
     } else {

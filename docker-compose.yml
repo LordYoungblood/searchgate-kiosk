@@ -35,7 +35,7 @@ services:
       # - DB_PASSWORD=Vehiclekiosk45!
       - DB_PASSWORD=password
       # - DB_NAME=vehicle_gate_kiosk
-      - DB_NAME=gatekiosk-db
+      - DB_NAME=gatekiosk
       # - POSTGRES_DB=gatekiosk-db
     volumes:
       - type: bind
