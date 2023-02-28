@@ -42,23 +42,17 @@ export const Forms = () => {
           mb: 1,
         }}
       >
-        {/* <img
-          style={{ width: "100px", margin: "10px" }}
-          src={flash}
-          alt="Security Forces Logo"
-        /> */}
-        <Typography style={{ alightContent: 'center', fontFamily: "sans", fontSize: 60 }}> VIGIL </Typography>
-        {/* VIGIL = Vehicle Information Gathering and Identification Log
-        || Vehicle Inspection Gateway and logistics */}
-        {/* <h1 style={{ paddingTop: "2%" }}> Halt Security Forces! </h1> */}
-        {/* <img
-          style={{ height: "100px", margin: "10px" }}
-          src={patch}
-          alt="Security Forces Logo"
-        /> */}
+        <Typography
+          style={{ alightContent: "center", fontFamily: "sans", fontSize: 60 }}
+        >
+          {" "}
+          VIGIL{" "}
+        </Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}></Box>
+
+      {/* the box below is for adjusting the entire height of the input box */}
 
       <Box
         sx={{
@@ -78,7 +72,12 @@ export const Forms = () => {
               m: 1,
             }}
           >
-           <Typography sx={{fontFamily: 'sans', fontSize: 25, fontWeight: 'bold'}}> Personal Information </Typography>
+            <Typography
+              sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
+            >
+              {" "}
+              Personal Information{" "}
+            </Typography>
             <Box
               sx={{
                 display: "flex",
@@ -207,7 +206,12 @@ export const Forms = () => {
                 name="Driver's License Number"
               />
             </Box>
-            <Typography sx={{fontFamily: 'sans', fontSize: 25, fontWeight: 'bold'}}> Vehicle Information </Typography>
+            <Typography
+              sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
+            >
+              {" "}
+              Vehicle Information{" "}
+            </Typography>
             <Box
               sx={{
                 display: "flex",

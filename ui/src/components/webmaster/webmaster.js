@@ -160,7 +160,7 @@ export const Webmaster = () => {
       // editable: true,
     },
     {
-      field: "base",
+      field: "user_base",
       headerName: "Base",
       width: 150,
       // editable: true,
@@ -182,7 +182,8 @@ export const Webmaster = () => {
     if (
       newUser.user_name === "" ||
       newUser.admin === "" ||
-      newUser.password === ""
+      newUser.password === "" ||
+      newUser.user_base === ""
     ) {
       setFailedRegister(true);
       // Swal.fire({
@@ -300,17 +301,16 @@ export const Webmaster = () => {
 
               <TextField
                 error={failedRegister}
-                sx={{ boxShadow: 2, m: "auto", width: "50%" }}
-                variant="outlined"
+                margin="normal"
                 required
-                id="base"
-                label="Installation"
-                name="base"
-                defaultValue=""
-                select
+                fullWidth
+                name="user_base"
+                label="User Base"
+                id="user_base"
+                autoComplete="current-user-base"
                 onChange={(e) => {
                   setNewUser((prev) => {
-                    return { ...prev, admin: e.target.value };
+                    return { ...prev, user_base: e.target.value };
                   });
                 }}
               >

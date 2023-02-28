@@ -47,14 +47,10 @@ const login = async (req, res) => {
 //----- Register functionallity with bcrypt *** must register with postman --------//
 //----- user_name: password: admin: true/false -----=------------------------------//
 const register = async (req, res) => {
-  // const base = req.headers.base;
-  // const parsedBase = JSON.parse(base);
-  // console.log('not parsed', base)
-  // console.log('parsed base from login.js', parsedBase.name)
   const objBase = req.body.user_base;
   const stringBase = JSON.stringify(req.body.user_base);
-  console.log("parsed", typeof objBase.name);
-  console.log("string", stringBase);
+  console.log("stringBase from register", stringBase);
+  console.log(req.body);
 
   if (req.body.admin === undefined) {
     req.body.admin = false;
@@ -70,17 +66,17 @@ const register = async (req, res) => {
     );
 
     await client.query(`CREATE TABLE IF NOT EXISTS ${objBase.name}
-(
-  id uuid NOT NULL DEFAULT uuid_generate_v4(),
-  first_name character varying(255) COLLATE pg_catalog."default",
-  last_name character varying(255) COLLATE pg_catalog."default",
-  drivers_license character varying(255) COLLATE pg_catalog."default",
-  plate character varying(255) COLLATE pg_catalog."default",
-  make character varying(255) COLLATE pg_catalog."default",
-  model character varying(255) COLLATE pg_catalog."default",
-  state character varying COLLATE pg_catalog."default",
-  date timestamp
-);`);
+            (
+              id uuid NOT NULL DEFAULT uuid_generate_v4(),
+              first_name character varying(255) COLLATE pg_catalog."default",
+              last_name character varying(255) COLLATE pg_catalog."default",
+              drivers_license character varying(255) COLLATE pg_catalog."default",
+              plate character varying(255) COLLATE pg_catalog."default",
+              make character varying(255) COLLATE pg_catalog."default",
+              model character varying(255) COLLATE pg_catalog."default",
+              state character varying COLLATE pg_catalog."default",
+              date timestamp
+            );`);
 
     res.status(200).send({ user_name, admin });
   } catch (err) {

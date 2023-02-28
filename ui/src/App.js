@@ -37,7 +37,6 @@ export const App = () => {
       setBase(JSON.parse(`${localStorage.base}`));
     }
   }, [flag]);
-  
 
   // ----------------- fetch for all Vehicle information -------------------------//
 
@@ -98,7 +97,7 @@ export const App = () => {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router>
           <Navbar />
-          {user === 2055 ? (
+          {user === 2055 && (
             <Routes>
               <Route path="/forms" element={<Forms />} />
               <Route path="/" element={<Login />} />
@@ -108,13 +107,26 @@ export const App = () => {
               <Route path="*" element={<Forms />} />
               <Route path="/webmaster" element={<Webmaster />} />
             </Routes>
-          ) : (
+          )}
+          {user === 7050 && (
+            <Routes>
+            <Route path="/forms" element={<Forms />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/data" element={<Data />} />
+            <Route path="/History" element={<History />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="*" element={<Forms />} />
+            <Route path="/webmaster" element={<Webmaster />} />
+          </Routes>
+          )}
+          {user === 5050 && (
             <Routes>
               <Route path="/forms" element={<Forms />} />
               <Route path="/" element={<Login />} />
               <Route path="*" element={<Forms />} />
             </Routes>
           )}
+          
         </Router>
       </MuiPickersUtilsProvider>
     </VehicleContext.Provider>

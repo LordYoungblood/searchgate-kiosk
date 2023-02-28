@@ -55,49 +55,71 @@ export const Login = () => {
         if (data === undefined) return;
         if (data !== undefined) {
           console.log("data", data);
-            console.log("data", data);
-          data.user.admin === true
-            ? localStorage.setItem("au", "2055", {
-                path: "/",
-                domain: userDomain,
-                maxAge: 8000,
-                secure: true,
-                SameSite: "None",
-              })
-            : localStorage.setItem("au", "5050", {
-                path: "/",
-                domain: userDomain,
-                maxAge: 8000,
-                secure: true,
-                SameSite: "None",
-              });
-          data.user.admin === true ? setCookie("au", "2055", {
-                path: "/",
-                domain: userDomain,
-                maxAge: 8000,
-                secure: true,
-                SameSite: "None",
-              }) : setCookie("au", "5050", {
-                path: "/",
-                domain: userDomain,
-                maxAge: 8000,
-                secure: true,
-                SameSite: "None",
-              });
-            setCookie("base", data.user.user_base, {
-                path: "/",
-                domain: userDomain,
-                maxAge: 8000,
-                secure: true,
-                SameSite: "None",
-            })
-          // setCookie("auth", data.token, {
-          //   path: "/",
-          //   domain: userDomain,
-          //   maxAge: 8000,
-          //   secure: true,
-          // });
-          // console.log("after cookies is set", data);
+
+          if (data.user.admin == 1) {
+            localStorage.setItem("au", "2055", {
+              path: "/",
+              domain: userDomain,
+              maxAge: 8000,
+              secure: true,
+              SameSite: "None",
+            });
+          } else if (data.user.admin == 2) {
+            localStorage.setItem("au", "5050", {
+              path: "/",
+              domain: userDomain,
+              maxAge: 8000,
+              secure: true,
+              SameSite: "None",
+            });
+          } else if (data.user.admin == 3) {
+            localStorage.setItem("au", "7050", {
+              path: "/",
+              domain: userDomain,
+              maxAge: 8000,
+              secure: true,
+              SameSite: "None",
+            });
+          }
+          if (data.user.admin == 1) {
+            setCookie("au", "2055", {
+              path: "/",
+              domain: userDomain,
+              maxAge: 8000,
+              secure: true,
+              SameSite: "None",
+            });
+          } else if (data.user.admin == 2) {
+            setCookie("au", "5050", {
+              path: "/",
+              domain: userDomain,
+              maxAge: 8000,
+              secure: true,
+              SameSite: "None",
+            });
+          } else if (data.user.admin == 3) {
+            setCookie("au", "7050", {
+              path: "/",
+              domain: userDomain,
+              maxAge: 8000,
+              secure: true,
+              SameSite: "None",
+            });
+          }
+          setCookie("base", data.user.user_base, {
+            path: "/",
+            domain: userDomain,
+            maxAge: 8000,
+            secure: true,
+            SameSite: "None",
+          });
+          setCookie("auth", data.token, {
+            path: "/",
+            domain: userDomain,
+            maxAge: 8000,
+            secure: true,
+          });
+          console.log("after cookies is set", data);
           setToken(data.token);
           setUser(data);
           localStorage.setItem("ver", JSON.stringify(data.token));

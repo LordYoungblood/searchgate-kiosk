@@ -3,13 +3,8 @@ const client = require("../../db/client");
 //-------------get all vehicle info from db-------------------------------------//
 const getAllVehicles = async (req, res) => {
   const base = JSON.parse(req.headers.base);
-  // console.log(typeof base.name)
-  // console.log(base.length)
   try {
-    // const all = await client.query("SELECT * FROM sfs45_cape ORDER BY date");
     const all = await client.query(`SELECT * FROM ${base.name} ORDER BY date`);
-   
-    // const all = await client.query(`SELECT * FROM ${base.name} ORDER BY date`);
     res.status(200).send(all.rows);
   } catch (err) {
     console.log(err);

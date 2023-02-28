@@ -44,6 +44,7 @@ export const Users = () => {
     user_name: "",
     admin: "",
     password: "",
+    user_base: base
   });
 
   const handleOpen = () => setOpen(true);
@@ -301,9 +302,12 @@ export const Users = () => {
                 defaultValue=""
                 select
                 onChange={(e) => {
-                  setNewUser((prev) => {
-                    return { ...prev, admin: e.target.value };
-                  });
+                  e.target.value === true ? setNewUser((prev) => { 
+                    return { ...prev, admin: 1 }}) : setNewUser((prev) => {
+                      return { ...prev, admin: 2 }});
+                  // setNewUser((prev) => {
+                  //   return { ...prev, admin: 2 };
+                  
                 }}
               >
                 <MenuItem value={true}>True</MenuItem>
