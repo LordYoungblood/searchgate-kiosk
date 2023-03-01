@@ -24,6 +24,7 @@ const corsOptions = {
   credentials: true,
   Credential: "include",
   AllowedHeaders: "Content-Type, Authorization",
+  Allowedheaders: "Content-Type, Base",
 
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
