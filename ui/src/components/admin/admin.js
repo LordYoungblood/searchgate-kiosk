@@ -13,7 +13,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import Swal from "sweetalert2";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import {
   DataGrid,
   GridToolbar,
@@ -26,8 +26,8 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    color: 'black',
-    backgroundColor: 'lightgray',
+    color: "black",
+    backgroundColor: "lightgray",
   },
 }));
 
@@ -44,7 +44,7 @@ export const Users = () => {
     user_name: "",
     admin: "",
     password: "",
-    user_base: base
+    user_base: base,
   });
 
   const handleOpen = () => setOpen(true);
@@ -164,10 +164,17 @@ export const Users = () => {
   // { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 }
   const rows = [];
   userDetails.map((user, index) => {
+    let addy = true
+    if (user.admin == 1 || user.admin == 3) {
+       addy = true;
+    } else {
+       addy = false;
+    }
+    
     rows.push({
       id: index + 1,
       user_name: user.user_name,
-      admin: user.admin,
+      admin: addy,
       uuid: user.id,
     });
   });
@@ -302,12 +309,15 @@ export const Users = () => {
                 defaultValue=""
                 select
                 onChange={(e) => {
-                  e.target.value === true ? setNewUser((prev) => { 
-                    return { ...prev, admin: 1 }}) : setNewUser((prev) => {
-                      return { ...prev, admin: 2 }});
+                  e.target.value === true
+                    ? setNewUser((prev) => {
+                        return { ...prev, admin: 1 };
+                      })
+                    : setNewUser((prev) => {
+                        return { ...prev, admin: 2 };
+                      });
                   // setNewUser((prev) => {
                   //   return { ...prev, admin: 2 };
-                  
                 }}
               >
                 <MenuItem value={true}>True</MenuItem>
@@ -341,32 +351,27 @@ export const Users = () => {
             // checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
-            sx={{ color: 'black', '& .MuiButtonBase-root': {color: 'black'}}}
+            sx={{ color: "black", "& .MuiButtonBase-root": { color: "black" } }}
             components={{
-              
-                sx: {
-                  "& .MuiButtonBase": {
-                    color: "black",
-                  },
-                  "& .MuiButtonBase-root": {
-                    color: "black",
-                  },
-                  "& .MuiTypography-root": {
-                    color: "black",
-                  },
-                  "& .MuiButton-StartIcon": {
-                    color: "black",
-                  },
-                  "& .MuiButtonBase-root": {
-                    color: "black",
-                  },
-                  "& .MuiTouchRipple": {
-                    color: "black",
-                  },
-
-  
-
-                
+              sx: {
+                "& .MuiButtonBase": {
+                  color: "black",
+                },
+                "& .MuiButtonBase-root": {
+                  color: "black",
+                },
+                "& .MuiTypography-root": {
+                  color: "black",
+                },
+                "& .MuiButton-StartIcon": {
+                  color: "black",
+                },
+                "& .MuiButtonBase-root": {
+                  color: "black",
+                },
+                "& .MuiTouchRipple": {
+                  color: "black",
+                },
               },
               Toolbar: GridToolbar,
             }}
@@ -382,7 +387,7 @@ export const Users = () => {
                   "& .MuiButton": {
                     color: "black",
                   },
-                 
+
                   "& .MuiButtonBase-root": {
                     color: "black",
                   },

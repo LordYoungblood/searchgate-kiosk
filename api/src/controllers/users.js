@@ -2,8 +2,6 @@ const client = require("../../db/client");
 
 const getAllUsers = async (req, res) => {
   const base = JSON.parse(req.headers.base);
-  
-  
   try {
     const all = await client.query(`SELECT * FROM users WHERE user_base ->> 'name' = '${base.name}'`);
     res.status(200).send(all.rows);
@@ -15,7 +13,7 @@ const getAllUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    
+
     const user = await client.query(
       `DELETE FROM Users WHERE id = '${req.body.id}'`
     );

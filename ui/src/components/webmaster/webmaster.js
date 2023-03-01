@@ -74,13 +74,14 @@ export const Webmaster = () => {
 
   const postUser = () => {
     setFailedRegister(false);
+    console.log(JSON.stringify(newUser))
     fetch(`${API}/register`, {
       method: "POST",
       // credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${token}`,
-        Base: JSON.stringify(base),
+        // Base: JSON.stringify(base),
       },
       body: JSON.stringify(newUser),
     })
@@ -218,7 +219,7 @@ export const Webmaster = () => {
       </Box>
 
       <div>
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             justifyContent: "start",
@@ -239,8 +240,8 @@ export const Webmaster = () => {
           >
             Add User
           </Button>
-        </Box>
-        <Modal
+        </Box> */}
+        <Box
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
@@ -310,7 +311,7 @@ export const Webmaster = () => {
                 autoComplete="current-user-base"
                 onChange={(e) => {
                   setNewUser((prev) => {
-                    return { ...prev, user_base: e.target.value };
+                    return { ...prev, user_base: {name: e.target.value}  };
                   });
                 }}
               >
@@ -334,8 +335,8 @@ export const Webmaster = () => {
                   });
                 }}
               >
-                <MenuItem value={true}>True</MenuItem>
-                <MenuItem value={false}>False</MenuItem>
+                <MenuItem value={1}>True</MenuItem>
+                <MenuItem value={2}>False</MenuItem>
               </TextField>
             </Box>
 
@@ -350,10 +351,10 @@ export const Webmaster = () => {
               Add User{" "}
             </Button>
           </Box>
-        </Modal>
+        </Box>
       </div>
 
-      <Box>
+      {/* <Box>
         <div style={{ height: "73vh", width: "100%" }}>
           <DataGrid
             toolBarStyles={classes.toolbar}
@@ -427,7 +428,7 @@ export const Webmaster = () => {
             }}
           ></DataGrid>
         </div>
-      </Box>
+      </Box> */}
     </>
   );
 };
