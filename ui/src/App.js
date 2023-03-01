@@ -16,25 +16,25 @@ import { af } from "date-fns/esm/locale";
 
 export const App = () => {
   const [visitorDetails, setVisitorDetails] = useState([]);
-  const [cookies, setCookie, removeCookie] = useCookies(["auth", "user"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["au", "ver", "base"]);
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [flag, setFlag] = useState(false);
   const [token, setToken] = useState(null);
   const [base, setBase] = useState(null);
 
-  const userDomain = "localhost";
-  // const userDomain = "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com/";
+  // const userDomain = "localhost";
+  const userDomain = "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com/";
 
-  const API = "http://localhost:8080/api";
-  // const API =
-  //   "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
+  // const API = "http://localhost:8080/api";
+  const API =
+    "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
 
   useMemo(() => {
-    if (localStorage.au && localStorage.ver) {
-      setUser(JSON.parse(`${localStorage.au}`));
-      setToken(JSON.parse(`${localStorage.ver}`));
-      setBase(JSON.parse(`${localStorage.base}`));
+    if (cookie.au && cookie.ver && cookie.base) {
+      setUser(JSON.parse(`${cookie.au}`));
+      setToken(JSON.parse(`${cookie.ver}`));
+      setBase(JSON.parse(`${cookie.base}`));
     }
   }, [flag]);
 

@@ -17,9 +17,12 @@ export const Navbar = () => {
   const { removeCookie, cookies, user } = useContext(VehicleContext);
 
   const logout = () => {
-    localStorage.removeItem("ver");
-    localStorage.removeItem("au");
-    localStorage.removeItem("base");
+    // localStorage.removeItem("ver");
+    // localStorage.removeItem("au");
+    // localStorage.removeItem("base");
+    removeCookie("ver");
+    removeCookie("au");
+    removeCookie("base");
     navigate("/");
   };
 

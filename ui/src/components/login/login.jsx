@@ -56,31 +56,31 @@ export const Login = () => {
         if (data !== undefined) {
           console.log("data", data);
 
-          if (data.user.admin == 1) {
-            localStorage.setItem("au", "2055", {
-              path: "/",
-              domain: userDomain,
-              maxAge: 8000,
-              secure: true,
-              SameSite: "None",
-            });
-          } else if (data.user.admin == 2) {
-            localStorage.setItem("au", "5050", {
-              path: "/",
-              domain: userDomain,
-              maxAge: 8000,
-              secure: true,
-              SameSite: "None",
-            });
-          } else if (data.user.admin == 3) {
-            localStorage.setItem("au", "7050", {
-              path: "/",
-              domain: userDomain,
-              maxAge: 8000,
-              secure: true,
-              SameSite: "None",
-            });
-          }
+          // if (data.user.admin == 1) {
+          //   localStorage.setItem("au", "2055", {
+          //     path: "/",
+          //     domain: userDomain,
+          //     maxAge: 8000,
+          //     secure: true,
+          //     SameSite: "None",
+          //   });
+          // } else if (data.user.admin == 2) {
+          //   localStorage.setItem("au", "5050", {
+          //     path: "/",
+          //     domain: userDomain,
+          //     maxAge: 8000,
+          //     secure: true,
+          //     SameSite: "None",
+          //   });
+          // } else if (data.user.admin == 3) {
+          //   localStorage.setItem("au", "7050", {
+          //     path: "/",
+          //     domain: userDomain,
+          //     maxAge: 8000,
+          //     secure: true,
+          //     SameSite: "None",
+          //   });
+          // }
           if (data.user.admin == 1) {
             setCookie("au", "2055", {
               path: "/",
@@ -119,11 +119,11 @@ export const Login = () => {
             maxAge: 8000,
             secure: true,
           });
-          console.log("after cookies is set", data);
+          // console.log("after cookies is set", data);
           setToken(data.token);
           setUser(data);
-          localStorage.setItem("ver", JSON.stringify(data.token));
-          localStorage.setItem("base", JSON.stringify(data.user.user_base));
+          // localStorage.setItem("ver", JSON.stringify(data.token));
+          // localStorage.setItem("base", JSON.stringify(data.user.user_base));
           // console.log("after local storage is set", localStorage);
           setIsAuthenticated(data.user.admin);
           setFlag(true);
