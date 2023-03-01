@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
+
 import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
 import logo from "../image/vigil_negative.png";
@@ -54,7 +55,7 @@ export const Login = () => {
       .then((data) => {
         if (data === undefined) return;
         if (data !== undefined) {
-          console.log("data", data);
+          
 
           // if (data.user.admin == 1) {
           //   localStorage.setItem("au", "2055", {
@@ -113,7 +114,7 @@ export const Login = () => {
             secure: true,
             SameSite: "None",
           });
-          setCookie("auth", data.token, {
+          setCookie("ver", data.token, {
             path: "/",
             domain: userDomain,
             maxAge: 8000,
@@ -122,8 +123,8 @@ export const Login = () => {
           // console.log("after cookies is set", data);
           setToken(data.token);
           setUser(data);
-          // localStorage.setItem("ver", JSON.stringify(data.token));
-          // localStorage.setItem("base", JSON.stringify(data.user.user_base));
+          localStorage.setItem("ver", JSON.stringify(data.token));
+          localStorage.setItem("base", JSON.stringify(data.user.user_base));
           // console.log("after local storage is set", localStorage);
           setIsAuthenticated(data.user.admin);
           setFlag(true);

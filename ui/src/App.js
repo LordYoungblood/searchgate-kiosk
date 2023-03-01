@@ -16,26 +16,27 @@ import { af } from "date-fns/esm/locale";
 
 export const App = () => {
   const [visitorDetails, setVisitorDetails] = useState([]);
-  const [cookies, setCookie, removeCookie] = useCookies(["au", "ver", "base"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["au", "base", "ver"]);
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [flag, setFlag] = useState(false);
   const [token, setToken] = useState(null);
   const [base, setBase] = useState(null);
 
-  // const userDomain = "localhost";
-  const userDomain = "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com/";
+  const userDomain = "localhost";
+  // const userDomain = "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com/";
 
-  // const API = "http://localhost:8080/api";
-  const API =
-    "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
+  const API = "http://localhost:8080/api";
+  // const API =
+  // "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
 
   useMemo(() => {
-    if (cookie.au && cookie.ver && cookie.base) {
-      setUser(JSON.parse(`${cookie.au}`));
-      setToken(JSON.parse(`${cookie.ver}`));
-      setBase(JSON.parse(`${cookie.base}`));
+    if (cookies.au && cookies.ver && cookies.base) {
+      setUser(cookies.au);
+      setToken(cookies.ver);
+      setBase(cookies.base);
     }
+    
   }, [flag]);
 
   // ----------------- fetch for all Vehicle information -------------------------//
@@ -97,7 +98,7 @@ export const App = () => {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router>
           <Navbar />
-          {user === 2055 && (
+          {user === '2055' && (
             <Routes>
               <Route path="/forms" element={<Forms />} />
               <Route path="/" element={<Login />} />
@@ -108,25 +109,24 @@ export const App = () => {
               <Route path="/webmaster" element={<Webmaster />} />
             </Routes>
           )}
-          {user === 7050 && (
+          {user === '7050' && (
             <Routes>
-            <Route path="/forms" element={<Forms />} />
-            <Route path="/" element={<Login />} />
-            <Route path="/data" element={<Data />} />
-            <Route path="/History" element={<History />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="*" element={<Forms />} />
-            <Route path="/webmaster" element={<Webmaster />} />
-          </Routes>
+              <Route path="/forms" element={<Forms />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/data" element={<Data />} />
+              <Route path="/History" element={<History />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="*" element={<Forms />} />
+              <Route path="/webmaster" element={<Webmaster />} />
+            </Routes>
           )}
-          {user === 5050 && (
+          {user === '5050' && (
             <Routes>
               <Route path="/forms" element={<Forms />} />
               <Route path="/" element={<Login />} />
               <Route path="*" element={<Forms />} />
             </Routes>
           )}
-          
         </Router>
       </MuiPickersUtilsProvider>
     </VehicleContext.Provider>

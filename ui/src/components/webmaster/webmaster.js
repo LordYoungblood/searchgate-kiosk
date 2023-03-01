@@ -47,6 +47,10 @@ export const Webmaster = () => {
     user_base: "",
   });
 
+  const reload = () => {
+    window.location.reload();
+  };
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -74,7 +78,7 @@ export const Webmaster = () => {
 
   const postUser = () => {
     setFailedRegister(false);
-    console.log(JSON.stringify(newUser))
+    
     fetch(`${API}/register`, {
       method: "POST",
       // credentials: "include",
@@ -92,7 +96,8 @@ export const Webmaster = () => {
       .catch((err) => {
         console.log("Error: ", err);
       });
-    handleClose();
+     
+      reload();
   };
 
   const deleteUser = (id) => {
@@ -198,6 +203,7 @@ export const Webmaster = () => {
       return;
     }
     postUser();
+    reload();
   };
 
   return (

@@ -31,7 +31,7 @@ export const Navbar = () => {
       <AppBar position="relative" sx={{ backgroundColor: "#051726" }}>
         <Toolbar>
           {/* <Box sx={{ width: "100%" }}> */}
-          {user === 2055 && (
+          {user === '2055' && (
             <Box
               sx={{
                 justifyContent: "flex-start",
@@ -71,7 +71,7 @@ export const Navbar = () => {
             </Box>
           )}
 
-          {user === 7050 && (
+          {user === '7050' && (
             <Box
               sx={{
                 justifyContent: "flex-start",
