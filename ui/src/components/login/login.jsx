@@ -86,7 +86,7 @@ export const Login = () => {
               path: "/",
               domain: userDomain,
               maxAge: 8000000,
-              secure: true,
+              // secure: true,
               SameSite: "None",
             });
           } else if (data.user.admin == 2) {
@@ -94,7 +94,7 @@ export const Login = () => {
               path: "/",
               domain: userDomain,
               maxAge: 8000000,
-              secure: true,
+              // secure: true,
               SameSite: "None",
             });
           } else if (data.user.admin == 3) {
@@ -102,7 +102,7 @@ export const Login = () => {
               path: "/",
               domain: userDomain,
               maxAge: 8000000,
-              secure: true,
+              // secure: true,
               SameSite: "None",
             });
           }
@@ -110,14 +110,15 @@ export const Login = () => {
             path: "/",
             domain: userDomain,
             maxAge: 8000000,
-            secure: true,
+            // secure: true,
             SameSite: "None",
           });
           setCookie("ver", data.token, {
             path: "/",
             domain: userDomain,
             maxAge: 8000000,
-            secure: true,
+            // secure: true,
+            SameSite: "None",
           });
           // console.log("after cookies is set", data);
           setToken(data.token);

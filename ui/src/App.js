@@ -23,21 +23,22 @@ export const App = () => {
   const [token, setToken] = useState(null);
   const [base, setBase] = useState(null);
 
-  const userDomain = "localhost";
-  // const userDomain =
-    // "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
+  // const userDomain = "localhost";
+  const userDomain =
+  "vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
+  // "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
 
-  const API = "http://localhost:8080/api";
-  // const API =
-    // "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
+  // const API = "http://localhost:8080/api";
+  const API =
+    "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
 
   useMemo(() => {
     if (cookies.au && cookies.ver && cookies.base) {
-      setBase(cookies.base)
+      setBase(cookies.base);
       setUser(cookies.au);
       setToken(cookies.ver);
     }
-    console.log("cookies", cookies.base)
+    console.log("cookies", cookies.base);
     console.log("user", user);
     console.log("token", token);
     console.log("base", base);
