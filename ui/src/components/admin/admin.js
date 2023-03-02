@@ -58,7 +58,7 @@ export const Users = () => {
   useEffect(() => {
     fetch(`${API}/users`, {
       method: "GET",
-      // credentials: "include",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${token}`,

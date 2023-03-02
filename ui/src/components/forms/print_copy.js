@@ -55,7 +55,7 @@ export default function PrintModal(props) {
     setFailedRegister(false);
     fetch(API, {
       method: "POST",
-      // credentials: "include",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${token}`,
