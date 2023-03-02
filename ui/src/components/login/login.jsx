@@ -80,7 +80,7 @@ export const Login = () => {
           //     SameSite: "None",
           //   });
           // }
-         console.log(data)
+         
           if (data.user.admin == 1) {
             setCookie("au", "2055", {
               path: "/",

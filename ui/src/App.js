@@ -23,9 +23,9 @@ export const App = () => {
   const [token, setToken] = useState(null);
   const [base, setBase] = useState(null);
 
-  // const userDomain = "localhost";
-  const userDomain =
-  "vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
+  const userDomain = "localhost";
+  // const userDomain =
+  // "vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
   // "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
 
   // const API = "http://localhost:8080/api";
@@ -38,10 +38,7 @@ export const App = () => {
       setUser(cookies.au);
       setToken(cookies.ver);
     }
-    console.log("cookies", cookies.base);
-    console.log("user", user);
-    console.log("token", token);
-    console.log("base", base);
+    
   }, [flag]);
 
   // ----------------- fetch for all Vehicle information -------------------------//
