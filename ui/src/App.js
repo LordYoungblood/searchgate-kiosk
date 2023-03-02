@@ -102,7 +102,7 @@ export const App = () => {
           <Navbar />
           {user === "2055" && (
             <Routes>
-              <Route path="/forms" element={<Forms />} />
+              <Route path='/forms' element={<Forms />} />
               <Route path="/" element={<Login />} />
               <Route path="/data" element={<Data />} />
               <Route path="/History" element={<History />} />
