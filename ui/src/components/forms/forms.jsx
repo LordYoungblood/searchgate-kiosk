@@ -12,7 +12,7 @@ export const Forms = () => {
     date.toISOString().slice(0, 10) + " " + date.toTimeString().slice(0, 5);
 
   const [failedRegister, setFailedRegister] = useState(false);
-  const { cookies } = useContext(VehicleContext);
+  const { cookies, base } = useContext(VehicleContext);
 
   const [vehicle, setVehicle] = useState({
     first_name: "",
@@ -24,6 +24,23 @@ export const Forms = () => {
     model: "",
     date: today,
   });
+  // let baseHeader = base.name.toUpperCase().split("_").join(" ");
+
+  const baseHeader = (base) => {
+    return base.map((name) => {
+      if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
+        return name.toUpperCase()
+      } else {
+       return name.charAt(0).toUpperCase() + name.slice(1) + " ";
+      
+  }})
+  }
+  
+ 
+
+  
+
+  
 
   // if (!localStorage) {
   //   window.location.href = "/login";
@@ -35,6 +52,7 @@ export const Forms = () => {
 
   return (
     <>
+          
       <Box
         sx={{
           display: "flex",
@@ -42,13 +60,15 @@ export const Forms = () => {
           mb: 1,
         }}
       >
+        
+          
         <Typography
           style={{ alightContent: "center", fontFamily: "sans", fontSize: 60 }}
         >
-          {" "}
-          VIGIL{" "}
+         {baseHeader(base.name.split('_'))} Search Gate
         </Typography>
       </Box>
+      
 
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}></Box>
 
@@ -59,6 +79,7 @@ export const Forms = () => {
           display: "grid",
           boxShadow: 3,
           gap: 1,
+          height: "70vh"
         }}
       >
         <Container className="Pass">
@@ -70,6 +91,7 @@ export const Forms = () => {
               boxShadow: 3,
               gap: 1,
               m: 1,
+              
             }}
           >
             <Typography
@@ -83,6 +105,7 @@ export const Forms = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 width: "100%",
+                
               }}
             >
               <TextField
@@ -97,6 +120,7 @@ export const Forms = () => {
                 label="First Name"
                 name="firstName"
                 autoComplete="firstName"
+                
                 error={failedRegister}
                 // helperText="Please enter your first name"
                 sx={{ boxShadow: 2, m: 1 }}

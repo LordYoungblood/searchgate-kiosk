@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { VehicleContext } from "../VehicleContext";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import {
   DataGrid,
   GridToolbar,
@@ -11,8 +11,19 @@ import {
 } from "@mui/x-data-grid";
 
 export const History = () => {
-  const { visitorDetails } = useContext(VehicleContext);
+  const { visitorDetails, base } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(50);
+
+  const baseHeader = (base) => {
+    return base.map((name) => {
+      if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
+        return name.toUpperCase()
+      } else {
+       return name.charAt(0).toUpperCase() + name.slice(1) + " ";
+      
+  }})
+  }
+
 
   const columns = [
     {
@@ -112,7 +123,12 @@ export const History = () => {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", flexGrow: 1 }}>
-        <h1>History</h1>
+      <Typography
+          style={{ alightContent: "center", fontFamily: "sans", fontSize: 30, fontWeight: "bold" }}
+        >
+          {" "}
+          {baseHeader(base.name.split('_'))} History{" "}
+        </Typography>
         {/* <SearchBar /> */}
       </Box>
       <Box>

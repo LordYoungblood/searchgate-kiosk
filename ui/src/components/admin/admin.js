@@ -47,6 +47,16 @@ export const Users = () => {
     user_base: base,
   });
 
+  const baseHeader = (base) => {
+    return base.map((name) => {
+      if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
+        return name.toUpperCase()
+      } else {
+       return name.charAt(0).toUpperCase() + name.slice(1) + " ";
+      
+  }})
+  }
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -210,10 +220,10 @@ export const Users = () => {
         }}
       >
         <Typography
-          style={{ alightContent: "center", fontFamily: "sans", fontSize: 30 }}
+          style={{ alightContent: "center", fontFamily: "sans", fontSize: 30, fontWeight: "bold" }}
         >
           {" "}
-          Users{" "}
+          {baseHeader(base.name.split('_'))} Users{" "}
         </Typography>
       </Box>
 

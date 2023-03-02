@@ -82,7 +82,7 @@ export default function PrintModal(props) {
             src={flash}
             alt="Security Forces Logo"
           />
-          <Typography
+          <Box
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -96,7 +96,7 @@ export default function PrintModal(props) {
             <Typography sx={{ ml: 1.5 }}>
               <b>{vehicle.date}</b>
             </Typography>
-          </Typography>
+          </Box>
 
           <img
             style={{ width: "15%", margin: 1 }}
