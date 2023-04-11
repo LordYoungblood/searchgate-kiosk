@@ -18,7 +18,7 @@ const whitelist = [
   "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com",
 ];
 
-// ----------------- CORS ----------------------------------------------------//
+// ----------------- CORS ---------------------------------------------------//
 
 const corsOptions = {
   credentials: true,
