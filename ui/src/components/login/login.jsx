@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 
 export const Login = () => {
   const {
-    API,
+    // API,
     setUser,
     setIsAuthenticated,
     setCookie,
@@ -21,6 +21,7 @@ export const Login = () => {
     userDomain,
     setFlag,
   } = useContext(VehicleContext);
+  const API = "http://localhost:8080/api"
 
   const [login, setLogin] = useState({
     user_name: "",
@@ -229,6 +230,7 @@ export const Login = () => {
             variant="contained"
             color="primary"
             size="medium"
+            name='login'
             sx={{
               boxShadow: 2,
               width: 150,

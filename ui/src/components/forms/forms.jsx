@@ -66,6 +66,7 @@ export const Forms = () => {
           style={{ alightContent: "center", fontFamily: "sans", fontSize: 60 }}
         >
          {baseHeader(base.name.split('_'))} Search Gate
+         
         </Typography>
       </Box>
       

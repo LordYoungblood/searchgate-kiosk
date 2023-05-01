@@ -28,9 +28,9 @@ export const App = () => {
   // "vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
   // "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
 
-  // const API = "http://localhost:8080/api";
-  const API =
-    "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
+  const API = "http://localhost:8080/api";
+  // const API =
+  //   "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
 
   useMemo(() => {
     if (cookies.au && cookies.ver && cookies.base) {
@@ -45,6 +45,7 @@ export const App = () => {
 
   useEffect(() => {
     fetch(API, {
+      
       method: "GET",
       credentials: "include",
       headers: {
