@@ -80,7 +80,7 @@ export const Login = () => {
           //     SameSite: "None",
           //   });
           // }
-         
+
           if (data.user.admin == 1) {
             setCookie("au", "2055", {
               path: "/",
@@ -177,13 +177,13 @@ export const Login = () => {
           <Box
             sx={{ backgroundColor: "#FAFAFF", borderRadius: 3, px: 4, py: 4 }}
           >
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+            {/* <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
               <img
                 style={{ width: "100px", margin: "10px" }}
                 src={logo}
                 alt="Security Forces Flash"
               />
-            </Box>
+            </Box> */}
 
             <TextField
               // error={failedLogin}
