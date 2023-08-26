@@ -31,17 +31,12 @@ export const Forms = () => {
       if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
         return name.toUpperCase()
       } else {
-       return name.charAt(0).toUpperCase() + name.slice(1) + " ";
+      return name.charAt(0).toUpperCase() + name.slice(1) + " ";
       
   }})
   }
   
  
-
-  
-
-  
-
   // if (!localStorage) {
   //   window.location.href = "/login";
   // }
@@ -50,10 +45,9 @@ export const Forms = () => {
     window.location.reload();
   };
 
+  console.log("base from forms", base)
+
   return (
-
-
-
     <div>
         <h1>HELLLOOO</h1>  
       <Box
@@ -68,7 +62,7 @@ export const Forms = () => {
         <Typography
           style={{ alightContent: "center", fontFamily: "sans", fontSize: 60 }}
         >
-         {baseHeader(base.name.split('_'))} Search Gate
+        {baseHeader(base.name.split('_'))} Search Gate
         </Typography>
       </Box>
       

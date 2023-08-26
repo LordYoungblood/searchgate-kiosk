@@ -46,6 +46,8 @@ export const Navbar = () => {
                 />
               </Button>
 
+              HELLLO
+
               <Button
                 onClick={() => navigate("/history")}
                 variant="h6"
