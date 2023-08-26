@@ -45,7 +45,7 @@ export const Forms = () => {
     window.location.reload();
   };
 
-  console.log("base from forms", base)
+  // console.log("base from forms", base)
 
   return (
     <div>
