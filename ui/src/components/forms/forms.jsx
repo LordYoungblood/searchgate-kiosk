@@ -98,7 +98,7 @@ export const Forms = () => {
               sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
             >
               {" "}
-              Personal Information{" "}
+              Personal Information{" "} 
             </Typography>
             <Box
               sx={{

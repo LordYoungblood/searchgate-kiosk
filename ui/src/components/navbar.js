@@ -41,7 +41,7 @@ export const Navbar = () => {
             >
               <Button>
                 <HomeIcon
-                  sx={{ fontSize: 30, color: "white", cursor: "pointer" }}
+                  sx={{ fontSize: 30, color: "red", cursor: "pointer" }}
                   onClick={() => navigate("/forms")}
                 />
               </Button>

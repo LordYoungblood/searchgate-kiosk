@@ -43,23 +43,23 @@ export const App = () => {
 
   // ----------------- fetch for all Vehicle information -------------------------//
 
-  useEffect(() => {
-    fetch(API, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${token}`,
-        Base: JSON.stringify(base),
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setVisitorDetails(json);
-        setFlag(false);
-      })
-      .catch((err) => console.log(err));
-  }, [token, flag]);
+  // useEffect(() => {
+  //   fetch(API, {
+  //     method: "GET",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json; charset=utf-8",
+  //       Authorization: `Bearer ${token}`,
+  //       Base: JSON.stringify(base),
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       setVisitorDetails(json);
+  //       setFlag(false);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [token, flag]);
 
   // ----------- Context object to be passed to all components ------------------//
   const obj = {
