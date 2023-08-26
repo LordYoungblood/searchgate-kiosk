@@ -51,8 +51,11 @@ export const Forms = () => {
   };
 
   return (
-    <>
-          
+
+
+
+    <div>
+        <h1>HELLLOOO</h1>  
       <Box
         sx={{
           display: "flex",
@@ -287,6 +290,6 @@ export const Forms = () => {
         </Container>
         <PrintModal element={{ vehicle, setFailedRegister, reload }} />
       </Box>
-    </>
+    </div>
   );
 };
