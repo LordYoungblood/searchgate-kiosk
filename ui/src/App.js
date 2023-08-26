@@ -30,7 +30,7 @@ export const App = () => {
 
   // const API = "http://localhost:8080/api";
   const API =
-    "http://vehiclegatekioskserver576-env.eba-rejckfyi.us-gov-west-1.elasticbeanstalk.com/api";
+    "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api"
 
   useMemo(() => {
     if (cookies.au && cookies.ver && cookies.base) {
