@@ -41,6 +41,7 @@ export const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           return res.json();
+          console.log("login success from login")
         } else {
           Swal.fire({
             title: "Invalid Credentials",
