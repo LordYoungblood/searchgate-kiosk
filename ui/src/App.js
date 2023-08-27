@@ -32,7 +32,7 @@ export const App = () => {
   const API =
     "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api"
 
-    //s
+    //ss
 
   useMemo(() => {
     if (cookies.au && cookies.ver && cookies.base) {
