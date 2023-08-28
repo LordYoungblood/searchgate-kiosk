@@ -98,6 +98,7 @@ export const Login = () => {
               // secure: true,
               SameSite: "None",
             });
+            console.log("hit 1 login")
           } else if (data.user.admin == 3) {
             setCookie("au", "7050", {
               path: "/",
@@ -106,6 +107,7 @@ export const Login = () => {
               // secure: true,
               SameSite: "None",
             });
+            console.log("hit 2 login")
           }
           setCookie("base", data.user.user_base, {
             path: "/",
