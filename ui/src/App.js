@@ -87,7 +87,7 @@ export const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
-            {/* <Route path="*" element={<Login />} /> */}
+            <Route path="*" element={<Login />} />
           </Routes>
         </Router>
       </VehicleContext.Provider>
@@ -104,7 +104,7 @@ export const App = () => {
             <Route path="/data" element={<Data />} />
             <Route path="/History" element={<History />} />
             <Route path="/users" element={<Users />} />
-            {/* <Route path="*" element={<Forms />} /> */}
+            <Route path="*" element={<Forms />} />
             <Route path="/webmaster" element={<Webmaster />} />
           </Routes>
         </Router>
