@@ -63,7 +63,8 @@ export const Forms = () => {
         <Typography
           style={{ alightContent: "center", fontFamily: "sans", fontSize: 60 }}
         >
-        {baseHeader(base.name.split('_'))} Search Gate
+        {/* {baseHeader(base.name.split('_'))} Search Gate */}
+        Cape Canaveral
         </Typography>
       </Box>
       
