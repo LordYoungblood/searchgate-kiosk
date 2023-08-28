@@ -14,6 +14,8 @@ export const History = () => {
   const { visitorDetails, base } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(50);
 
+  
+
   const baseHeader = (base) => {
     return base.map((name) => {
       if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {

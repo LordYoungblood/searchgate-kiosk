@@ -69,6 +69,7 @@ export const Users = () => {
 
   // console.log(visitorDetails);
 
+
   useEffect(() => {
     fetch(`${API}/users`, {
       method: "GET",

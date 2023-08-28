@@ -132,13 +132,15 @@ export const Login = () => {
           setIsAuthenticated(data.user.admin);
           setFlag(true);
           navigate("/forms");
-          console.log("data from login", data)
+          // console.log("data from login", data)
           console.log("hitting this function")
         }
       })
       .catch((err) => console.log(err));
   };
   // console.log("after post login is complete", localStorage);
+
+
 
   return (
     <Box
