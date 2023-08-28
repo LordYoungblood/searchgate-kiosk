@@ -13,7 +13,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import Swal from "sweetalert2";
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import {
   DataGrid,
   GridToolbar,
@@ -24,12 +24,12 @@ import {
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    color: 'black',
-    backgroundColor: 'lightgray',
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   toolbar: {
+//     color: 'black',
+//     backgroundColor: 'lightgray',
+//   },
+// }));
 
 export const Webmaster = () => {
   const { API, token, base } = useContext(VehicleContext);
@@ -37,7 +37,7 @@ export const Webmaster = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [open, setOpen] = useState(false);
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [failedRegister, setFailedRegister] = useState(false);
   const [newUser, setNewUser] = useState({
@@ -78,7 +78,7 @@ export const Webmaster = () => {
 
   const postUser = () => {
     setFailedRegister(false);
-    
+
     fetch(`${API}/register`, {
       method: "POST",
       credentials: "include",
@@ -96,8 +96,8 @@ export const Webmaster = () => {
       .catch((err) => {
         console.log("Error: ", err);
       });
-     
-      reload();
+
+    reload();
   };
 
   const deleteUser = (id) => {
@@ -317,7 +317,7 @@ export const Webmaster = () => {
                 autoComplete="current-user-base"
                 onChange={(e) => {
                   setNewUser((prev) => {
-                    return { ...prev, user_base: {name: e.target.value}  };
+                    return { ...prev, user_base: { name: e.target.value } };
                   });
                 }}
               >

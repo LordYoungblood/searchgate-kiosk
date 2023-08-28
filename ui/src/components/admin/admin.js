@@ -13,7 +13,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import Swal from "sweetalert2";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import {
   DataGrid,
   GridToolbar,
@@ -24,12 +24,12 @@ import {
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    color: "black",
-    backgroundColor: "lightgray",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   toolbar: {
+//     color: "black",
+//     backgroundColor: "lightgray",
+//   },
+// }));
 
 export const Users = () => {
   const { API, token, base } = useContext(VehicleContext);
@@ -37,7 +37,7 @@ export const Users = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [open, setOpen] = useState(false);
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [failedRegister, setFailedRegister] = useState(false);
   const [newUser, setNewUser] = useState({
@@ -49,13 +49,17 @@ export const Users = () => {
 
   const baseHeader = (base) => {
     return base.map((name) => {
-      if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
-        return name.toUpperCase()
+      if (
+        name.includes("afb") ||
+        name.includes("sfb") ||
+        name.includes("sfs")
+      ) {
+        return name.toUpperCase();
       } else {
-       return name.charAt(0).toUpperCase() + name.slice(1) + " ";
-      
-  }})
-  }
+        return name.charAt(0).toUpperCase() + name.slice(1) + " ";
+      }
+    });
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -174,13 +178,13 @@ export const Users = () => {
   // { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 }
   const rows = [];
   userDetails.map((user, index) => {
-    let addy = true
+    let addy = true;
     if (user.admin == 1 || user.admin == 3) {
-       addy = true;
+      addy = true;
     } else {
-       addy = false;
+      addy = false;
     }
-    
+
     rows.push({
       id: index + 1,
       user_name: user.user_name,
@@ -220,10 +224,15 @@ export const Users = () => {
         }}
       >
         <Typography
-          style={{ alightContent: "center", fontFamily: "sans", fontSize: 30, fontWeight: "bold" }}
+          style={{
+            alightContent: "center",
+            fontFamily: "sans",
+            fontSize: 30,
+            fontWeight: "bold",
+          }}
         >
           {" "}
-          {baseHeader(base.name.split('_'))} Users{" "}
+          {baseHeader(base.name.split("_"))} Users{" "}
         </Typography>
       </Box>
 
@@ -352,7 +361,7 @@ export const Users = () => {
       <Box>
         <div style={{ height: "73vh", width: "100%" }}>
           <DataGrid
-            toolBarStyles={classes.toolbar}
+            // toolBarStyles={classes.toolbar}
             rows={rows}
             columns={columns}
             pageSize={pageSize}

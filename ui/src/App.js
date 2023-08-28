@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Login } from "./components/login/login";
 import { Forms } from "./components/forms/forms";
 import { Navbar } from "./components/navbar";
@@ -9,10 +8,9 @@ import { History } from "./components/history/history";
 import { Webmaster } from "./components/webmaster/webmaster";
 import { VehicleContext } from "./components/VehicleContext";
 import { useCookies } from "react-cookie";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Users } from "./components/admin/admin";
-import DateFnsUtils from "@date-io/date-fns";
-import { af } from "date-fns/esm/locale";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export const App = () => {
   const [visitorDetails, setVisitorDetails] = useState([]);
@@ -30,9 +28,9 @@ export const App = () => {
 
   // const API = "http://localhost:8080/api";
   const API =
-    "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api"
+    "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api";
 
-    //ssssss
+  //ssssss
 
   useMemo(() => {
     if (cookies.au && cookies.ver && cookies.base) {
@@ -40,7 +38,6 @@ export const App = () => {
       setUser(cookies.au);
       setToken(cookies.ver);
     }
-    
   }, [flag]);
 
   // ----------------- fetch for all Vehicle information -------------------------//
@@ -98,41 +95,21 @@ export const App = () => {
   }
 
   return (
-    <VehicleContext.Provider value={obj}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <VehicleContext.Provider value={obj}>
         <Router>
           <Navbar />
-          {user === "2055" && (
-            <Routes>
-              <Route path='/forms' element={<Forms />} />
-              <Route path="/" element={<Login />} />
-              <Route path="/data" element={<Data />} />
-              <Route path="/History" element={<History />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="*" element={<Forms />} />
-              <Route path="/webmaster" element={<Webmaster />} />
-            </Routes>
-          )}
-          {user === "7050" && (
-            <Routes>
-              <Route path="/forms" element={<Forms />} />
-              <Route path="/" element={<Login />} />
-              <Route path="/data" element={<Data />} />
-              <Route path="/History" element={<History />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="*" element={<Forms />} />
-              <Route path="/webmaster" element={<Webmaster />} />
-            </Routes>
-          )}
-          {user === "5050" && (
-            <Routes>
-              <Route path="/forms" element={<Forms />} />
-              <Route path="/" element={<Login />} />
-              <Route path="*" element={<Forms />} />
-            </Routes>
-          )}
+          <Routes>
+            <Route path="/forms" element={<Forms />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/data" element={<Data />} />
+            <Route path="/History" element={<History />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="*" element={<Forms />} />
+            <Route path="/webmaster" element={<Webmaster />} />
+          </Routes>
         </Router>
-      </MuiPickersUtilsProvider>
-    </VehicleContext.Provider>
+      </VehicleContext.Provider>
+    </LocalizationProvider>
   );
 };

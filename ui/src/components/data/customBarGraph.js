@@ -1,9 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Box, Typography, Item } from "@mui/material";
-import TextField from "@material-ui/core/TextField";
-import { alpha } from "@material-ui/core/styles";
-import { DateTimePicker } from "@material-ui/pickers";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 export const CustomBarGraph = (props) => {
   const vehicleData = props.visitorDetails.visitorDetails;
@@ -27,7 +25,6 @@ export const CustomBarGraph = (props) => {
       }
     });
   }, [selectedDate, selectedDate1]);
-
 
   useMemo(() => {
     for (let i = 0; i < combineDates.length; i++) {
@@ -113,9 +110,8 @@ export const CustomBarGraph = (props) => {
           //   showTodayButton
         />
       </Box>
-      
-        <ReactApexChart options={chartData} series={chartData.series} />
-      
+
+      <ReactApexChart options={chartData} series={chartData.series} />
     </span>
   );
 };
