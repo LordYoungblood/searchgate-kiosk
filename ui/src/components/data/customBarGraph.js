@@ -2,14 +2,12 @@ import { useState, useMemo } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Box, Typography, Item } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import dayjs from "dayjs";
 
 export const CustomBarGraph = (props) => {
   const vehicleData = props.visitorDetails.visitorDetails;
-  const [selectedDate, handleDateChange] = useState(new Date());
-  const [selectedDate1, handleDateChange1] = useState(new Date());
-
-  let startDate = selectedDate.toISOString().slice(0, 10);
-  let endDate = selectedDate1.toISOString().slice(0, 10);
+  const [selectedDate, handleDateChange] = useState(dayjs());
+  const [selectedDate1, handleDateChange1] = useState(dayjs());
 
   const combineDates = [];
   const numberOFVehicles = [];
@@ -17,7 +15,7 @@ export const CustomBarGraph = (props) => {
   useMemo(() => {
     const date = vehicleData.map((data) => {
       const newDay = data.date.slice(0, 10);
-      if (newDay >= startDate && newDay <= endDate) {
+      if (newDay >= selectedDate && newDay <= selectedDate1) {
         if (!combineDates.includes(newDay)) {
           combineDates.push(newDay);
         }
@@ -83,7 +81,6 @@ export const CustomBarGraph = (props) => {
       // },
     ],
   };
-  
 
   return (
     <span>
@@ -101,7 +98,6 @@ export const CustomBarGraph = (props) => {
           value={selectedDate}
           onChange={handleDateChange}
           label="Start Date"
-          //   showTodayButton
         />
         <DateTimePicker
           value={selectedDate1}
