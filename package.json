@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Search Gate Kiosk",
   "scripts": {
-    "install": "cd ui && npm install",
     "start": "cd ui && npm install && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
