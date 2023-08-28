@@ -131,7 +131,7 @@ export const Login = () => {
           // console.log("after local storage is set", localStorage);
           setIsAuthenticated(data.user.admin);
           setFlag(true);
-          navigate("/forms");
+          // navigate("/forms");
           console.log("data from login", data)
           console.log("hitting this function")
         }

@@ -46,7 +46,7 @@ export const Navbar = () => {
                 />
               </Button>
 
-              HELLLO
+              YURIK
 
               <Button
                 onClick={() => navigate("/history")}
