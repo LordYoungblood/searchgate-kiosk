@@ -4,7 +4,7 @@
   "description": "Search Gate Kiosk",
   "scripts": {
     "install": "cd ui && npm install",
-    "start": "cd ui && npm install --force && npm start",
+    "start": "cd ui && npm install && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
