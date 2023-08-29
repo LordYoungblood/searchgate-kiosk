@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
-
 import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
 import logo from "../image/vigil_negative.png";
@@ -81,10 +80,9 @@ export const Login = () => {
           //     SameSite: "None",
           //   });
           // }
-
           if (data.user.admin == 1) {
             setCookie("au", "2055", {
-              path: "/",
+              // path: "/",
               domain: userDomain,
               maxAge: 8000000,
               // secure: true,
@@ -92,7 +90,7 @@ export const Login = () => {
             });
           } else if (data.user.admin == 2) {
             setCookie("au", "5050", {
-              path: "/",
+              // path: "/",
               domain: userDomain,
               maxAge: 8000000,
               // secure: true,
@@ -101,7 +99,7 @@ export const Login = () => {
             console.log("hit 1 login")
           } else if (data.user.admin == 3) {
             setCookie("au", "7050", {
-              path: "/",
+              // path: "/",
               domain: userDomain,
               maxAge: 8000000,
               // secure: true,
@@ -110,14 +108,14 @@ export const Login = () => {
             console.log("hit 2 login")
           }
           setCookie("base", data.user.user_base, {
-            path: "/",
+            // path: "/",
             domain: userDomain,
             maxAge: 8000000,
             // secure: true,
             SameSite: "None",
           });
           setCookie("ver", data.token, {
-            path: "/",
+            // path: "/",
             domain: userDomain,
             maxAge: 8000000,
             // secure: true,
@@ -134,6 +132,7 @@ export const Login = () => {
           navigate("/forms");
           // console.log("data from login", data)
           console.log("hitting this function")
+          console.log("data from login", data)
         }
       })
       .catch((err) => console.log(err));

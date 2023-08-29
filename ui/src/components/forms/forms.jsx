@@ -46,6 +46,7 @@ export const Forms = () => {
   };
 
   console.log("base from forms", base)
+  console.log("cookies from forms", cookies)
   
 
   return (

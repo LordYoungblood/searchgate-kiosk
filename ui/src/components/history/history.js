@@ -21,7 +21,7 @@ export const History = () => {
       if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
         return name.toUpperCase()
       } else {
-       return name.charAt(0).toUpperCase() + name.slice(1) + " ";
+      return name.charAt(0).toUpperCase() + name.slice(1) + " ";
       
   }})
   }

@@ -40,6 +40,8 @@ export const App = () => {
     }
   }, [flag]);
 
+  console.log("flag from app.js", flag)
+
   // ----------------- fetch for all Vehicle information -------------------------//
 
   // useEffect(() => {
