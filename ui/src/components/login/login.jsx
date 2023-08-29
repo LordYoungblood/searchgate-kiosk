@@ -115,8 +115,8 @@ export const Login = () => {
             SameSite: "None",
           });
           setCookie("ver", data.token, {
-            // path: "/",
-            path: `${API}`,
+            path: "/",
+            // path: `${API}`,
             domain: userDomain,
             maxAge: 8000000,
             // secure: true,
