@@ -23,7 +23,7 @@ export const App = () => {
 
   // const userDomain = "localhost";
   const userDomain =
-  "http://kioskapp-env.eba-umdxbzym.us-gov-west-1.elasticbeanstalk.com/"
+  "http://kioskapp-env.eba-umdxbzym.us-gov-west-1.elasticbeanstalk.com"
 
   // const API = "http://localhost:8080/api";
   const API =
