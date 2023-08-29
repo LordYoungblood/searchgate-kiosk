@@ -41,6 +41,7 @@ export const App = () => {
   }, [flag]);
 
   console.log("flag from app.js", flag)
+  console.log("cookies from app.js", cookies)
 
   // ----------------- fetch for all Vehicle information -------------------------//
 

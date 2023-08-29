@@ -133,6 +133,7 @@ export const Login = () => {
           // console.log("data from login", data)
           console.log("hitting this function")
           console.log("data from login", data)
+          console.log("user from login", user)
         }
       })
       .catch((err) => console.log(err));
