@@ -23,11 +23,11 @@ export const App = () => {
 
   // const userDomain = "localhost";
   const userDomain =
-  "http://kioskapp-env.eba-umdxbzym.us-gov-west-1.elasticbeanstalk.com/login"
+  "http://kioskapp-env.eba-umdxbzym.us-gov-west-1.elasticbeanstalk.com/"
 
-  // const API = "http://localhost:8080/api";
-  const API =
-    "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api";
+  const API = "http://localhost:8080/api";
+  // const API =
+  //   "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api";
 
   //ssssss
 
@@ -83,7 +83,7 @@ export const App = () => {
     setFlag,
   };
 
-  console.log("obj from login", obj)
+  console.log("obj from login", obj.cookies)
 
   // ----------------- verification routes for login ----------------------------//
   if (!user) {
