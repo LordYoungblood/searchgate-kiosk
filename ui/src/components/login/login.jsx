@@ -116,6 +116,7 @@ export const Login = () => {
           });
           setCookie("ver", data.token, {
             // path: "/",
+            path: `${API}`,
             domain: userDomain,
             maxAge: 8000000,
             // secure: true,
@@ -133,7 +134,7 @@ export const Login = () => {
           // console.log("data from login", data)
           console.log("hitting this function")
           console.log("data from login", data)
-          console.log("user from login", user)
+          // console.log("user from login", user)
         }
       })
       .catch((err) => console.log(err));
