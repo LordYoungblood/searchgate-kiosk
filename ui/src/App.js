@@ -21,10 +21,11 @@ export const App = () => {
   const [token, setToken] = useState(null);
   const [base, setBase] = useState(null);
 
-  const userDomain = "localhost";
-  // const userDomain =
+  // const userDomain = "localhost";
+  const userDomain =
   // "vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
   // "http://vehiclegatekioskui2-env.eba-vgfrxrgp.us-gov-west-1.elasticbeanstalk.com";
+  "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api";
 
   // const API = "http://localhost:8080/api";
   const API =
@@ -40,8 +41,9 @@ export const App = () => {
     }
   }, [flag]);
 
-  console.log("flag from app.js", flag)
+  // console.log("flag from app.js", flag)
   console.log("cookies from app.js", cookies)
+  console.log("token from login", token)
 
   // ----------------- fetch for all Vehicle information -------------------------//
 
@@ -82,6 +84,8 @@ export const App = () => {
     userDomain,
     setFlag,
   };
+
+  console.log("obj from login", obj)
 
   // ----------------- verification routes for login ----------------------------//
   if (!user) {
