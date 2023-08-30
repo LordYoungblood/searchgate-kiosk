@@ -119,7 +119,7 @@ export const Login = () => {
             // path: `${API}`,
             domain: userDomain,
             maxAge: 8000000,
-            // secure: true,
+            secure: false,
             SameSite: "None",
           });
           // console.log("after cookies is set", data);
