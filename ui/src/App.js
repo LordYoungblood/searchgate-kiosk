@@ -26,9 +26,9 @@ export const App = () => {
   "http://kioskapp-env.eba-umdxbzym.us-gov-west-1.elasticbeanstalk.com"
   
  
-  const API = "http://localhost:8080/api";
-  // const API =
-  //   "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api";
+  // const API = "http://localhost:8080/api";
+  const API =
+    "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api";
 
     // const [baseName, setBaseName] = useState('');
 
