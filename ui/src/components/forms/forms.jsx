@@ -1,4 +1,4 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { VehicleContext } from "../VehicleContext";
 import { Box, Container, MenuItem, TextField, Typography } from "@mui/material";
 
@@ -12,7 +12,15 @@ export const Forms = () => {
     date.toISOString().slice(0, 10) + " " + date.toTimeString().slice(0, 5);
 
   const [failedRegister, setFailedRegister] = useState(false);
-  const { cookies, base } = useContext(VehicleContext);
+  const { cookies, base, token } = useContext(VehicleContext);
+
+  const [baseName, setBaseName] = useState('');
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem('base')
+      const containsPatrick = storedValue.includes('patrick_sfb');
+      setBaseName (containsPatrick ? 'Patrick SFB' : 'NOTHING')
+  }, [])
 
   const [vehicle, setVehicle] = useState({
     first_name: "",
@@ -24,19 +32,9 @@ export const Forms = () => {
     model: "",
     date: today,
   });
-  // let baseHeader = base.name.toUpperCase().split("_").join(" ");
 
-  const baseHeader = (base) => {
-    return base.map((name) => {
-      if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
-        return name.toUpperCase()
-      } else {
-      return name.charAt(0).toUpperCase() + name.slice(1) + " ";
-      
-  }})
-  }
   
- 
+
   // if (!localStorage) {
   //   window.location.href = "/login";
   // }
@@ -45,13 +43,11 @@ export const Forms = () => {
     window.location.reload();
   };
 
-  console.log("base from forms", base)
-  console.log("cookies from forms", cookies)
+
   
 
   return (
-    <div>
-        <h1>HELLLOOO</h1>  
+    <div> 
       <Box
         sx={{
           display: "flex",
@@ -64,8 +60,10 @@ export const Forms = () => {
         <Typography
           style={{ alightContent: "center", fontFamily: "sans", fontSize: 60 }}
         >
-        {baseHeader(base.name.split('_'))} Search Gate
-        Cape Canaveral
+        {/* {baseHeader(base.name.split('_'))} Search Gate */}
+      {baseName} Search Gate
+  
+          {/* Search Gate */}
         </Typography>
       </Box>
       
@@ -142,7 +140,7 @@ export const Forms = () => {
                 sx={{ boxShadow: 2, m: 1 }}
               />
             </Box>
-            <Box>
+            <Box sx={{ displayFlex:'flex', flexDirection:'row'}}>
               <TextField
                 error={failedRegister}
                 sx={{ boxShadow: 2, m: 1, width: "17%" }}
@@ -215,10 +213,9 @@ export const Forms = () => {
                 <MenuItem value="AA">Armed Forces Americas</MenuItem>
                 <MenuItem value="other">Other</MenuItem>
               </TextField>
-
               <TextField
                 error={failedRegister}
-                sx={{ boxShadow: 2, m: 1, width: "80%" }}
+                sx={{ boxShadow: 2, m: 1, width: "79%", ml : 1.5 }}
                 onChange={(e) =>
                   setVehicle((prev) => {
                     return { ...prev, drivers_license: e.target.value };

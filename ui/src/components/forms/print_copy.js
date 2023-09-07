@@ -38,7 +38,7 @@ export default function PrintModal(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { token, API, base } = React.useContext(VehicleContext);
-
+  const userToken = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
   const componentRef = useRef();
   const vehicle = props.element.vehicle;
   const setFailedRegister = props.element.setFailedRegister;
@@ -51,14 +51,15 @@ export default function PrintModal(props) {
   });
 
   // ------------------ POST USER/VEHICLE INFO INTO DB ----------------- //
-  const postUser = () => {
+  const postVehicle = () => {
     setFailedRegister(false);
+    console.log("posting veh to DB PEARS and YG suck for not naming stuff correctly", userToken)
     fetch(API, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userToken}`,
         Base: JSON.stringify(base),
       },
       body: JSON.stringify(vehicle),
@@ -160,7 +161,7 @@ export default function PrintModal(props) {
   });
 
   const printAndClose = async () => {
-    postUser();
+    postVehicle();
     handleClose();
     handlePrint();
   };
@@ -213,10 +214,10 @@ export default function PrintModal(props) {
   return (
     <div>
       <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center", mb: 50 }}
       >
         <Button
-          sx={{ boxShadow: 2, width: 150, m: 1, backgroundColor: '#61C0A3', '&:hover': { backgroundColor: '#61C0A3', color: 'black'} }}
+          sx={{boxShadow: 2, width: 150, m: 1, backgroundColor: '#61C0A3', '&:hover': { backgroundColor: '#61C0A3', color: 'black'} }}
           variant="contained"
           onClick={() => {
             fillOutFields();

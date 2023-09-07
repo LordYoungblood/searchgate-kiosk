@@ -8,14 +8,13 @@ export const MonthlyBarGraph = (props) => {
   const combineDates = [];
   const numberOFVehicles = [];
 
-  const date = vehicleData.map((data) => {
+  const date = vehicleData?.length > 0 ? vehicleData.map((data) => {
     const newDay = data.date.slice(0, 7);
     if (!combineDates.includes(newDay) && newDay >= lastYear) {
       combineDates.push(newDay);
     }
-
     return;
-  });
+  }) : [];
 
   useMemo(() => {
     for (let i = 0; i < combineDates.length; i++) {

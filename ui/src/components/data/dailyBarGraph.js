@@ -5,11 +5,11 @@ export const DailyBarGraph = (props) => {
   const vehicleData = props.element.visitorDetails;
   const lastMonth = props.element.lastMonth;
  
-
+console.log("props from dailyBarGraph", props)
   const combineDates = [];
   let numberOFVehicles = [];
 
-  const date = vehicleData.map((data) => {
+  const date = vehicleData?.length > 0 ? vehicleData.map((data) => {
     const newDay = data.date.slice(0, 10);
     if (newDay >= lastMonth) {
       if (!combineDates.includes(newDay)) {
@@ -17,7 +17,7 @@ export const DailyBarGraph = (props) => {
       }
       return;
     }
-  });
+  }) : [];
 
   // useMemo(() => {
   //   for (let i = 0; i < combineDates.length; i++) {
@@ -32,7 +32,7 @@ export const DailyBarGraph = (props) => {
   // }, [combineDates, vehicleData]);
   
   useMemo(() => {
-     numberOFVehicles = combineDates.map(date =>
+    numberOFVehicles = combineDates.map(date =>
       vehicleData.filter(vehicle => date === vehicle.date.slice(0, 10)).length
     );
   }, [combineDates, vehicleData]);

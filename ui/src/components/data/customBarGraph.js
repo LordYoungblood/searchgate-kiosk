@@ -8,12 +8,11 @@ export const CustomBarGraph = (props) => {
   const vehicleData = props.visitorDetails.visitorDetails;
   const [selectedDate, handleDateChange] = useState(dayjs());
   const [selectedDate1, handleDateChange1] = useState(dayjs());
-
   const combineDates = [];
   const numberOFVehicles = [];
-
+console.log("PROPS FROM CUSTOMBARGRAPH", props)
   useMemo(() => {
-    const date = vehicleData.map((data) => {
+    const date = vehicleData?.lenght > 0 ? vehicleData?.map((data) => {
       const newDay = data.date.slice(0, 10);
       if (newDay >= selectedDate && newDay <= selectedDate1) {
         if (!combineDates.includes(newDay)) {
@@ -21,7 +20,7 @@ export const CustomBarGraph = (props) => {
         }
         return;
       }
-    });
+    }) : [];
   }, [selectedDate, selectedDate1]);
 
   useMemo(() => {

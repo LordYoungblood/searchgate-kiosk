@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { VehicleContext } from "../VehicleContext";
 import { Box, Typography } from "@mui/material";
 import {
@@ -11,20 +11,40 @@ import {
 } from "@mui/x-data-grid";
 
 export const History = () => {
-  const { visitorDetails, base } = useContext(VehicleContext);
+  const { base, API, token, setFlag, flag } = useContext(VehicleContext);
+  const [baseName, setBaseName] = useState('');
   const [pageSize, setPageSize] = useState(50);
+  const userToken = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
+  const [visitorDetails, setVisitorDetails] = useState([]);
 
-  
+  useEffect(() => {
+    fetch(API, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${userToken}`,
+        Base: JSON.stringify(base),
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setVisitorDetails(json);
+        setFlag(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-  const baseHeader = (base) => {
-    return base.map((name) => {
-      if ( name.includes('afb') || name.includes('sfb') || name.includes('sfs')) {
-        return name.toUpperCase()
-      } else {
-      return name.charAt(0).toUpperCase() + name.slice(1) + " ";
-      
-  }})
-  }
+  // console.log("visitorDetails from app.js", visitorDetails)
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem('base')
+      const containsPatrick = storedValue.includes('patrick_sfb');
+      setBaseName (containsPatrick ? 'Patrick SFB' : 'NOTHING')
+  }, [])
+
+
+
 
 
   const columns = [
@@ -91,9 +111,9 @@ export const History = () => {
     },
   ];
 
-  // { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 }
+
   const rows = [];
-  visitorDetails.map((visitor) => {
+  visitorDetails?.map((visitor) => {
     rows.push({
       date:
         visitor.date.split("T")[0] +
@@ -112,6 +132,8 @@ export const History = () => {
     return rows;
   });
 
+
+
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
@@ -128,8 +150,8 @@ export const History = () => {
       <Typography
           style={{ alightContent: "center", fontFamily: "sans", fontSize: 30, fontWeight: "bold" }}
         >
-          {" "}
-          {baseHeader(base.name.split('_'))} History{" "}
+          {baseName} History
+          
         </Typography>
         {/* <SearchBar /> */}
       </Box>

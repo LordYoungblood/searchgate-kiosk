@@ -74,7 +74,7 @@ export const Webmaster = () => {
         setUserDetails(json);
       })
       .catch((err) => console.log(err));
-  }, [toggle]);
+  }, []);
 
   const postUser = () => {
     setFailedRegister(false);

@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { VehicleContext } from "../VehicleContext";
 import {
   Box,
-  Container,
+  // Container,
   Modal,
   Button,
   Typography,
@@ -10,18 +10,16 @@ import {
   TextField,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import Swal from "sweetalert2";
 // import { makeStyles } from "@material-ui/core/styles";
 import {
   DataGrid,
   GridToolbar,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarExport,
-  GridToolbarDensitySelector,
+  // GridToolbarContainer,
+  // GridToolbarColumnsButton,
+  // GridToolbarFilterButton,
+  // GridToolbarExport,
+  // GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 
 // const useStyles = makeStyles((theme) => ({
@@ -36,7 +34,12 @@ export const Users = () => {
   const [pageSize, setPageSize] = useState(10);
   const [userDetails, setUserDetails] = useState([]);
   const [toggle, setToggle] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const userToken = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
+
   const [open, setOpen] = useState(false);
+    // const [users, setUsers] = useState([]); //inventory state
   // const classes = useStyles();
 
   const [failedRegister, setFailedRegister] = useState(false);
@@ -47,27 +50,15 @@ export const Users = () => {
     user_base: base,
   });
 
-  const baseHeader = (base) => {
-    return base.map((name) => {
-      if (
-        name.includes("afb") ||
-        name.includes("sfb") ||
-        name.includes("sfs")
-      ) {
-        return name.toUpperCase();
-      } else {
-        return name.charAt(0).toUpperCase() + name.slice(1) + " ";
-      }
-    });
-  };
+
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleOpen2 = () => setOpen(true);
-  const handleClose2 = () => setOpen(false);
+  // const handleOpen2 = () => setOpen(true);
+  // const handleClose2 = () => setOpen(false);
 
-  // console.log(visitorDetails);
+ 
 
 
   useEffect(() => {
@@ -76,16 +67,20 @@ export const Users = () => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userToken}`,
         Base: JSON.stringify(base),
       },
     })
       .then((res) => res.json())
       .then((json) => {
         setUserDetails(json);
+        setLoading(true); 
       })
       .catch((err) => console.log(err));
-  }, [toggle]);
+      setLoading(false)
+  }, []);
+
+
 
   const postUser = () => {
     setFailedRegister(false);
@@ -94,7 +89,7 @@ export const Users = () => {
       // credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userToken}`,
         Base: JSON.stringify(base),
       },
       body: JSON.stringify(newUser),
@@ -107,30 +102,52 @@ export const Users = () => {
         console.log("Error: ", err);
       });
     handleClose();
+    window.location.reload();
   };
 
-  const deleteUser = (id) => {
+
+  const deleteUser = (id, params) => {
     setFailedRegister(false);
-    console.log(id);
-    fetch(`${API}/users`, {
+    const userID = params.row.admin.id;
+      fetch(`${API}/users`, {
       method: "DELETE",
       // credentials: "include",
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ userID }),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userToken}`,
       },
     })
       .then((res) => {
         res.json();
-        toggle ? setToggle(false) : setToggle(true);
+        // toggle ? setToggle(false) : setToggle(true);
       })
       .catch((err) => {
         console.log("Error: ", err);
       });
+      window.location.reload();
   };
+
+  const handleDeleteUser = (params) => {
+    const { id, user_name } = params.row;
+    Swal.fire({
+      title: `Do you want to delete ${user_name}?`,
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(id, params); // Pass both the id and params to deleteUser
+        Swal.fire(`${user_name} has been deleted`, "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+
+
   const columns = [
-    // { field: "id", headerName: "ID", width: 90 },
     {
       field: "Delete",
       headerName: "Delete",
@@ -138,30 +155,41 @@ export const Users = () => {
       renderCell: (params) => (
         <DeleteForeverIcon
           sx={{ color: "#ef5350" }}
-          onClick={() => {
-            Swal.fire({
-              title: `Do you want to delete ${params.row.user_name}?`,
-              showDenyButton: false,
-              showCancelButton: true,
-              confirmButtonText: "Delete",
-              denyButtonText: `Don't save`,
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                deleteUser(params.row.uuid);
-                Swal.fire(
-                  `${params.row.user_name} has been deleted`,
-                  "",
-                  "success"
-                );
-              } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info");
-              }
-            });
-          }}
+          onClick={() => handleDeleteUser(params)} // Call handleDeleteUser with params
         />
       ),
     },
+    // {
+    //   field: "Delete",
+    //   headerName: "Delete",
+    //   width: 60,
+    //   renderCell: (params) => (
+    //     <DeleteForeverIcon
+    //       sx={{ color: "#ef5350" }}
+    //       onClick={() => {
+    //         Swal.fire({
+    //           title: `Do you want to delete ${params.row.user_name}?`,
+    //           showDenyButton: false,
+    //           showCancelButton: true,
+    //           confirmButtonText: "Delete",
+    //           denyButtonText: `Don't save`,
+    //         }).then((result) => {
+    //           /* Read more about isConfirmed, isDenied below */
+    //           if (result.isConfirmed) {
+    //             deleteUser(params.row.uuid);
+    //             Swal.fire(
+    //               `${params.row.user_name} has been deleted`,
+    //               "",
+    //               "success"
+    //             );
+    //           } else if (result.isDenied) {
+    //             Swal.fire("Changes are not saved", "", "info");
+    //           }
+    //         });
+    //       }}
+    //     />
+    //   ),
+    // },
     {
       field: "user_name",
       headerName: "User Name",
@@ -176,23 +204,53 @@ export const Users = () => {
     },
   ];
 
-  // { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 }
-  const rows = [];
-  userDetails.map((user, index) => {
-    let addy = true;
-    if (user.admin == 1 || user.admin == 3) {
-      addy = true;
-    } else {
-      addy = false;
-    }
 
-    rows.push({
-      id: index + 1,
-      user_name: user.user_name,
-      admin: addy,
-      uuid: user.id,
-    });
-  });
+// //write a function that sets rows to the return of userDetails.map
+// const rows = userDetails?.map((user, index) => {
+//   return {
+//     id: index + 1,
+//     user_name: user.user_name,
+//     admin: user,
+//   };
+// });
+
+const rows = userDetails?.length > 0 ? userDetails.map((user, index) => ({
+  id: index + 1,
+  user_name: user.user_name,
+  admin: user,
+})) : [];
+
+
+  // userDetails?.map((user, index) => {
+  //   let addy = true;
+  //   if (user.admin == 1 || user.admin == 3) {
+  //     addy = true;
+  //   } else {
+  //     addy = false;
+  //   }
+
+//     if (Array.isArray(userDetails)) {
+//       userDetails?.map((user, index) => {
+//         let addy = true;
+//         if (user.admin === 1 || user.admin === 3) {
+//           addy = true;
+//         } else {
+//           addy = false;
+//         }
+
+//         console.log("userdetails in ADMIN", userDetails)
+//         console.log("TOWSSS in ADMIN", user)
+      
+
+//     rows.push({
+//       id: index + 1,
+//       user_name: user.user_name,
+//       admin: addy,
+//       uuid: user.id,
+//     });
+//   });
+// }
+
 
   const fillOutFields = () => {
     if (
@@ -233,7 +291,7 @@ export const Users = () => {
           }}
         >
           {" "}
-          {baseHeader(base.name.split("_"))} Users{" "}
+          {/* {baseHeader(base.name.split("_"))} Users{" "} */}
         </Typography>
       </Box>
 
@@ -359,10 +417,20 @@ export const Users = () => {
         </Modal>
       </div>
 
+{loading === false ? ('Loading...') : (
       <Box>
         <div style={{ height: "73vh", width: "100%" }}>
           <DataGrid
             // toolBarStyles={classes.toolbar}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "Name", sort: "asc" }],
+              },
+              pagination: {
+                pageSize: 100,
+              },
+              // density: { density: "compact"}
+            }}
             rows={rows}
             columns={columns}
             pageSize={pageSize}
@@ -380,13 +448,7 @@ export const Users = () => {
                 "& .MuiButtonBase-root": {
                   color: "black",
                 },
-                "& .MuiTypography-root": {
-                  color: "black",
-                },
                 "& .MuiButton-StartIcon": {
-                  color: "black",
-                },
-                "& .MuiButtonBase-root": {
                   color: "black",
                 },
                 "& .MuiTouchRipple": {
@@ -429,6 +491,7 @@ export const Users = () => {
           ></DataGrid>
         </div>
       </Box>
+)}
     </>
   );
 };

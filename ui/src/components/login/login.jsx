@@ -6,7 +6,9 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
-import logo from "../image/vigil_negative.png";
+import EZ from "../image/EZ.png";
+// import EazyPass3 from "../image/EazyPass3.svg";
+// import EazyPass3 from "../image/EazyPass3.png";
 import Swal from "sweetalert2";
 // import { setFlagsFromString } from "v8";
 
@@ -27,6 +29,8 @@ export const Login = () => {
   });
   const navigate = useNavigate();
 
+  
+
   const postLogin = () => {
     // console.log("pre fetch");
     fetch(`${API}/login`, {
@@ -41,6 +45,7 @@ export const Login = () => {
         if (res.status === 200) {
           return res.json();
           console.log("login success from login")
+          console.log("res from loging", res)
         } else {
           Swal.fire({
             title: "Invalid Credentials",
@@ -55,92 +60,24 @@ export const Login = () => {
       .then((data) => {
         if (data === undefined) return;
         if (data !== undefined) {
-          // if (data.user.admin == 1) {
-          //   localStorage.setItem("au", "2055", {
-          //     path: "/",
-          //     domain: userDomain,
-          //     maxAge: 8000,
-          //     secure: true,
-          //     SameSite: "None",
-          //   });
-          // } else if (data.user.admin == 2) {
-          //   localStorage.setItem("au", "5050", {
-          //     path: "/",
-          //     domain: userDomain,
-          //     maxAge: 8000,
-          //     secure: true,
-          //     SameSite: "None",
-          //   });
-          // } else if (data.user.admin == 3) {
-          //   localStorage.setItem("au", "7050", {
-          //     path: "/",
-          //     domain: userDomain,
-          //     maxAge: 8000,
-          //     secure: true,
-          //     SameSite: "None",
-          //   });
-          // }
           if (data.user.admin == 1) {
-            setCookie("au", "2055", {
-              // path: "/",
-              domain: userDomain,
-              maxAge: 8000000,
-              // secure: true,
-              SameSite: "None",
-            });
+            localStorage.setItem("base", JSON.stringify(data.user.user_base))
+            localStorage.setItem("user_rights", '7050');
+            localStorage.setItem("token", JSON.stringify(data.token));
+            navigate("/forms");
           } else if (data.user.admin == 2) {
-            setCookie("au", "5050", {
-              // path: "/",
-              domain: userDomain,
-              maxAge: 8000000,
-              // secure: true,
-              SameSite: "None",
-            });
-            console.log("hit 1 login")
+            console.log("admin 2", data)
           } else if (data.user.admin == 3) {
-            setCookie("au", "7050", {
-              // path: "/",
-              domain: userDomain,
-              maxAge: 8000000,
-              // secure: true,
-              SameSite: "None",
-            });
-            console.log("hit 2 login")
+            console.log("admin 3", data)
           }
-          setCookie("base", data.user.user_base, {
-            // path: "/",
-            domain: userDomain,
-            maxAge: 8000000,
-            // secure: true,
-            SameSite: "None",
-          });
-          setCookie("ver", data.token, {
-            path: "/",
-            // path: `${API}`,
-            domain: userDomain,
-            maxAge: 8000000,
-            secure: false,
-            SameSite: "None",
-          });
-          // console.log("after cookies is set", data);
           setToken(data.token);
           setUser(data);
-          // localStorage.setItem("ver", JSON.stringify(data.token));
-          // localStorage.setItem("base", JSON.stringify(data.user.user_base));
-          // console.log("after local storage is set", localStorage);
           setIsAuthenticated(data.user.admin);
-          setFlag(true);
-          navigate("/forms");
-          // console.log("data from login", data)
-          console.log("hitting this function")
-          console.log("data from login", data)
-          // console.log("user from login", user)
         }
       })
       .catch((err) => console.log(err));
-  };
-  // console.log("after post login is complete", localStorage);
-
+    };
+    
 
 
   return (
@@ -166,9 +103,10 @@ export const Login = () => {
           }}
         >
           <Box
-            sx={{ backgroundColor: "#212121", borderRadius: "20px", pl: 1.5 }}
+            
           >
             {/* <img src={logo} alt='logo' style={{ width: '20rem' }} /> */}
+            <img src={EZ} alt="shark" style={{ width: '10rem' }} />
           </Box>
           {/* {failedLogin && (
             <span>
@@ -231,24 +169,6 @@ export const Login = () => {
               }}
             />
           </Box>
-
-        
-                    <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    sx={{
-                      boxShadow: 2,
-                      width: 150,
-                      m: 1,
-                      backgroundColor: "#61C",
-                      "&:hover": { backgroundColor: "#61C0A3", color: "black" },
-                    }}
-                  
-                  >
-            
-            TEST</Button>
 
           <Button
             fullWidth

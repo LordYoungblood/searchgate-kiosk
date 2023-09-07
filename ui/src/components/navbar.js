@@ -4,7 +4,8 @@ import { VehicleContext } from "./VehicleContext";
 import AppBar from "@mui/material/AppBar";
 import { Box, Typography } from "@mui/material/";
 import Toolbar from "@mui/material/Toolbar";
-import logo from "./image/vigil_nobackground.png";
+import EZ from "./image/EZ.png";
+
 
 import Button from "@mui/material/Button";
 import shark from "./image/shark.png";
@@ -14,24 +15,29 @@ import HomeIcon from "@mui/icons-material/Home";
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const { removeCookie, cookies, user } = useContext(VehicleContext);
+  const { removeCookie, cookies, user, userRights } = useContext(VehicleContext);
 
   const logout = () => {
-    // localStorage.removeItem("ver");
-    // localStorage.removeItem("au");
-    // localStorage.removeItem("base");
-    removeCookie("ver");
-    removeCookie("au");
-    removeCookie("base");
+    localStorage.removeItem("user_rights");
+    localStorage.removeItem("token");
+    localStorage.removeItem("base");
+    // removeCookie("ver");
+    // removeCookie("au");
+    // removeCookie("base");
     navigate("/");
+    window.location.reload();
   };
+
+
+
 
   return (
     <Box sx={{ display: "flex", width: "100%" }}>
       <AppBar position="relative" sx={{ backgroundColor: "#051726" }}>
         <Toolbar>
+          
           {/* <Box sx={{ width: "100%" }}> */}
-          {user === '2055' && (
+          {userRights === '7050' && (
             <Box
               sx={{
                 justifyContent: "flex-start",
@@ -41,12 +47,12 @@ export const Navbar = () => {
             >
               <Button>
                 <HomeIcon
-                  sx={{ fontSize: 30, color: "red", cursor: "pointer" }}
+                  sx={{ fontSize: 30, color: "white", cursor: "pointer" }}
                   onClick={() => navigate("/forms")}
                 />
               </Button>
 
-              YURIK
+
 
               <Button
                 onClick={() => navigate("/history")}
@@ -73,7 +79,7 @@ export const Navbar = () => {
             </Box>
           )}
 
-          {user === '7050' && (
+          {userRights === "2055" && (
             <Box
               sx={{
                 justifyContent: "flex-start",
@@ -122,7 +128,8 @@ export const Navbar = () => {
           )}
 
           <Box sx={{ justifyContent: "center", width: "100%" }}>
-            <img src={logo} alt="shark" style={{ width: 55 }} />
+            {/* <img src={logo} alt="shark" style={{ width: 55 }} /> */}
+            <img src={EZ} alt="sad" style={{ width: 55 }} />
           </Box>
 
           <Button
