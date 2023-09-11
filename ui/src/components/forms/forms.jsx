@@ -31,6 +31,7 @@ export const Forms = () => {
     make: "",
     model: "",
     date: today,
+    delivery_location: ""
   });
 
   
@@ -44,7 +45,7 @@ export const Forms = () => {
   };
 
 
-  
+  console.log("veh from forms", vehicle);
 
   return (
     <div> 
@@ -58,7 +59,7 @@ export const Forms = () => {
         
           
         <Typography
-          style={{ alightContent: "center", fontFamily: "sans", fontSize: 60 }}
+          style={{ alightContent: "center", fontFamily: "sans", fontSize: 20, mt:1 }}
         >
         {/* {baseHeader(base.name.split('_'))} Search Gate */}
       {baseName} Search Gate
@@ -280,6 +281,28 @@ export const Forms = () => {
                 name="model"
               />
             </Box>
+            <Typography
+              sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
+            >
+              {" "}
+              Delivery Information{" "}
+            </Typography>
+
+              <TextField
+                sx={{ boxShadow: 2, m: 1, width: "100%" }}
+                error={failedRegister}
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, delivery_location: e.target.value };
+                  })
+                }
+                required
+                id="Delivery Location"
+                label="Delivery Location"
+                name="Delivery Location"
+              />
+              
+        
           </form>
         </Container>
         <PrintModal element={{ vehicle, setFailedRegister, reload }} />
