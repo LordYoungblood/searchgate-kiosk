@@ -141,6 +141,10 @@ export default function PrintModal(props) {
               {" "}
               <b>Model:</b> {vehicle.model}
             </Typography>
+            <Typography>
+              {" "}
+              <b>Delivery Location:</b> {vehicle.delivery_location}
+            </Typography>
           </Box>
 
           <Typography

@@ -101,13 +101,19 @@ export const History = () => {
       // editable: true,
     },
     {
-      field: "fullName",
+      field: "fullDL",
       headerName: "Full DL",
-      description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 160,
       valueGetter: (params) =>
         `${params.row.state || ""} ${params.row.drivers_license || ""}`,
+    },
+    {
+      field: "delivery_location",
+      headerName: "Delivery Location",
+      // type: 'number',
+      width: 110,
+      // editable: true,
     },
   ];
 
@@ -128,6 +134,7 @@ export const History = () => {
       plate: visitor.plate,
       make: visitor.make,
       model: visitor.model,
+      delivery_location: visitor.delivery_location,
     });
     return rows;
   });
