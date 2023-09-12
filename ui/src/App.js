@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 import { Users } from "./components/admin/admin";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LoadingProvider } from "./components/contexts/LoadingContext";
 
 export const App = () => {
   const [base, setBase] = useState(null);
@@ -19,78 +20,31 @@ export const App = () => {
   const [flag, setFlag] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [ visitorDetails, setVisitorDetails] = useState([]);
-  
-  // const userDomain = "localhost";
+  const [visitorDetails, setVisitorDetails] = useState([]);
+
   const userDomain =
-  "http://kioskapp-env.eba-umdxbzym.us-gov-west-1.elasticbeanstalk.com"
-  
- 
-  // const API = "http://localhost:8080/api";
+    "http://kioskapp-env.eba-umdxbzym.us-gov-west-1.elasticbeanstalk.com";
   const API =
     "http://kioskapi3-env.eba-mxp73pfs.us-gov-west-1.elasticbeanstalk.com/api";
 
-    // const [baseName, setBaseName] = useState('');
+  const userRights = localStorage.getItem("user_rights");
+  const userToken = localStorage.getItem("token");
+  const userTokenn = localStorage.getItem("token")
+    ? localStorage.getItem("token").replace(/^"(.*)"$/, "$1")
+    : null;
 
-    // useEffect(() => {
-    //   const storedValue = localStorage.getItem('base')
-    //     const containsPatrick = storedValue.includes('patrick_sfb');
-    //     setBaseName (containsPatrick ? 'Patrick SFB' : 'NOTHING')
-    // }, [])
+  const getBaseName = () => {
+    const baseSetter = { name: "patrick_sfb" };
+    return baseSetter.name;
+  };
 
-    const userRights = localStorage.getItem('user_rights');//sets variable for admin level 
-    const userToken = localStorage.getItem('token');//sets variable for token
+  const baseName = getBaseName();
 
-
-
-
-//write me a function that sets usertokenn if localStorage.getItem('token') is not null
-const userTokenn = localStorage.getItem('token') ? localStorage.getItem('token').replace(/^"(.*)"$/, '$1') : null
-
-    // const userTokenn = localStorage.getItem('token').replace(/^"(.*)"$/, '$1') 
-    
-
-    
-
-
-    //function that maps localStorage.getItem('base') to the name in the object
-    const baseSetter = localStorage.getItem('base')
-    
-    //set base to the name in the baseSetter object
-  
-    const getBaseName = () => {
-      const baseSetter = {"name": "patrick_sfb"};
-      return baseSetter.name;
-    };
-    
-    const baseName = getBaseName();
-    
-  
   useMemo(() => {
-      setBase(baseName);
-      setUser(userRights);
-      setToken(userToken);
-  }, [flag]);
-
-
-
-
-
-
-  // useMemo(() => {
-  //   if (localStorage) {
-  //     const user = JSON.parse(`${localStorage.au}`);
-  //     const token = JSON.parse(`${localStorage.ver}`);
-  //     setUser(user);
-  //     setToken(token);
-  //   }
-  // }, [flag]);
-
-  // console.log("flag from app.js", flag)
-  // console.log("cookies from app.js", cookies)
-  // console.log("token from login", token)
-
-  // ----------------- fetch for all Vehicle information -------------------------//
+    setBase(baseName);
+    setUser(userRights);
+    setToken(userToken);
+  }, [baseName, userRights, userToken]);
 
   useEffect(() => {
     fetch(API, {
@@ -108,11 +62,8 @@ const userTokenn = localStorage.getItem('token') ? localStorage.getItem('token')
         setFlag(false);
       })
       .catch((err) => console.log(err));
-  }, [token, flag]);
+  }, [token, flag, base, userTokenn]);
 
- 
-
-  // ----------- Context object to be passed to all components ------------------//
   const obj = {
     visitorDetails,
     setVisitorDetails,
@@ -130,13 +81,9 @@ const userTokenn = localStorage.getItem('token') ? localStorage.getItem('token')
     removeCookie,
     userDomain,
     setFlag,
-    userRights
+    userRights,
   };
 
-  // console.log('token from app.js', token)
-  // console.log('obj from app.js', obj)
-
-  // ----------------- verification routes for login ----------------------------//
   if (!user) {
     return (
       <VehicleContext.Provider value={obj}>
@@ -153,17 +100,19 @@ const userTokenn = localStorage.getItem('token') ? localStorage.getItem('token')
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <VehicleContext.Provider value={obj}>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/forms" element={<Forms />} />
-            <Route path="/data" element={<Data />} />
-            <Route path="/History" element={<History />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="*" element={<Login />} />
-            <Route path="/webmaster" element={<Webmaster />} />
-          </Routes>
-        </Router>
+        <LoadingProvider>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/forms" element={<Forms />} />
+              <Route path="/data" element={<Data />} />
+              <Route path="/History" element={<History />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="*" element={<Login />} />
+              <Route path="/webmaster" element={<Webmaster />} />
+            </Routes>
+          </Router>
+        </LoadingProvider>
       </VehicleContext.Provider>
     </LocalizationProvider>
   );
