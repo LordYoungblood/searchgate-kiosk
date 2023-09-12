@@ -2,64 +2,58 @@ import { useState, useContext, useEffect } from "react";
 import { VehicleContext } from "../VehicleContext";
 import {
   Box,
-  // Container,
   Modal,
   Button,
   Typography,
-  MenuItem,
   TextField,
+  MenuItem,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Swal from "sweetalert2";
-// import { makeStyles } from "@material-ui/core/styles";
-import {
-  DataGrid,
-  GridToolbar,
-  // GridToolbarContainer,
-  // GridToolbarColumnsButton,
-  // GridToolbarFilterButton,
-  // GridToolbarExport,
-  // GridToolbarDensitySelector,
-} from "@mui/x-data-grid";
-
-// const useStyles = makeStyles((theme) => ({
-//   toolbar: {
-//     color: "black",
-//     backgroundColor: "lightgray",
-//   },
-// }));
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 export const Users = () => {
-  const { API, token, base } = useContext(VehicleContext);
+  const { API, base } = useContext(VehicleContext);
   const [pageSize, setPageSize] = useState(10);
   const [userDetails, setUserDetails] = useState([]);
-  const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  const userToken = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
-
+  const userToken = localStorage.getItem("token").replace(/^"(.*)"$/, "$1");
   const [open, setOpen] = useState(false);
-    // const [users, setUsers] = useState([]); //inventory state
-  // const classes = useStyles();
-
-  const [failedRegister, setFailedRegister] = useState(false);
-  const [newUser, setNewUser] = useState({
-    user_name: "",
-    admin: "",
-    password: "",
-    user_base: base,
-  });
-
-
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const handleOpen2 = () => setOpen(true);
-  // const handleClose2 = () => setOpen(false);
+  const [newUser, setNewUser] = useState({
+    user_name: "",
+    admin: false,
+    password: "",
+  });
 
- 
-
+  const postUser = async () => {
+    try {
+      const response = await fetch(`${API}/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify(newUser),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setUserDetails([...userDetails, newUser]);
+        Swal.fire("Success", "User added successfully!", "success");
+      } else {
+        console.error("Failed to add user:", data.message || "Unknown error");
+        Swal.fire("Error", data.message || "Failed to add user", "error");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire("Error", "Failed to add user", "error");
+    } finally {
+      handleClose();
+    }
+  };
 
   useEffect(() => {
     fetch(`${API}/users`, {
@@ -74,58 +68,24 @@ export const Users = () => {
       .then((res) => res.json())
       .then((json) => {
         setUserDetails(json);
-        setLoading(true); 
+        setLoading(false);
       })
       .catch((err) => console.log(err));
-      setLoading(false)
-  }, []);
-
-
-
-  const postUser = () => {
-    setFailedRegister(false);
-    fetch(`${API}/register`, {
-      method: "POST",
-      // credentials: "include",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${userToken}`,
-        Base: JSON.stringify(base),
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((res) => {
-        res.json();
-        toggle ? setToggle(false) : setToggle(true);
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-      });
-    handleClose();
-    window.location.reload();
-  };
-
+  }, [API, base, userToken]);
 
   const deleteUser = (id, params) => {
-    setFailedRegister(false);
     const userID = params.row.admin.id;
-      fetch(`${API}/users`, {
+    fetch(`${API}/users`, {
       method: "DELETE",
-      // credentials: "include",
       body: JSON.stringify({ userID }),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${userToken}`,
       },
     })
-      .then((res) => {
-        res.json();
-        // toggle ? setToggle(false) : setToggle(true);
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-      });
-      window.location.reload();
+      .then((res) => res.json())
+      .catch((err) => console.log("Error: ", err));
+    window.location.reload();
   };
 
   const handleDeleteUser = (params) => {
@@ -138,14 +98,13 @@ export const Users = () => {
       denyButtonText: `Don't save`,
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteUser(id, params); // Pass both the id and params to deleteUser
+        deleteUser(id, params);
         Swal.fire(`${user_name} has been deleted`, "", "success");
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
     });
   };
-
 
   const columns = [
     {
@@ -155,122 +114,33 @@ export const Users = () => {
       renderCell: (params) => (
         <DeleteForeverIcon
           sx={{ color: "#ef5350" }}
-          onClick={() => handleDeleteUser(params)} // Call handleDeleteUser with params
+          onClick={() => handleDeleteUser(params)}
         />
       ),
     },
-    // {
-    //   field: "Delete",
-    //   headerName: "Delete",
-    //   width: 60,
-    //   renderCell: (params) => (
-    //     <DeleteForeverIcon
-    //       sx={{ color: "#ef5350" }}
-    //       onClick={() => {
-    //         Swal.fire({
-    //           title: `Do you want to delete ${params.row.user_name}?`,
-    //           showDenyButton: false,
-    //           showCancelButton: true,
-    //           confirmButtonText: "Delete",
-    //           denyButtonText: `Don't save`,
-    //         }).then((result) => {
-    //           /* Read more about isConfirmed, isDenied below */
-    //           if (result.isConfirmed) {
-    //             deleteUser(params.row.uuid);
-    //             Swal.fire(
-    //               `${params.row.user_name} has been deleted`,
-    //               "",
-    //               "success"
-    //             );
-    //           } else if (result.isDenied) {
-    //             Swal.fire("Changes are not saved", "", "info");
-    //           }
-    //         });
-    //       }}
-    //     />
-    //   ),
-    // },
     {
       field: "user_name",
       headerName: "User Name",
       width: 150,
-      // editable: true,
     },
     {
       field: "admin",
       headerName: "admin",
       width: 150,
-      // editable: true,
+      valueGetter: (params) => {
+        return params.row.admin ? "Yes" : "No";
+      },
     },
   ];
 
-
-// //write a function that sets rows to the return of userDetails.map
-// const rows = userDetails?.map((user, index) => {
-//   return {
-//     id: index + 1,
-//     user_name: user.user_name,
-//     admin: user,
-//   };
-// });
-
-const rows = userDetails?.length > 0 ? userDetails.map((user, index) => ({
-  id: index + 1,
-  user_name: user.user_name,
-  admin: user,
-})) : [];
-
-
-  // userDetails?.map((user, index) => {
-  //   let addy = true;
-  //   if (user.admin == 1 || user.admin == 3) {
-  //     addy = true;
-  //   } else {
-  //     addy = false;
-  //   }
-
-//     if (Array.isArray(userDetails)) {
-//       userDetails?.map((user, index) => {
-//         let addy = true;
-//         if (user.admin === 1 || user.admin === 3) {
-//           addy = true;
-//         } else {
-//           addy = false;
-//         }
-
-//         console.log("userdetails in ADMIN", userDetails)
-//         console.log("TOWSSS in ADMIN", user)
-      
-
-//     rows.push({
-//       id: index + 1,
-//       user_name: user.user_name,
-//       admin: addy,
-//       uuid: user.id,
-//     });
-//   });
-// }
-
-
-  const fillOutFields = () => {
-    if (
-      newUser.user_name === "" ||
-      newUser.admin === "" ||
-      newUser.password === ""
-    ) {
-      setFailedRegister(true);
-      // Swal.fire({
-      //   title: "All Fields Are Required To Be Completed!",
-      //   text: "If you are experiencing locate a Security Forces Member ",
-      //   icon: "error",
-      //   button: "Continue",
-      //   showConfirmButton: false,
-      //   timer: 7000,
-      // });
-      return;
-    }
-    postUser();
-  };
+  const rows =
+    userDetails?.length > 0
+      ? userDetails.map((user, index) => ({
+          id: index + 1,
+          user_name: user.user_name,
+          admin: user.admin,
+        }))
+      : [];
 
   return (
     <>
@@ -289,10 +159,7 @@ const rows = userDetails?.length > 0 ? userDetails.map((user, index) => ({
             fontSize: 30,
             fontWeight: "bold",
           }}
-        >
-          {" "}
-          {/* {baseHeader(base.name.split("_"))} Users{" "} */}
-        </Typography>
+        ></Typography>
       </Box>
 
       <div>
@@ -338,160 +205,127 @@ const rows = userDetails?.length > 0 ? userDetails.map((user, index) => ({
               p: 4,
             }}
           >
-            <Box>
-              <TextField
-                error={failedRegister}
-                margin="normal"
-                required
-                fullWidth
-                id="user_name"
-                label="User Name"
-                name="user_name"
-                autoComplete="Username"
-                autoFocus
-                onChange={(e) => {
-                  setNewUser((prev) => {
-                    return { ...prev, user_name: e.target.value };
-                  });
-                }}
-              />
-              <TextField
-                error={failedRegister}
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => {
-                  setNewUser((prev) => {
-                    return { ...prev, password: e.target.value };
-                  });
-                }}
-                onKeyPress={(event) => {
-                  if (event.key === "Enter") {
-                    // postLogin();
-                  }
-                }}
-              />
-              <TextField
-                error={failedRegister}
-                sx={{ boxShadow: 2, m: "auto", width: "50%" }}
-                variant="outlined"
-                required
-                id="admin"
-                label="admin"
-                name="admin"
-                defaultValue=""
-                select
-                onChange={(e) => {
-                  e.target.value === true
-                    ? setNewUser((prev) => {
-                        return { ...prev, admin: 1 };
-                      })
-                    : setNewUser((prev) => {
-                        return { ...prev, admin: 2 };
-                      });
-                  // setNewUser((prev) => {
-                  //   return { ...prev, admin: 2 };
-                }}
-              >
-                <MenuItem value={true}>True</MenuItem>
-                <MenuItem value={false}>False</MenuItem>
-              </TextField>
-            </Box>
-
-            <Button
-              sx={{ boxShadow: 2, width: 150, m: 1 }}
-              variant="contained"
-              onClick={() => {
-                fillOutFields();
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="user_name"
+              label="User Name"
+              name="user_name"
+              autoComplete="Username"
+              autoFocus
+              onChange={(e) => {
+                setNewUser((prev) => {
+                  return { ...prev, user_name: e.target.value };
+                });
               }}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => {
+                setNewUser((prev) => {
+                  return { ...prev, password: e.target.value };
+                });
+              }}
+            />
+            <TextField
+              select
+              label="Admin"
+              value={newUser.admin}
+              onChange={(e) => {
+                setNewUser((prev) => {
+                  return { ...prev, admin: e.target.value };
+                });
+              }}
+              helperText="Select if the user is an admin"
             >
-              {" "}
-              Add User{" "}
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </TextField>
+            <Button variant="contained" color="primary" onClick={postUser}>
+              Add User
             </Button>
           </Box>
         </Modal>
       </div>
 
-{loading === false ? ('Loading...') : (
-      <Box>
-        <div style={{ height: "73vh", width: "100%" }}>
-          <DataGrid
-            // toolBarStyles={classes.toolbar}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: "Name", sort: "asc" }],
-              },
-              pagination: {
-                pageSize: 100,
-              },
-              // density: { density: "compact"}
-            }}
-            rows={rows}
-            columns={columns}
-            pageSize={pageSize}
-            onPageSizeChange={(e) => setPageSize(e)}
-            rowsPerPageOptions={[10, 20, 50, 100]}
-            // checkboxSelection
-            disableSelectionOnClick
-            experimentalFeatures={{ newEditingApi: true }}
-            sx={{ color: "black", "& .MuiButtonBase-root": { color: "black" } }}
-            components={{
-              sx: {
-                "& .MuiButtonBase": {
-                  color: "black",
+      {loading ? (
+        "Loading..."
+      ) : userDetails && userDetails.length > 0 ? (
+        <Box>
+          <div style={{ height: "73vh", width: "100%" }}>
+            <DataGrid
+              initialState={{
+                sorting: {
+                  sortModel: [{ field: "Name", sort: "asc" }],
                 },
-                "& .MuiButtonBase-root": {
-                  color: "black",
+                pagination: {
+                  pageSize: 100,
                 },
-                "& .MuiButton-StartIcon": {
-                  color: "black",
-                },
-                "& .MuiTouchRipple": {
-                  color: "black",
-                },
-              },
-              Toolbar: GridToolbar,
-            }}
-            componentsProps={{
-              panel: {
+              }}
+              rows={rows}
+              columns={columns}
+              pageSize={pageSize}
+              onPageSizeChange={(e) => setPageSize(e)}
+              rowsPerPageOptions={[10, 20, 50, 100]}
+              disableSelectionOnClick
+              experimentalFeatures={{ newEditingApi: true }}
+              sx={{
+                color: "black",
+                "& .MuiButtonBase-root": { color: "black" },
+              }}
+              components={{
                 sx: {
+                  "& .MuiButtonBase": {
+                    color: "black",
+                  },
+                  "& .MuiButtonBase-root": {
+                    color: "black",
+                  },
                   "& .MuiButton-StartIcon": {
                     color: "black",
                   },
                   "& .MuiTouchRipple": {
                     color: "black",
                   },
-                  "& .MuiButton": {
-                    color: "black",
-                  },
-
-                  "& .MuiButtonBase-root": {
-                    color: "black",
-                  },
-                  "& .MuiTypography-root": {
-                    color: "black",
-                    fontSize: 20,
-                  },
-                  "& .MuiDataGrid-filterForm": {
-                    color: "#61C0A3",
-                    // bgcolor: "#61C0A3",
-                  },
-                  "& .MuiDataGrid-filterFormContainer": {
-                    color: "black",
-                    // bgcolor: "#61C0A3",
+                },
+                Toolbar: GridToolbar,
+              }}
+              componentsProps={{
+                panel: {
+                  sx: {
+                    "& .MuiButton-StartIcon": {
+                      color: "black",
+                    },
+                    "& .MuiTouchRipple": {
+                      color: "black",
+                    },
+                    "& .MuiButton": {
+                      color: "black",
+                    },
+                    "& .MuiButtonBase-root": {
+                      color: "black",
+                    },
+                    "& .MuiTypography-root": {
+                      color: "black",
+                      fontSize: 20,
+                    },
                   },
                 },
-              },
-            }}
-          ></DataGrid>
-        </div>
-      </Box>
-)}
+              }}
+            ></DataGrid>
+          </div>
+        </Box>
+      ) : (
+        "No data available."
+      )}
     </>
   );
 };
