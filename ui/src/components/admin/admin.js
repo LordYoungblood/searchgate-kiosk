@@ -17,7 +17,7 @@ export const Users = () => {
   const [pageSize, setPageSize] = useState(10);
   const [userDetails, setUserDetails] = useState([]);
   const [loading, setLoading] = useState(true);
-  const userToken = localStorage.getItem("token").replace(/^"(.*)"$/, "$1");
+  const userToken = localStorage.getItem("token");
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -35,7 +35,7 @@ export const Users = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${userToken.replace(/"/g, "")}`,
         },
         body: JSON.stringify(newUser),
       });
@@ -56,21 +56,34 @@ export const Users = () => {
   };
 
   useEffect(() => {
+    console.log("Token from local storage:", userToken);
+
+    const headers = {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${userToken.replace(/"/g, "")}`,
+      Base: JSON.stringify(base),
+    };
+
+    console.log("Headers for the request:", headers);
+
     fetch(`${API}/users`, {
       method: "GET",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${userToken}`,
-        Base: JSON.stringify(base),
-      },
+      headers: headers,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((json) => {
         setUserDetails(json);
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("Fetch error:", err);
+      });
   }, [API, base, userToken]);
 
   const deleteUser = (id, params) => {
@@ -80,7 +93,7 @@ export const Users = () => {
       body: JSON.stringify({ userID }),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${userToken}`,
+        Authorization: `Bearer ${userToken.replace(/"/g, "")}`,
       },
     })
       .then((res) => res.json())
