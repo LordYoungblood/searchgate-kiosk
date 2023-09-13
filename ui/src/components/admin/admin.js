@@ -6,7 +6,8 @@ import {
   Button,
   Typography,
   TextField,
-  MenuItem,
+  Switch,
+  FormControlLabel,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Swal from "sweetalert2";
@@ -248,20 +249,21 @@ export const Users = () => {
                 });
               }}
             />
-            <TextField
-              select
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={newUser.admin}
+                  onChange={(e) => {
+                    setNewUser((prev) => {
+                      return { ...prev, admin: e.target.checked };
+                    });
+                  }}
+                  name="admin"
+                  color="primary"
+                />
+              }
               label="Admin"
-              value={newUser.admin}
-              onChange={(e) => {
-                setNewUser((prev) => {
-                  return { ...prev, admin: e.target.value };
-                });
-              }}
-              helperText="Select if the user is an admin"
-            >
-              <MenuItem value={true}>Yes</MenuItem>
-              <MenuItem value={false}>No</MenuItem>
-            </TextField>
+            />
             <Button variant="contained" color="primary" onClick={postUser}>
               Add User
             </Button>
