@@ -4,56 +4,31 @@ import { useReactToPrint } from "react-to-print";
 import { VehicleContext } from "../VehicleContext";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
-// import swal from "sweetalert";
 import Swal from "sweetalert2";
-
-// const tabStyle = {
-//   height: 500,
-//   maxHeight: 300,
-//   overflow: "scroll",
-// };
-
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: "75%",
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
-// const printStyle = {
-//   position: "absolute",
-//   top: "10px",
-//   bottom: "10px",
-//   left: "10px",
-//   right: "10px",
-// };
 
 export default function PrintModal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { token, API, base } = React.useContext(VehicleContext);
-  const userToken = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
+  const userToken = localStorage.getItem("token").replace(/^"(.*)"$/, "$1");
   const componentRef = useRef();
   const vehicle = props.element.vehicle;
   const setFailedRegister = props.element.setFailedRegister;
   const reload = props.element.reload;
 
-  // ------------------ PRINTING ----------------- //
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     onAfterPrint: () => reload(),
   });
 
-  // ------------------ POST USER/VEHICLE INFO INTO DB ----------------- //
   const postVehicle = () => {
     setFailedRegister(false);
-    console.log("posting veh to DB PEARS and YG suck for not naming stuff correctly", userToken)
+
+    if (!vehicle.make) vehicle.make = "N/A";
+    if (!vehicle.model) vehicle.model = "N/A";
+    if (!vehicle.drivers_license) vehicle.drivers_license = "N/A";
+
     fetch(API, {
       method: "POST",
       credentials: "include",
@@ -93,12 +68,10 @@ export default function PrintModal(props) {
             <Typography>
               <b>45 SFS Vehicle Pass</b>
             </Typography>
-
             <Typography sx={{ ml: 1.5 }}>
               <b>{vehicle.date}</b>
             </Typography>
           </Box>
-
           <img
             style={{ width: "15%", margin: 1 }}
             src={patch}
@@ -111,18 +84,10 @@ export default function PrintModal(props) {
         >
           <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1.5 }}>
             <Typography>
-              {" "}
               <b>First Name:</b> {vehicle.first_name}
             </Typography>
             <Typography>
-              {/* {" "} */}
               <b>Last Name:</b> {vehicle.last_name}
-            </Typography>
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Typography>
-              {" "}
-              <b>Drivers License:</b> {vehicle.state} {vehicle.drivers_license}
             </Typography>
           </Box>
           <Box
@@ -130,23 +95,18 @@ export default function PrintModal(props) {
             sx={{ display: "flex", flexDirection: "column", rowGap: 1.5 }}
           >
             <Typography>
-              {" "}
               <b>Vehicle Plate:</b> {vehicle.plate}
             </Typography>
             <Typography>
-              {" "}
-              <b>Make:</b> {vehicle.make}
-            </Typography>
-            <Typography>
-              {" "}
-              <b>Model:</b> {vehicle.model}
-            </Typography>
-            <Typography>
-              {" "}
               <b>Delivery Location:</b> {vehicle.delivery_location}
             </Typography>
           </Box>
-
+          {/* <Box sx={{ mt: 6 }}>
+            <hr />
+            <Typography sx={{ textAlign: "center", mt: 1 }}>
+              Security Forces Member Signature
+            </Typography>
+          </Box> */}
           <Typography
             sx={{
               mt: 25,
@@ -156,8 +116,7 @@ export default function PrintModal(props) {
               flexWrap: true,
             }}
           >
-            {" "}
-            Ensure Pass Is Kept In Vehicle At All Times{" "}
+            Ensure Pass Is Kept In Vehicle At All Times
           </Typography>
         </Box>
       </Box>
@@ -175,33 +134,10 @@ export default function PrintModal(props) {
       vehicle.first_name === "" ||
       vehicle.last_name === "" ||
       vehicle.plate === "" ||
-      vehicle.drivers_license === "" ||
       vehicle.state === "" ||
-      vehicle.make === "" ||
-      vehicle.model === ""
+      vehicle.delivery_location === ""
     ) {
       setFailedRegister(true);
-      // This is SweetAlert2 Code Easter Egg
-      // Swal.fire({
-      //   title: 'Custom width, padding, color, background.',
-      //   width: 600,
-      //   padding: '3em',
-      //   color: '#6EF57B',
-      //   background: '#fff url("https://img.freepik.com/free-vector/green-cannabis-leaves-hand-drawn-cartoon-illustration_56104-1867.jpg?w=360")',
-      //   backdrop: `
-      //   rgba(0,0,123,0.4)
-      //     url("https://i.gifer.com/X11G.gif")
-      //     left top
-      //     no-repeat
-      //   `
-      // })
-      // swal({
-      //   title: "All Fields are required to be filled!",
-      //   text: "If you are experiencing please locate a Security Forces Member ",
-      //   icon: "error",
-      //   button: "Continue",
-      //   timer: 5000,
-      // });
       Swal.fire({
         title: "All Fields Are Required To Be Completed!",
         text: "If you are experiencing issues please locate a Security Forces Member ",
@@ -218,10 +154,21 @@ export default function PrintModal(props) {
   return (
     <div>
       <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center", mb: 50 }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          mb: 50,
+        }}
       >
         <Button
-          sx={{boxShadow: 2, width: 150, m: 1, backgroundColor: '#61C0A3', '&:hover': { backgroundColor: '#61C0A3', color: 'black'} }}
+          sx={{
+            boxShadow: 2,
+            width: 150,
+            m: 1,
+            backgroundColor: "#61C0A3",
+            "&:hover": { backgroundColor: "#61C0A3", color: "black" },
+          }}
           variant="contained"
           onClick={() => {
             fillOutFields();
@@ -257,19 +204,14 @@ export default function PrintModal(props) {
           </Box>
 
           <ComponentToPrint ref={componentRef} />
-          {/* <Button onClick={handlePrint}>Print this out!</Button> */}
           <Button
             sx={{ boxShadow: 2, width: 150, m: 1 }}
             variant="contained"
             onClick={() => {
-              // postUser();
-              // handlePrint();
-              // reload();
               printAndClose();
             }}
           >
-            {" "}
-            Print Pass{" "}
+            Print Pass
           </Button>
         </Box>
       </Modal>

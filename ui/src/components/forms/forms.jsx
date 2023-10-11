@@ -1,10 +1,17 @@
 import { React, useState, useContext, useEffect } from "react";
 import { VehicleContext } from "../VehicleContext";
-import { Box, Container, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Container,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 
-import flash from "../image/flash.png";
-import patch from "../image/patch.png";
 import PrintModal from "./print_copy";
+
+const deliveryLocations = [{ title: "Space X" }, { title: "Blue Origin" }];
 
 export const Forms = () => {
   const date = new Date();
@@ -14,13 +21,13 @@ export const Forms = () => {
   const [failedRegister, setFailedRegister] = useState(false);
   const { cookies, base, token } = useContext(VehicleContext);
 
-  const [baseName, setBaseName] = useState('');
+  const [baseName, setBaseName] = useState("");
 
   useEffect(() => {
-    const storedValue = localStorage.getItem('base')
-      const containsPatrick = storedValue.includes('patrick_sfb');
-      setBaseName (containsPatrick ? 'Patrick SFB' : 'NOTHING')
-  }, [])
+    const storedValue = localStorage.getItem("base");
+    const containsPatrick = storedValue.includes("patrick_sfb");
+    setBaseName(containsPatrick ? "Patrick SFB" : "NOTHING");
+  }, []);
 
   const [vehicle, setVehicle] = useState({
     first_name: "",
@@ -31,24 +38,15 @@ export const Forms = () => {
     make: "",
     model: "",
     date: today,
-    delivery_location: ""
+    delivery_location: "",
   });
-
-  
-
-  // if (!localStorage) {
-  //   window.location.href = "/login";
-  // }
 
   const reload = () => {
     window.location.reload();
   };
 
-
-  console.log("veh from forms", vehicle);
-
   return (
-    <div> 
+    <div>
       <Box
         sx={{
           display: "flex",
@@ -56,29 +54,24 @@ export const Forms = () => {
           mb: 1,
         }}
       >
-        
-          
         <Typography
-          style={{ alightContent: "center", fontFamily: "sans", fontSize: 20, mt:1 }}
+          style={{
+            alightContent: "center",
+            fontFamily: "sans",
+            fontSize: 20,
+            mt: 1,
+          }}
         >
-        {/* {baseHeader(base.name.split('_'))} Search Gate */}
-      {baseName} Search Gate
-  
-          {/* Search Gate */}
+          {baseName} Search Gate
         </Typography>
       </Box>
-      
-
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}></Box>
-
-      {/* the box below is for adjusting the entire height of the input box */}
-
       <Box
         sx={{
           display: "grid",
           boxShadow: 3,
           gap: 1,
-          height: "70vh"
+          height: "70vh",
         }}
       >
         <Container className="Pass">
@@ -90,21 +83,18 @@ export const Forms = () => {
               boxShadow: 3,
               gap: 1,
               m: 1,
-              
             }}
           >
             <Typography
               sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
             >
-              {" "}
-              Personal Information{" "} 
+              Personal Information
             </Typography>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 width: "100%",
-                
               }}
             >
               <TextField
@@ -119,9 +109,7 @@ export const Forms = () => {
                 label="First Name"
                 name="firstName"
                 autoComplete="firstName"
-                
                 error={failedRegister}
-                // helperText="Please enter your first name"
                 sx={{ boxShadow: 2, m: 1 }}
               />
               <TextField
@@ -137,11 +125,37 @@ export const Forms = () => {
                 name="lastName"
                 autoComplete="lastName"
                 error={failedRegister}
-                // helperText="Please enter your first name"
                 sx={{ boxShadow: 2, m: 1 }}
               />
             </Box>
-            <Box sx={{ displayFlex:'flex', flexDirection:'row'}}>
+
+            <Typography
+              sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
+            >
+              Vehicle Information
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <TextField
+                error={failedRegister}
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, plate: e.target.value };
+                  })
+                }
+                required
+                id="plate"
+                label="Plate Number"
+                name="Plate Number"
+                sx={{ boxShadow: 2, m: 1, width: "100%" }}
+              />
+            </Box>
+            <Box sx={{ displayFlex: "flex", flexDirection: "row" }}>
               <TextField
                 error={failedRegister}
                 sx={{ boxShadow: 2, m: 1, width: "17%" }}
@@ -214,95 +228,32 @@ export const Forms = () => {
                 <MenuItem value="AA">Armed Forces Americas</MenuItem>
                 <MenuItem value="other">Other</MenuItem>
               </TextField>
-              <TextField
-                error={failedRegister}
-                sx={{ boxShadow: 2, m: 1, width: "79%", ml : 1.5 }}
-                onChange={(e) =>
-                  setVehicle((prev) => {
-                    return { ...prev, drivers_license: e.target.value };
-                  })
-                }
-                required
-                id="dl"
-                label="Driver's License Number"
-                name="Driver's License Number"
-              />
             </Box>
-            <Typography
-              sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
-            >
-              {" "}
-              Vehicle Information{" "}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
+            <Autocomplete
+              id="delivery-location-combo-box"
+              options={deliveryLocations}
+              getOptionLabel={(option) => option.title}
+              fullWidth
+              sx={{ boxShadow: 2, m: 1 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  error={failedRegister}
+                  label="Delivery Location"
+                  required
+                  onChange={(e) =>
+                    setVehicle((prev) => {
+                      return { ...prev, delivery_location: e.target.value };
+                    })
+                  }
+                />
+              )}
+              onInputChange={(event, newValue) => {
+                setVehicle((prev) => {
+                  return { ...prev, delivery_location: newValue };
+                });
               }}
-            >
-              <TextField
-                error={failedRegister}
-                onChange={(e) =>
-                  setVehicle((prev) => {
-                    return { ...prev, plate: e.target.value };
-                  })
-                }
-                required
-                id="plate"
-                label="Plate Number"
-                name="Plate Number"
-                sx={{ boxShadow: 2, m: 1, width: "100%" }}
-              />
-              <TextField
-                sx={{ boxShadow: 2, m: 1, width: "100%" }}
-                error={failedRegister}
-                onChange={(e) =>
-                  setVehicle((prev) => {
-                    return { ...prev, make: e.target.value };
-                  })
-                }
-                required
-                id="make"
-                label="Make"
-                name="make"
-              />
-              <TextField
-                sx={{ boxShadow: 2, m: 1, width: "100%" }}
-                error={failedRegister}
-                onChange={(e) =>
-                  setVehicle((prev) => {
-                    return { ...prev, model: e.target.value };
-                  })
-                }
-                required
-                id="model"
-                label="Model"
-                name="model"
-              />
-            </Box>
-            <Typography
-              sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
-            >
-              {" "}
-              Delivery Information{" "}
-            </Typography>
-
-              <TextField
-                sx={{ boxShadow: 2, m: 1, width: "100%" }}
-                error={failedRegister}
-                onChange={(e) =>
-                  setVehicle((prev) => {
-                    return { ...prev, delivery_location: e.target.value };
-                  })
-                }
-                required
-                id="Delivery Location"
-                label="Delivery Location"
-                name="Delivery Location"
-              />
-              
-        
+            />
           </form>
         </Container>
         <PrintModal element={{ vehicle, setFailedRegister, reload }} />
