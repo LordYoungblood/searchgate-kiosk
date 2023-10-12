@@ -164,7 +164,7 @@ export default function PrintModal(props) {
         <Button
           sx={{
             boxShadow: 2,
-            width: 150,
+            width: 200,
             m: 1,
             backgroundColor: "#61C0A3",
             "&:hover": { backgroundColor: "#61C0A3", color: "black" },
@@ -205,7 +205,7 @@ export default function PrintModal(props) {
 
           <ComponentToPrint ref={componentRef} />
           <Button
-            sx={{ boxShadow: 2, width: 150, m: 1 }}
+            sx={{ boxShadow: 2, width: 200, m: 1 }}
             variant="contained"
             onClick={() => {
               printAndClose();
