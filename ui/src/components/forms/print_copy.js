@@ -211,7 +211,7 @@ export default function PrintModal(props) {
               printAndClose();
             }}
           >
-            Print Pass
+            Print Pass / Imprimir Pass
           </Button>
         </Box>
       </Modal>
