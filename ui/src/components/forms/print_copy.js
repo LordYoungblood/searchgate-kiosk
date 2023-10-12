@@ -97,9 +97,9 @@ export default function PrintModal(props) {
             <Typography>
               <b>Vehicle Plate:</b> {vehicle.plate}
             </Typography>
-            <Typography>
+            {/* <Typography>
               <b>Delivery Location:</b> {vehicle.delivery_location}
-            </Typography>
+            </Typography> */}
           </Box>
           {/* <Box sx={{ mt: 6 }}>
             <hr />
@@ -134,8 +134,8 @@ export default function PrintModal(props) {
       vehicle.first_name === "" ||
       vehicle.last_name === "" ||
       vehicle.plate === "" ||
-      vehicle.state === "" ||
-      vehicle.delivery_location === ""
+      vehicle.state === ""
+      // vehicle.delivery_location === ""
     ) {
       setFailedRegister(true);
       Swal.fire({
@@ -174,7 +174,7 @@ export default function PrintModal(props) {
             fillOutFields();
           }}
         >
-          Verify & Print
+          Verify & Print / Verificar y Imprimir
         </Button>
       </Box>
       <Modal

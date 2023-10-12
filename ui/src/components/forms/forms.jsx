@@ -1,4 +1,4 @@
-import { React, useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { VehicleContext } from "../VehicleContext";
 import {
   Autocomplete,
@@ -10,8 +10,7 @@ import {
 } from "@mui/material";
 
 import PrintModal from "./print_copy";
-
-const deliveryLocations = [{ title: "Space X" }, { title: "Blue Origin" }];
+import translate from "translate-google-api";
 
 export const Forms = () => {
   const date = new Date();
@@ -20,14 +19,36 @@ export const Forms = () => {
 
   const [failedRegister, setFailedRegister] = useState(false);
   const { cookies, base, token } = useContext(VehicleContext);
-
   const [baseName, setBaseName] = useState("");
+  const [language, setLanguage] = useState("en"); // 'en' for English, 'es' for Spanish
+  const [personalInfoTitle, setPersonalInfoTitle] = useState(
+    "Personal Information"
+  );
 
   useEffect(() => {
     const storedValue = localStorage.getItem("base");
     const containsPatrick = storedValue.includes("patrick_sfb");
     setBaseName(containsPatrick ? "Patrick SFB" : "NOTHING");
   }, []);
+
+  useEffect(() => {
+    const translateText = async (text) => {
+      try {
+        const translatedText = await translate(text, { to: language });
+        return translatedText;
+      } catch (error) {
+        console.error("Error translating text:", error);
+        return text; // Return original text if translation fails
+      }
+    };
+
+    const fetchTranslation = async () => {
+      const translatedTitle = await translateText("Personal Information");
+      setPersonalInfoTitle(translatedTitle);
+    };
+
+    fetchTranslation();
+  }, [language]);
 
   const [vehicle, setVehicle] = useState({
     first_name: "",
@@ -44,6 +65,8 @@ export const Forms = () => {
   const reload = () => {
     window.location.reload();
   };
+
+  const deliveryLocations = [{ title: "Space X" }, { title: "Blue Origin" }];
 
   return (
     <div>
@@ -65,7 +88,10 @@ export const Forms = () => {
           {baseName} Search Gate
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}></Box>
+      {/* <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+        <button onClick={() => setLanguage("en")}>English</button>
+        <button onClick={() => setLanguage("es")}>Spanish</button>
+      </Box> */}
       <Box
         sx={{
           display: "grid",
@@ -85,10 +111,14 @@ export const Forms = () => {
               m: 1,
             }}
           >
+            {/* <div>
+              <button onClick={() => setLanguage("en")}>English</button>
+              <button onClick={() => setLanguage("es")}>Spanish</button>
+            </div> */}
             <Typography
               sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
             >
-              Personal Information
+              Personal Information / Informacion Personal
             </Typography>
             <Box
               sx={{
@@ -106,7 +136,7 @@ export const Forms = () => {
                 }
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="First Name / Primer Nombre"
                 name="firstName"
                 autoComplete="firstName"
                 error={failedRegister}
@@ -121,7 +151,7 @@ export const Forms = () => {
                 fullWidth
                 required
                 id="lastName"
-                label="Last Name"
+                label="Last Name / Apellido"
                 name="lastName"
                 autoComplete="lastName"
                 error={failedRegister}
@@ -132,7 +162,7 @@ export const Forms = () => {
             <Typography
               sx={{ fontFamily: "sans", fontSize: 25, fontWeight: "bold" }}
             >
-              Vehicle Information
+              Vehicle Information / Informacion del vehiculo
             </Typography>
             <Box
               sx={{
@@ -150,7 +180,7 @@ export const Forms = () => {
                 }
                 required
                 id="plate"
-                label="Plate Number"
+                label="Plate Number / Numero de placa"
                 name="Plate Number"
                 sx={{ boxShadow: 2, m: 1, width: "100%" }}
               />
@@ -162,7 +192,7 @@ export const Forms = () => {
                 variant="outlined"
                 required
                 id="state"
-                label="State"
+                label="State / Estado"
                 name="state"
                 defaultValue=""
                 select
@@ -229,7 +259,7 @@ export const Forms = () => {
                 <MenuItem value="other">Other</MenuItem>
               </TextField>
             </Box>
-            <Autocomplete
+            {/* <Autocomplete
               id="delivery-location-combo-box"
               options={deliveryLocations}
               getOptionLabel={(option) => option.title}
@@ -253,7 +283,7 @@ export const Forms = () => {
                   return { ...prev, delivery_location: newValue };
                 });
               }}
-            />
+            /> */}
           </form>
         </Container>
         <PrintModal element={{ vehicle, setFailedRegister, reload }} />
