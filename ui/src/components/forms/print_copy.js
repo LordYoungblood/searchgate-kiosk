@@ -101,43 +101,12 @@ export default function PrintModal(props) {
               <b>Delivery Location:</b> {vehicle.delivery_location}
             </Typography> */}
           </Box>
-          {<Box sx={{ mt: 6 }}>
-          <Typography sx={{ textAlign: "left", mt: 1 }}>
-             Trip 1:
+          {/* <Box sx={{ mt: 6 }}>
+            <hr />
+            <Typography sx={{ textAlign: "center", mt: 1 }}>
+              Security Forces Member Signature
             </Typography>
-          <hr style={{ 
-    border: 'none', 
-    borderTop: '2px solid black', 
-    margin: '0px 0px' 
-  }} />
-            <Typography sx={{ textAlign: "left", mt: 1 }}>
-             Trip 2:
-            </Typography>
-          <hr style={{ 
-    border: 'none', 
-    borderTop: '2px solid black', 
-    margin: '0px 0px' 
-  }} />
-            <Typography sx={{ textAlign: "left", mt: 1 }}>
-             Trip 3:
-            </Typography>
-          <hr style={{ 
-    border: 'none', 
-    borderTop: '2px solid black', 
-    margin: '0px 0px' 
-  }} />
-              <Typography sx={{ textAlign: "left", mt: 1 }}>
-             Trip 4:
-            </Typography>
-          <hr style={{ 
-    border: 'none', 
-    borderTop: '2px solid black', 
-    margin: '0px 0px' 
-  }} />
-                <Typography sx={{ textAlign: "left", mt: 1 }}>
-             SF Member Signature/Time
-            </Typography>
-          </Box> }
+          </Box> */}
           <Typography
             sx={{
               mt: 25,
@@ -145,20 +114,9 @@ export default function PrintModal(props) {
               width: "100%",
               justifyContent: "center",
               flexWrap: true,
-              fontWeight: 'bold',
-              fontSize: '1.5rem',
             }}
           >
             Ensure Pass Is Kept In Vehicle At All Times
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: '0.875rem', 
-              color: 'text.secondary',  
-              justifyContent: "center",
-            }}
-          >
-            For each additional trip on the installation, ensure Security Forces member receives this receipt.
           </Typography>
         </Box>
       </Box>
